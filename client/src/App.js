@@ -14,6 +14,7 @@ import HomePageadmin from "./component/page/admin page/HomePageAdmin";
 import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
 //student
 import HomePageStudent from "./component/page/student page/HomePageStudent";
+import CoursesPageStudent from "./component/page/student page/CoursesPageStudent";
 
 function App() {
   const idtoken = localStorage.token;
@@ -55,6 +56,7 @@ function App() {
 
         {/* student */}
         <Route path="/homestudent" element={<HomePageStudent />} />
+        <Route path="/courses_student" element={<CoursesPageStudent />} />
       </Routes>
     </div>
   );
