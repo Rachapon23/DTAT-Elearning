@@ -29,15 +29,15 @@ const NavAdmin = () => {
             <Nav.Link href="/homeadmin">หน้าแรก</Nav.Link>
             <Nav.Link href="/homeadmin/listalluser">สมาชิกทั้งหมด</Nav.Link>
             <Nav.Link href="/homeadmin">จัดการแอดมิน</Nav.Link>
-            <Nav.Link href="/homeadmin">จัดการผู้สอน</Nav.Link>
-            <Nav.Link href="/homeadmin">จัดการผู้เรียน</Nav.Link>
+            <Nav.Link href="/homeadmin/listteacheruser">จัดการผู้สอน</Nav.Link>
+            <Nav.Link href="/homeadmin/lisstudentuser">จัดการผู้เรียน</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
 
           <Navbar.Text
           className="text-danger">
-            Signed in Teacher as: 
+            Signed in Admin as: 
 </Navbar.Text>
             <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
               <NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>

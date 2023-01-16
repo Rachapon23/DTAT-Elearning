@@ -94,13 +94,3 @@ exports.login = async (req, res) => {
       res.status(500).send("Server Error!!! on current user");
     }
   };
-
-  exports.ch = async (req, res) => {
-    try {
-     
-      res.send("OK");
-    } catch (err) {
-      console.log(err);
-      res.status(500).send("Server Error!!! on CH");
-    }
-  };
