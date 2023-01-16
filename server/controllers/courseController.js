@@ -5,10 +5,10 @@ exports.createCourse = async (req, res) => {
         const {
             name,
             teacher,
-            material,
+            description,
         } = req.body;
 
-        Courses.create({name, teacher, material}, (err, course) => {
+        Courses.create({name, teacher, description}, (err, course) => {
             if(err) {
                 return res.status(500).json({error: "fail to create the course"});
             }

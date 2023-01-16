@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const {ObjectId} = mongoose.Schema;
 
 const CourseSchema = new mongoose.Schema({
     name: {
@@ -7,8 +8,8 @@ const CourseSchema = new mongoose.Schema({
         unique: true,
     },
     teacher: {
-        type: [String],
-        require: true,
+        type: ObjectId,
+        ref: "user",
     },
     description: {
         type: String,
