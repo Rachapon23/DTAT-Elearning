@@ -14,12 +14,10 @@ import AlluserFromadmin from "./component/page/admin page/AlluserFromadmin";
 import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
 //student
 import HomePageStudent from "./component/page/student page/HomePageStudent";
-<<<<<<< HEAD
 import CoursesPageStudent from "./component/page/student page/CoursesPageStudent";
 import CreateCoursePageTeacher from "./component/page/teacher page/CreateCoursePageTeacher";
-=======
 import { useEffect } from "react";
->>>>>>> 3c767e7bf333b594d7f348e29b99b7dd985e70b1
+
 
 function App() {
 
