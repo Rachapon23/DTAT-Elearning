@@ -26,4 +26,4 @@ router.get('/studench',checkUser,ch)
 router.get('/teacherch',checkUser,checkTeacher,ch)
 router.get('/adminch',checkUser,checkTeacher,checkAdmin,ch)
 
-module.exports=router
+module.exports = router;
