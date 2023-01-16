@@ -15,6 +15,7 @@ import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
 //student
 import HomePageStudent from "./component/page/student page/HomePageStudent";
 import CoursesPageStudent from "./component/page/student page/CoursesPageStudent";
+import CreateCoursePageTeacher from "./component/page/teacher page/CreateCoursePageTeacher";
 
 function App() {
   const idtoken = localStorage.token;
@@ -53,10 +54,12 @@ function App() {
 
         {/* teacher */}
         <Route path="/hometeacher" element={<HomePageTeacher />} />
+        <Route path="/create_course_teacher" element={<CreateCoursePageTeacher />} />
 
         {/* student */}
         <Route path="/homestudent" element={<HomePageStudent />} />
         <Route path="/courses_student" element={<CoursesPageStudent />} />
+
       </Routes>
     </div>
   );

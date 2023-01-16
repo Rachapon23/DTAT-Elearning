@@ -10,8 +10,8 @@ const CourseSchema = new mongoose.Schema({
         type: [String],
         require: true,
     },
-    material: {
-        type: {},
+    description: {
+        type: String,
     }
 }, {timestamps: true});
 

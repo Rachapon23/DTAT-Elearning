@@ -2,7 +2,6 @@ const Courses = require("../models/courseModel");
 
 exports.createCourse = async (req, res) => {
     try {
-        console.log("sdsdi");
         const {
             name,
             teacher,
@@ -11,7 +10,7 @@ exports.createCourse = async (req, res) => {
 
         Courses.create({name, teacher, material}, (err, course) => {
             if(err) {
-                res.status(500).json({error: "fail to create the course"});
+                return res.status(500).json({error: "fail to create the course"});
             }
             res.json(course);
         })
