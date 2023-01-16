@@ -63,7 +63,7 @@ const HomePageStudent = () => {
               <div className="col-md-4">
                 <div className="justify-content-center">
                   <button className="btn btn-primary"
-                  onClick={handleT}>>
+                  onClick={handleT}>
                     TEACHER CHEECK
                   </button>
                 </div>
@@ -71,7 +71,7 @@ const HomePageStudent = () => {
               <div className="col-md-4">
                 <div className="justify-content-center">
                   <button className="btn btn-success"
-                  onClick={handleS}>>
+                  onClick={handleS}>
                    STUDENT CHEECK
                   </button>
                 </div>

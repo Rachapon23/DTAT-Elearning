@@ -6,39 +6,46 @@ import { Routes, Route } from "react-router-dom";
 //auth
 import Login from "./component/auth/Login";
 import Register from "./component/auth/Register";
-import { useDispatch } from "react-redux";
 import { currentUser } from "../src/function/auth";
 //admin
 import HomePageadmin from "./component/page/admin page/HomePageAdmin";
+import AlluserFromadmin from "./component/page/admin page/AlluserFromadmin";
 //teacher
 import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
 //student
 import HomePageStudent from "./component/page/student page/HomePageStudent";
+import { useEffect } from "react";
 
 function App() {
-  const idtoken = localStorage.token;
-  const dispatch = useDispatch();
-  // ตรวจสอบ user คนปัจจุบัน
-  if (idtoken) {
-    currentUser(idtoken)
-      .then((res) => {
-        console.log("in app",res)
-        dispatch({
-          type: "LOGIN",
-          payload: {
-            token: idtoken,
-            firstname: res.data.firstname,
-            user_id: res.data._id,
-            role: res.data.role,
-          },
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  } else {
-    console.log("not get token");
-  }
+
+  // const idtoken = localStorage.token;
+  // const dispatch = useDispatch();
+
+  //    // ตรวจสอบ user คนปัจจุบัน
+  //   if (idtoken) {
+  //   currentUser(idtoken)
+  //     .then((res) => {
+  //       console.log("in app",res)
+        
+  //       dispatch({
+  //         type: "LOGIN",
+  //         payload: {
+  //           token: idtoken,
+  //           firstname: res.data.firstname,
+  //           user_id: res.data._id,
+  //           role: res.data.role,
+  //         },
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // } else {
+  //   console.log("not get token");
+  // }
+
+ 
+  
 
   return (
     <div>
@@ -49,6 +56,7 @@ function App() {
 
         {/* admin */}
         <Route path="/homeadmin" element={<HomePageadmin />} />
+        <Route path="//homeadmin/listalluser" element={<AlluserFromadmin />} />
 
         {/* teacher */}
         <Route path="/hometeacher" element={<HomePageTeacher />} />

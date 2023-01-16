@@ -1,15 +1,12 @@
 import React from "react";
 import { login } from "../../function/auth";
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, location } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import {  useSelector } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const { user } = useSelector((state) => ({ ...state }));
+
   const [value, setValue] = useState({
     employee_ID: "",
     password: "",
@@ -24,17 +21,10 @@ const Login = () => {
     login(value)
       .then((res) => {
         console.log(res.data);
-
-        dispatch({
-            type: "LOGIN",
-            payload: {
-              token: res.data.token,
-              firstname: res.data.Payload.user.fisrtname,
-              user_id: res.data.Payload.user.user_id,
-              role: res.data.Payload.user.role,
-            },
-          });
-          localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", res.data.token);
+        sessionStorage.setItem("firstname", res.data.Payload.user.fisrtname)
+        sessionStorage.setItem("user_id", res.data.Payload.user.user_id)
+        sessionStorage.setItem("role", res.data.Payload.user.role)
 
         roleBaseRedirect(res.data.Payload.user.role);
       })
@@ -49,22 +39,23 @@ const Login = () => {
       navigate("/homeadmin");
     } else if (role === "teacher") {
       navigate("/hometeacher");
-    }else{
-        navigate("/homestudent");
+    } else {
+      navigate("/homestudent");
     }
   };
 
-  useEffect(()=>{
-if(user){
-    if (user.role === "admin") {
+  useEffect(() => {
+
+    if (sessionStorage.length != 0) {
+      if (sessionStorage.getItem("role") === "admin") {
         navigate("/homeadmin");
-      } else if (user.role === "teacher") {
+      } else if (sessionStorage.getItem("role") === "teacher") {
         navigate("/hometeacher");
-      }else{
-          navigate("/homestudent");
+      } else {
+        navigate("/homestudent");
       }
-}
-  },[])
+    }
+  }, [])
 
   return (
     <div className="container mt-5">
