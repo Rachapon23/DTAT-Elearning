@@ -8,10 +8,11 @@ const QuizSchema = new mongoose.Schema({
         require: true,
         unique: true,
     },
-    question_data: {
-        type: {}
-    }, teacher: {
+    question_data: [{
+        type:Object
+    }], teacher: {
         type: ObjectId,
+        ref:"users"
     
     },
 

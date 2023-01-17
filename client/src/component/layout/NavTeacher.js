@@ -27,9 +27,9 @@ const NavTeacher = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/hometeacher">สร้างบทเรียน</Nav.Link>
-            <Nav.Link href="/hometeacher/quiz">สร้างแบบทดสอบ</Nav.Link>
-            <Nav.Link href="/hometeacher">page3</Nav.Link>
+            <Nav.Link href="/teacher">สร้างบทเรียน</Nav.Link>
+            <Nav.Link href="/teacher/quiz">สร้างแบบทดสอบ</Nav.Link>
+            <Nav.Link href="/teacher/test">ทำแบบทดสอบ</Nav.Link>
             <Nav.Link href="/hometeacher">page4</Nav.Link>
           </Nav>
         </Navbar.Collapse>

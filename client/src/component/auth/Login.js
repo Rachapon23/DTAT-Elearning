@@ -22,6 +22,7 @@ const Login = () => {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("token", res.data.token);
+        sessionStorage.setItem("token", res.data.token)
         sessionStorage.setItem("firstname", res.data.Payload.user.fisrtname)
         sessionStorage.setItem("user_id", res.data.Payload.user.user_id)
         sessionStorage.setItem("role", res.data.Payload.user.role)

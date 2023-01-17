@@ -16,6 +16,10 @@ import TeacherFromAdmin from "./component/page/admin page/TeacherFromAdmin";
 //teacher
 import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
 import TeacherQuiz from './component/page/teacher page/quiz/TeacherQuiz'
+import Question from "./component/page/teacher page/quiz/Question";
+//test
+import Test from "./component/page/teacher page/test/Test";
+import Dotest from "./component/page/teacher page/test/Dotest";
 //student
 import HomePageStudent from "./component/page/student page/HomePageStudent";
 
@@ -41,7 +45,10 @@ function App() {
 
         {/* teacher */}
         <Route path="/hometeacher" element={<HomePageTeacher />} />
-        <Route path="/hometeacher/quiz" element={<TeacherQuiz />} />
+        <Route path="/teacher/quiz" element={<TeacherQuiz />} />
+        <Route path="/teacher/test" element={<Test />} />
+        <Route path="/teacher/test/:params" element={<Dotest />} />
+        <Route path="/teacher/quiz/:params" element={<Question />} />
 
         {/* student */}
         <Route path="/homestudent" element={<HomePageStudent />} />

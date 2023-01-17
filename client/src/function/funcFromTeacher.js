@@ -10,3 +10,32 @@ export const createQuiz  = async(authtoken,value) =>
         authtoken,
     }
 });
+export const createQusetion  = async(authtoken,params,value) => 
+    await axios.put(process.env.REACT_APP_API+'/quiz/createqusetion/'+params,{value},
+    {
+    headers:{
+        authtoken,
+    }
+});
+
+export const listQuizby  = async(authtoken,params) => 
+    await axios.get(process.env.REACT_APP_API+'/quiz/listquizby/'+params,
+    {
+    headers:{
+        authtoken,
+    }
+});
+export const removeQuiz  = async(authtoken,params) => 
+    await axios.delete(process.env.REACT_APP_API+'/quiz/removequiz/'+params,
+    {
+    headers:{
+        authtoken,
+    }
+});
+export const listQuiz  = async(authtoken) => 
+    await axios.get(process.env.REACT_APP_API+'/quiz/listquiz/',
+    {
+    headers:{
+        authtoken,
+    }
+});

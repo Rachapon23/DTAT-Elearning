@@ -5,10 +5,18 @@ const router = express.Router()
 const {checkUser,checkTeacher,checkAdmin} = require('../middleware/middleward')
 
 const {
-    create
+    create,
+    listquizby,
+    listquiz,
+    remove,
+    createQusetion
 } = require('../controllers/quizController')
 
 
 router.post('/quiz/create',checkUser,checkTeacher,create)
+router.get('/quiz/listquizby/:params',checkUser,checkTeacher,listquizby)
+router.get('/quiz/listquiz',checkUser,checkTeacher,listquiz)
+router.delete('/quiz/removequiz/:params',checkUser,checkTeacher,remove)
+router.put('/quiz/createqusetion/:params',checkUser,checkTeacher,createQusetion)
 
 module.exports = router;
