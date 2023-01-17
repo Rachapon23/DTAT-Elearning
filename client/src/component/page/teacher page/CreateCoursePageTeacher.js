@@ -1,9 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { createCourse, getCurrentTeacher } from "../../../function/FromTeacher";
+import { useState } from "react";
+import { createCourse, getCurrentTeacher } from "../../../function/funcFromTeacher";
 import NavTeacher from "../../layout/NavTeacher";
 import Swal from "sweetalert2";
-import { currentTeacher } from "../../../function/auth";
 
 const CreateCoursePageTeacher = () => {
 

@@ -16,7 +16,7 @@ import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
 import HomePageStudent from "./component/page/student page/HomePageStudent";
 import CoursesPageStudent from "./component/page/student page/CoursesPageStudent";
 import CreateCoursePageTeacher from "./component/page/teacher page/CreateCoursePageTeacher";
-import { useEffect } from "react";
+import CoursePageStudent from "./component/page/student page/CoursePageStudent";
 
 
 function App() {
@@ -68,6 +68,7 @@ function App() {
         {/* student */}
         <Route path="/homestudent" element={<HomePageStudent />} />
         <Route path="/courses_student" element={<CoursesPageStudent />} />
+        <Route path="/course_student/:id" element={<CoursePageStudent />} />
 
       </Routes>
     </div>

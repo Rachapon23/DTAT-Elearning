@@ -1,9 +1,8 @@
-import axios from 'axios'
+import axios from 'axios';
 
 
 export const createCourse  = async(data) => {
-    const {name, teacher, description} = data
-    await axios.post(process.env.REACT_APP_API+'/create_course', data);
+    return await axios.post(process.env.REACT_APP_API+'/create_course', data);
 }
 
 export const getCurrentTeacher  = async(authtoken) =>
