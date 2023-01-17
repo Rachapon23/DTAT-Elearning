@@ -16,40 +16,18 @@ await axios.post(process.env.REACT_APP_API+'/current-user',{},
         authtoken,
     }
 });
-export const currentTeacher = async(authtoken) =>
-await axios.post(process.env.REACT_APP_API+'/current-teacher',{},
-    {
-    headers:{
-        authtoken,
-    }
-});
-export const currentAdmin = async(authtoken) =>
-await axios.post(process.env.REACT_APP_API+'/current-admin',{},
-    {
-    headers:{
-        authtoken,
-    }
-});
+// export const currentTeacher = async(authtoken) =>
+// await axios.post(process.env.REACT_APP_API+'/current-teacher',{},
+//     {
+//     headers:{
+//         authtoken,
+//     }
+// });
+// export const currentAdmin = async(authtoken) =>
+// await axios.post(process.env.REACT_APP_API+'/current-admin',{},
+//     {
+//     headers:{
+//         authtoken,
+//     }
+// });
 //--------------------------
-
-export const adminCH  = async(authtoken) =>
-    await axios.get(process.env.REACT_APP_API+'/adminch',
-    {
-    headers:{
-        authtoken,
-    }
-});
-export const teacherCH  = async(authtoken) =>
-    await axios.get(process.env.REACT_APP_API+'/teacherch',
-    {
-    headers:{
-        authtoken,
-    }
-});
-export const studentCH  = async(authtoken) =>
-    await axios.get(process.env.REACT_APP_API+'/studench',
-    {
-    headers:{
-        authtoken,
-    }
-});
