@@ -1,20 +1,39 @@
 const mongoose = require("mongoose");
-const {ObjectId} = mongoose.Schema
 
-const QuizSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
 
-    title: {
+    employee_ID: {
         type: String,
         require: true,
         unique: true,
     },
-    question_data: {
-        type: {}
-    }, teacher: {
-        type: ObjectId,
-    
+    password:{
+        type:String,
+        require: true,
     },
+    department_ID: {
+        type: String,
+        require: true,
+    },
+    firstname: {
+        type: String,
+        require: true,
+    },
+    lastname: {
+        type: String,
+        require: true,
+    },
+    role: {
+        type: String,
+        default: "student",
+    },
+    course: {
+        type:{}
+    },
+    enabled:{
+        type:Boolean,
+        default: true,
+    },
+}, {timestamps: true});
 
-}, { timestamps: true });
-
-module.exports = Quiz = mongoose.model("quiz", QuizSchema);
+module.exports = User = mongoose.model("users",UserSchema);

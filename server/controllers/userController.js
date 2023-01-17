@@ -72,6 +72,7 @@ exports.login = async (req, res) => {
           res.json({ token, Payload });
         });
       } else {
+        // console.log("user: ",user)
         return res.status(400).send("User not found!!!");
       }
     } catch (err) {
