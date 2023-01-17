@@ -19,8 +19,8 @@ import TeacherQuiz from './component/page/teacher page/quiz/TeacherQuiz'
 //student
 import HomePageStudent from "./component/page/student page/HomePageStudent";
 
-
-import { useEffect } from "react";
+import CoursesPageStudent from "./component/page/student page/CoursesPageStudent";
+import CreateCoursePageTeacher from "./component/page/teacher page/CreateCoursePageTeacher";
 
 
 function App() {
@@ -42,9 +42,13 @@ function App() {
         {/* teacher */}
         <Route path="/hometeacher" element={<HomePageTeacher />} />
         <Route path="/hometeacher/quiz" element={<TeacherQuiz />} />
+        <Route path="/create_course_teacher" element={<CreateCoursePageTeacher />} />
+
 
         {/* student */}
         <Route path="/homestudent" element={<HomePageStudent />} />
+        <Route path="/courses_student" element={<CoursesPageStudent />} />
+
       </Routes>
     </div>
   );

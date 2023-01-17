@@ -57,12 +57,12 @@ exports.login = async (req, res) => {
           return res.status(400).send("Password Invalid!!!");
         }
 
-        user_id = user._id.toString();
+        // user_id = user._id.toString();
         const Payload = {
           user: {
             fisrtname: user.firstname,
             role: user.role,
-            user_id: user_id,
+            user_id: user._id,
           },
         };
 
