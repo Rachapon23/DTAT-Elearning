@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 exports.checkUser = (req,res,next) =>{
     try{
         const token = req.headers["authtoken"]
+        // console.log(req)
         if(!token){
             return res.status(401).send("no token, authorization denied")
         }
@@ -29,7 +30,7 @@ exports.checkTeacher = async(req,res,next) =>{
             next()
             
         }else{
-           res.status(403).send(err,"teacher Access denied")
+           res.status(403).send(err,"teacher Access denied",teacherUser.role)
         }
         
     }catch(err){

@@ -10,45 +10,27 @@ import { currentUser } from "../src/function/auth";
 //admin
 import HomePageadmin from "./component/page/admin page/HomePageAdmin";
 import AlluserFromadmin from "./component/page/admin page/AlluserFromadmin";
+import StudentFormAdmin from "./component/page/admin page/StudentFormAdmin";
+import TeacherFromAdmin from "./component/page/admin page/TeacherFromAdmin";
+
 //teacher
 import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
+import TeacherQuiz from './component/page/teacher page/quiz/TeacherQuiz'
+import Question from "./component/page/teacher page/quiz/Question";
+//test
+import Test from "./component/page/teacher page/test/Test";
+import Dotest from "./component/page/teacher page/test/Dotest";
 //student
 import HomePageStudent from "./component/page/student page/HomePageStudent";
+
 import CoursesPageStudent from "./component/page/student page/CoursesPageStudent";
 import CreateCoursePageTeacher from "./component/page/teacher page/CreateCoursePageTeacher";
 import CoursePageStudent from "./component/page/student page/CoursePageStudent";
 
 
+
 function App() {
 
-  // const idtoken = localStorage.token;
-  // const dispatch = useDispatch();
-
-  //    // ตรวจสอบ user คนปัจจุบัน
-  //   if (idtoken) {
-  //   currentUser(idtoken)
-  //     .then((res) => {
-  //       console.log("in app",res)
-        
-  //       dispatch({
-  //         type: "LOGIN",
-  //         payload: {
-  //           token: idtoken,
-  //           firstname: res.data.firstname,
-  //           user_id: res.data._id,
-  //           role: res.data.role,
-  //         },
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // } else {
-  //   console.log("not get token");
-  // }
-
- 
-  
 
   return (
     <div>
@@ -59,11 +41,22 @@ function App() {
 
         {/* admin */}
         <Route path="/homeadmin" element={<HomePageadmin />} />
-        <Route path="//homeadmin/listalluser" element={<AlluserFromadmin />} />
+        <Route path="/homeadmin/listalluser" element={<AlluserFromadmin />} />
+        <Route path="/homeadmin/lisstudentuser" element={<StudentFormAdmin />} />
+        <Route path="/homeadmin/listteacheruser" element={<TeacherFromAdmin />} />
 
         {/* teacher */}
         <Route path="/hometeacher" element={<HomePageTeacher />} />
+
+        <Route path="/teacher/quiz" element={<TeacherQuiz />} />
+        <Route path="/teacher/test" element={<Test />} />
+        <Route path="/teacher/test/:params" element={<Dotest />} />
+        <Route path="/teacher/quiz/:params" element={<Question />} />
+
+        <Route path="/hometeacher/quiz" element={<TeacherQuiz />} />
         <Route path="/create_course_teacher" element={<CreateCoursePageTeacher />} />
+
+
 
         {/* student */}
         <Route path="/homestudent" element={<HomePageStudent />} />

@@ -72,6 +72,7 @@ exports.login = async (req, res) => {
           res.json({ token, Payload });
         });
       } else {
+        // console.log("user: ",user)
         return res.status(400).send("User not found!!!");
       }
     } catch (err) {
@@ -92,15 +93,5 @@ exports.login = async (req, res) => {
     } catch (err) {
       console.log(err);
       res.status(500).send("Server Error!!! on current user");
-    }
-  };
-
-  exports.ch = async (req, res) => {
-    try {
-     
-      res.send("OK");
-    } catch (err) {
-      console.log(err);
-      res.status(500).send("Server Error!!! on CH");
     }
   };

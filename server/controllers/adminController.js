@@ -13,3 +13,44 @@ exports.listAlluser = async (req, res) => {
     }
 };
 
+exports.listStudentuser = async (req, res) => {
+    try {
+        const user = await User.find({role:"student"})
+            .select("-password")
+            .exec();
+        // console.log("User: ", user)
+        res.send(user);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server Error!!! on listStudentuser");
+    }
+};
+exports.listTeacheruser = async (req, res) => {
+    try {
+        const user = await User.find({role:"teacher"})
+            .select("-password")
+            .exec();
+        // console.log("User: ", user)
+        res.send(user);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server Error!!! on listStudentuser");
+    }
+};
+
+
+exports.ChangeRole = async (req, res) => {
+    try {
+        const value = req.body
+        const user = await User.findOneAndUpdate(
+            { _id: req.body.id },
+            { role: req.body.role }
+            ).select("-password")
+
+        res.send(user);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Server Error!!! on ChangeRole");
+    }
+};
+
