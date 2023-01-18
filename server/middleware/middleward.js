@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 exports.checkUser = (req,res,next) =>{
     try{
         const token = req.headers["authtoken"]
-        console.log(token)
+        // console.log(req)
         if(!token){
             return res.status(401).send("no token, authorization denied")
         }
