@@ -16,7 +16,7 @@ const AlluserFromadmin = () => {
 
   const loadData = () => {
 
-    listAlluser(localStorage.getItem("token"))
+    listAlluser(sessionStorage.getItem("token"))
       .then(res => {
         setData(res.data)
       })

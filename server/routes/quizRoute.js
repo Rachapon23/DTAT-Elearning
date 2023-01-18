@@ -9,7 +9,8 @@ const {
     listquizby,
     listquiz,
     remove,
-    createQusetion
+    createQusetion,
+    createExaminer
 } = require('../controllers/quizController')
 
 
@@ -18,5 +19,6 @@ router.get('/quiz/listquizby/:params',checkUser,checkTeacher,listquizby)
 router.get('/quiz/listquiz',checkUser,checkTeacher,listquiz)
 router.delete('/quiz/removequiz/:params',checkUser,checkTeacher,remove)
 router.put('/quiz/createqusetion/:params',checkUser,checkTeacher,createQusetion)
+router.put('/quiz/createexaminer/:params',checkUser,checkTeacher,createExaminer)
 
 module.exports = router;

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import NavStudent from "../../layout/NavStudent";
 import { getCourse } from "../../../function/funcFromStudent";
 import Swal from "sweetalert2";
-import { title } from "process";
+
 
 const CoursePageStudent = () => {
     const course_id = useParams();

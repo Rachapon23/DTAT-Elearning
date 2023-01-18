@@ -14,6 +14,11 @@ const CourseSchema = new mongoose.Schema({
     description: {
         type: String,
     }
+    ,
+    password: {
+        type: String,
+        Text:true
+    }
 }, {timestamps: true});
 
 module.exports = Course = mongoose.model("course", CourseSchema);

@@ -15,7 +15,7 @@ const StudentFormAdmin = () => {
 
   const loadData = () => {
 
-    listStudentuser(localStorage.getItem("token"))
+    listStudentuser(sessionStorage.getItem("token"))
       .then(res => {
 
         setData(res.data)
@@ -33,7 +33,7 @@ const StudentFormAdmin = () => {
       id: id,
       role: e.target.value
     }
-    changeRole(localStorage.getItem("token"), value)
+    changeRole(sessionStorage.getItem("token"), value)
       .then(res => {
         console.log(res)
         loadData()

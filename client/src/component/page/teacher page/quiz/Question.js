@@ -14,18 +14,18 @@ const Question = () => {
     const [content, setContent] = useState({
         qusetion: "",
         choice: {
-            1:"",
-            2:"",
-            3:"",
-            4:""
+            ch1:"",
+            ch2:"",
+            ch3:"",
+            ch4:""
         },
         ans: ""
     })
     const [choice,setChoice] = useState({
-        1:"",
-        2:"",
-        3:"",
-        4:""
+        ch1:"",
+        ch2:"",
+        ch3:"",
+        ch4:""
     })
 
     const [dataQuiz, setDataQuiz] = useState()
@@ -111,22 +111,22 @@ const Question = () => {
                     <div className='mt-4'>
                         <div className="input-group mb-3">
                             <span className="input-group-text">ตัวเลือกที่ 1</span>
-                            <input type="text" name='1' className="form-control"
+                            <input type="text" name='ch1' className="form-control"
                                 onChange={handleChange_2} />
                         </div>
                         <div className="input-group mb-3">
                             <span className="input-group-text">ตัวเลือกที่ 2</span>
-                            <input type="text" name='2' className="form-control"
+                            <input type="text" name='ch2' className="form-control"
                                 onChange={handleChange_2} />
                         </div>
                         <div className="input-group mb-3">
                             <span className="input-group-text">ตัวเลือกที่ 3</span>
-                            <input type="text" name='3' className="form-control"
+                            <input type="text" name='ch3' className="form-control"
                                 onChange={handleChange_2} />
                         </div>
                         <div className="input-group mb-3">
                             <span className="input-group-text">ตัวเลือกที่ 4</span>
-                            <input type="text" name='4' className="form-control"
+                            <input type="text" name='ch4' className="form-control"
                                 onChange={handleChange_2} />
                         </div>
                         <select className="form-select mb-3"

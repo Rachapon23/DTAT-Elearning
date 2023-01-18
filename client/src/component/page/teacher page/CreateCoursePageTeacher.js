@@ -9,6 +9,7 @@ const CreateCoursePageTeacher = () => {
         name: "",
         teacher: sessionStorage.getItem("user_id"),
         description: "",
+        password:""
     })
 
     const handleChange = (e) => {
@@ -25,7 +26,9 @@ const CreateCoursePageTeacher = () => {
                 'Create Success',
                 'success'
               )
+              window.location.reload(false);
         })
+        
         .catch(err => {
             Swal.fire(
                 'Fail to Create Success',
@@ -54,6 +57,11 @@ const CreateCoursePageTeacher = () => {
         <div >
             <NavTeacher/>
             <form className="p-5">
+                <div class="mb-3">
+                    <label className="form-label">Course Password</label>
+                    <input type="text" className="form-control" name="password" onChange={handleChange}/>
+                    {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
+                </div>
                 <div class="mb-3">
                     <label className="form-label">Course Name</label>
                     <input type="text" className="form-control" name="name" onChange={handleChange}/>

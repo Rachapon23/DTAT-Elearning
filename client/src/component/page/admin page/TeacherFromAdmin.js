@@ -14,7 +14,7 @@ const TeacherFromAdmin = () => {
 
     const loadData = () => {
 
-        listTeacheruser(localStorage.getItem("token"))
+        listTeacheruser(sessionStorage.getItem("token"))
             .then(res => {
 
                 setData(res.data)
@@ -32,7 +32,7 @@ const TeacherFromAdmin = () => {
             id: id,
             role: e.target.value
         }
-        changeRole(localStorage.getItem("token"), value)
+        changeRole(sessionStorage.getItem("token"), value)
             .then(res => {
                 console.log(res)
                 loadData()

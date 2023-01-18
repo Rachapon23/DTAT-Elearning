@@ -17,6 +17,7 @@ import TeacherFromAdmin from "./component/page/admin page/TeacherFromAdmin";
 import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
 import TeacherQuiz from './component/page/teacher page/quiz/TeacherQuiz'
 import Question from "./component/page/teacher page/quiz/Question";
+import QuizDetail from "./component/page/teacher page/quiz/QuizDetail";
 //test
 import Test from "./component/page/teacher page/test/Test";
 import Dotest from "./component/page/teacher page/test/Dotest";
@@ -52,6 +53,7 @@ function App() {
         <Route path="/teacher/test" element={<Test />} />
         <Route path="/teacher/test/:params" element={<Dotest />} />
         <Route path="/teacher/quiz/:params" element={<Question />} />
+        <Route path="/teacher/quizdetail/:params" element={<QuizDetail />} />
 
         <Route path="/hometeacher/quiz" element={<TeacherQuiz />} />
         <Route path="/create_course_teacher" element={<CreateCoursePageTeacher />} />
