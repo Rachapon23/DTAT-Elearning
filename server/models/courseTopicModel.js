@@ -9,10 +9,6 @@ const UserSchema = new mongoose.Schema({
     description:{
         type:String,
     },
-    department_ID: {
-        type: String,
-        require: true,
-    },
     material: {
         type: {}
     },
