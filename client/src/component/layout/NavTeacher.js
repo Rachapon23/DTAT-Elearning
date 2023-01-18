@@ -37,7 +37,7 @@ const NavTeacher = () => {
 
           <Navbar.Text
           className="text-danger">
-            Signed in Teacher as: 
+            Signed in {sessionStorage.getItem("role")} as: 
 </Navbar.Text>
             <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
               <NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>

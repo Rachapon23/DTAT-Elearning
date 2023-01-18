@@ -1,7 +1,8 @@
+import axios from 'axios';
 
-
-import axios from 'axios'
-
+export const createCourse  = async(data) => {
+    return await axios.post(process.env.REACT_APP_API+'/create_course', data);
+}
 
 export const createQuiz  = async(authtoken,value) => 
     await axios.post(process.env.REACT_APP_API+'/quiz/create',value,

@@ -1,20 +1,22 @@
 import NavStudent from "../../layout/NavStudent"
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import {listCourses} from "../../../function/funcFromStudent";
+
 
 const CoursePageStudent = () => {
 
     const [courses, setCourses] = useState([]);
 
     const fetchData = () => {
-        axios
-        .get(process.env.REACT_APP_API+'/list_courses')
+        listCourses()
         .then((response) => {
             console.log(response)
             setCourses(response.data)
         })
         .catch((err) => {
+            console.log(err)
             Swal.fire(
                 "Alert!",
                 "Cannot fetch blogs data",
@@ -36,17 +38,9 @@ const CoursePageStudent = () => {
                     courses.map((course, index) => (
                         <div className="row" key={index}>
                             <div className="col pt-3 pb-2">
-                                <h2>{course.name}</h2>
-                                <p>
-                                {
-                                    course.teacher.map((teacher, index) => (
-                                        <div className="col" key={index}>
-                                            {teacher}
-                                        </div>
-                                    ))
-                                }
-                                </p>
-                                <p>{course.material.link1}</p>
+                                <Link to={`/course_student/${course._id}`}><h2>{course.name}</h2></Link>
+                                <p>{course.description}</p>
+                                <p className="text-muted">ผู้สอน {course.teacher.firstname}</p>
                             </div>
                         </div>
                     ))
