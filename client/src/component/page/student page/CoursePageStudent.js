@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import NavStudent from "../../layout/NavStudent";
 import { getCourse } from "../../../function/funcFromStudent";
 import Swal from "sweetalert2";
-import { title } from "process";
+import { Link } from "react-router-dom";
 
 const CoursePageStudent = () => {
     const course_id = useParams();
@@ -44,13 +44,18 @@ const CoursePageStudent = () => {
                             <p>{course.description}</p>
                             <p className="text-muted">{course.teacher.firstname}</p>
                         </div>
-                        <div className="col-1 pt-4">
-                            <button type="button" class="btn btn-primary btn-lg"> Edit </button>
-                        </div>
+                        {
+                            sessionStorage.getItem("user_id") === course.teacher._id ? (
+                                <div className="col-1 pt-4">
+                                    <Link to={`/edit_course_teacher/${course._id}`}><button type="button" className="btn btn-primary btn-lg"> Edit </button></Link>
+                                </div>
+                            ): (
+                                <div/>
+                            )
+                        }
                     </div>   
                 </div> 
             }
-            
         </div>
     );
 }
