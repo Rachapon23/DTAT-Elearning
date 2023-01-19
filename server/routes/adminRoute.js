@@ -12,7 +12,7 @@ const {
 } = require('../controllers/adminController')
 
 router.get('/listalluser',checkUser,checkTeacher,checkAdmin,listAlluser)
-router.get('/liststudentuser',checkUser,checkTeacher,checkAdmin,listStudentuser)
+router.get('/liststudentuser',checkUser,checkTeacher,listStudentuser)
 router.get('/listteacheruser',checkUser,checkTeacher,checkAdmin,listTeacheruser)
 
 

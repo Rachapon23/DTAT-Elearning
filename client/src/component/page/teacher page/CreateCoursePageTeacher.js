@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 const CreateCoursePageTeacher = () => {
 
     const [value, setValue] = useState({
+        course_number:"",
         name: "",
         teacher: sessionStorage.getItem("user_id"),
         description: "",
@@ -57,25 +58,30 @@ const CreateCoursePageTeacher = () => {
         <div >
             <NavTeacher/>
             <form className="p-5">
-                <div class="mb-3">
+                <div className="mb-3">
+                    <label className="form-label">Course Number</label>
+                    <input type="text" className="form-control" name="course_number" onChange={handleChange}/>
+                    {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
+                </div>
+                <div className="mb-3">
                     <label className="form-label">Course Password</label>
                     <input type="text" className="form-control" name="password" onChange={handleChange}/>
                     {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                     <label className="form-label">Course Name</label>
                     <input type="text" className="form-control" name="name" onChange={handleChange}/>
                     {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                     <label className="form-label">Course Description</label>
                     <input type="text" className="form-control" name="description" onChange={handleChange}/>
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                     <label className="form-label">Teacher</label>
                     <input type="text" className="form-control" name="teacher" disabled value={sessionStorage.getItem("firstname")}/>
                 </div>
-                <button type="submit" class="btn btn-primary" onClick={submit}>Create</button>
+                <button type="submit" className="btn btn-primary" onClick={submit}>Create</button>
             </form>
         </div>
     );

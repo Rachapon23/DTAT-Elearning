@@ -15,9 +15,12 @@ const CourseSchema = new mongoose.Schema({
         type: String,
     }
     ,
-    password: {
+    course_number: {
         type: String,
         Text:true
+    },
+    password:{
+        type:String,
     }
 }, {timestamps: true});
 
