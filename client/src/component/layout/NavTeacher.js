@@ -21,16 +21,17 @@ const NavTeacher = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/homeadmin" className="text-danger">
+        <Navbar.Brand href="/hometeacher" className="text-danger">
           Denso elearning Teacher
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/teacher">สร้างบทเรียน</Nav.Link>
+            <Nav.Link href="/create_course_teacher">สร้างบทเรียน</Nav.Link>
+            <Nav.Link href="/courses_student">คอร์สทั้งหมด</Nav.Link>
             <Nav.Link href="/teacher/quiz">สร้างแบบทดสอบ</Nav.Link>
             <Nav.Link href="/teacher/test">ทำแบบทดสอบ</Nav.Link>
-            <Nav.Link href="/hometeacher">page4</Nav.Link>
+            <Nav.Link href="/teacher/score">ทำคะแนน</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">

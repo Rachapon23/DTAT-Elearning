@@ -20,14 +20,14 @@ const NavStudent = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/homeadmin" className="text-danger">
+        <Navbar.Brand href="/homestudent" className="text-danger">
           Denso elearning Student
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/homeadmin">page1</Nav.Link>
-            <Nav.Link href="/homeadmin">page2</Nav.Link>
+            <Nav.Link href="/courses_student">คอร์สทั้งหมด</Nav.Link>
+            <Nav.Link href="/create_course_teacher">สร้างคอร์ส</Nav.Link>
             <Nav.Link href="/homeadmin">page3</Nav.Link>
             <Nav.Link href="/homeadmin">page4</Nav.Link>
           </Nav>

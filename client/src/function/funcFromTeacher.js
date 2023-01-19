@@ -47,3 +47,19 @@ export const listQuiz  = async(authtoken) =>
         authtoken,
     }
 });
+
+export const getStudentby  = async(authtoken,{params}) => 
+    await axios.get(process.env.REACT_APP_API+'/listudentby/'+params,
+    {
+    headers:{
+        authtoken,
+    }
+});
+
+// export const listQuizbyUser  = async(authtoken,params) => 
+//     await axios.get(process.env.REACT_APP_API+'/quiz/listquizbyuser/'+params,
+//     {
+//     headers:{
+//         authtoken,
+//     }
+// });

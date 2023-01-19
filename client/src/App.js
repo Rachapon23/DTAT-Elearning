@@ -18,6 +18,8 @@ import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
 import TeacherQuiz from './component/page/teacher page/quiz/TeacherQuiz'
 import Question from "./component/page/teacher page/quiz/Question";
 import QuizDetail from "./component/page/teacher page/quiz/QuizDetail";
+import Score from "./component/page/teacher page/score/Score";
+import ScoreDetail from "./component/page/teacher page/score/ScoreDetail";
 //test
 import Test from "./component/page/teacher page/test/Test";
 import Dotest from "./component/page/teacher page/test/Dotest";
@@ -55,17 +57,19 @@ function App() {
         <Route path="/teacher/test/:params" element={<Dotest />} />
         <Route path="/teacher/quiz/:params" element={<Question />} />
         <Route path="/teacher/quizdetail/:params" element={<QuizDetail />} />
-
+       
         <Route path="/hometeacher/quiz" element={<TeacherQuiz />} />
         <Route path="/create_course_teacher" element={<CreateCoursePageTeacher />} />
         <Route path="/edit_course_teacher/:id" element={<EditCoursePageTeacher />} />
 
-
+ <Route path="/teacher/score" element={<Score />} />
+ <Route path="/teacher/score/:params" element={<ScoreDetail />} />
 
         {/* student */}
         <Route path="/homestudent" element={<HomePageStudent />} />
         <Route path="/courses_student" element={<CoursesPageStudent />} />
         <Route path="/course_student/:id" element={<CoursePageStudent />} />
+
 
       </Routes>
     </div>

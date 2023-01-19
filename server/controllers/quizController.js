@@ -28,6 +28,16 @@ exports.listquizby = async (req, res) => {
         res.status(500).send('Server Error!!! on list quiz By')
     }
 }
+// exports.listquizbyUser = async (req, res) => {
+//     try {
+//         // const quiz = await Quiz.findOne({ _id: req.params.params }).exec()
+//         // console.log(req.params)
+//         res.send("quiz")
+//     } catch (err) {
+//         console.log(err)
+//         res.status(500).send('Server Error!!! on list quiz By User')
+//     }
+// }
 exports.remove = async (req, res) => {
     try {
         const quiz = await Quiz.findOneAndRemove({ _id: req.params.params }).exec()

@@ -9,6 +9,9 @@ const HomePageTeacher = () => {
   return (
     <div>
       <NavTeacher/>
+      <div className='container'>
+        <h5 className='mt-5'>Home Teacher</h5>
+      </div>
   
     </div>
   )
