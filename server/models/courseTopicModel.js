@@ -9,12 +9,8 @@ const UserSchema = new mongoose.Schema({
     description:{
         type:String,
     },
-    department_ID: {
-        type: String,
-        require: true,
-    },
     material: {
-        type: {}
+        type: [String],
     },
     enabled:{
         type:Boolean,
@@ -22,4 +18,4 @@ const UserSchema = new mongoose.Schema({
     },
 }, {timestamps: true});
 
-module.exports = User = mongoose.model("users",UserSchema);
+module.exports = User = mongoose.model("topic",UserSchema);
