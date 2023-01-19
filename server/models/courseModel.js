@@ -19,14 +19,9 @@ const CourseSchema = new mongoose.Schema({
         type: String,
         Text:true
     },
-<<<<<<< HEAD
-    password:{
-        type:String,
-=======
     material: {
         type: ObjectId,
         ref: "topic",
->>>>>>> d099e632c086e793acc3449b46c5f4e96020d4e3
     }
 }, {timestamps: true});
 
