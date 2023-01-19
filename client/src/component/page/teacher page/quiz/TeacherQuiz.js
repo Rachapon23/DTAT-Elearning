@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 const TeacherQuiz = () => {
 
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
 
   const [value, setValue] = useState({
     title: "",
@@ -22,7 +23,7 @@ const TeacherQuiz = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     //  console.log(value)
-    createQuiz(localStorage.getItem('token'), value)
+    createQuiz(sessionStorage.getItem("token"), value)
       .then(res => {
         console.log(res)
         navigate("/teacher/quiz/" + res.data._id);
@@ -31,17 +32,26 @@ const TeacherQuiz = () => {
         console.log(err)
       })
   };
+  const handdleDetail = (e) => {
+    // e.preventDefault();
+    console.log(e)
+  navigate("/teacher/quizdetail/" + e);
+    
+  };
   useEffect(() => {
     loadData()
   }, [])
   const loadData = () => {
+    setLoading(true)
     listQuiz(sessionStorage.getItem("token"))
       .then(res => {
         console.log(res)
         setDataQuiz(res.data)
+        setLoading(false)
       })
       .catch(err => {
         console.log(err)
+        setLoading(false)
       })
   }
   const remove = (params) => {
@@ -95,25 +105,40 @@ const TeacherQuiz = () => {
                       <th scope="col">ชื่อแบบทดสอบ</th>
                       <th scope="col">จำนวนข้อ</th>
                       <th scope="col">ผู้สร้าง</th>
+                      <th scope="col">รายละเอียด</th>
                       <th scope="col">ลบ</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {dataQuiz && dataQuiz.map((item, index) =>
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{item.title}</td>
-                        <td className='text-center'>{item.question_data.length}</td>
-                        <td>{item.teacher.firstname}</td>
-                        <td><i className="bi bi-trash text-danger"
-                          onClick={() => remove(item._id)}
-                        ></i></td>
-                      </tr>
-                    )}
+                  {!loading &&
+                    <tbody>
+                      {dataQuiz && dataQuiz.map((item, index) =>
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <td>{item.title}</td>
+                          <td className='text-center'>{item.question_data.length}</td>
+                          <td>{item.teacher.firstname}</td>
+                          <td><a onClick={()=>handdleDetail(item._id)} class="bi bi-card-checklist text-warning"></a></td>
+                          <td><i className="bi bi-trash text-danger"
+                            onClick={() => remove(item._id)}
+                          ></i></td>
+
+                        </tr>
+                      )}
 
 
-                  </tbody>
+                    </tbody>}
+
+                  
                 </table>
+                {loading &&
+                    <div>
+                      <div className='justify-content-center '>
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+
+                    </div>}
               </div>
             </div>
             <div className="col-md-6">

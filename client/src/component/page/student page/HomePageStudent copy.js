@@ -1,6 +1,5 @@
 import React from 'react'
 import NavStudent from '../../layout/NavStudent'
-import Search from './Search'
 
 
 const HomePageStudent = () => {
@@ -9,12 +8,8 @@ const HomePageStudent = () => {
 
   return (
     <div>
-      <NavStudent />
-      <div className='container'>
-        <Search/>
-        
+      <NavStudent/>
 
-      </div>
     </div>
   )
 }

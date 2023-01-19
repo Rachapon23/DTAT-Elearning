@@ -5,6 +5,7 @@ import { getCourse } from "../../../function/funcFromStudent";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
+
 const CoursePageStudent = () => {
     const course_id = useParams();
     const [course, setCourse] = useState("");

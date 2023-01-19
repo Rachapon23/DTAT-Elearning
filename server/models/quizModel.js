@@ -10,7 +10,11 @@ const QuizSchema = new mongoose.Schema({
     },
     question_data: [{
         type:Object
-    }], teacher: {
+    }],
+    examiner_data: [{
+        type:Object
+    }],
+    teacher: {
         type: ObjectId,
         ref:"users"
     

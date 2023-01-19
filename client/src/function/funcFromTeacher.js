@@ -18,6 +18,13 @@ export const createQusetion  = async(authtoken,params,value) =>
         authtoken,
     }
 });
+export const createExaminer = async(authtoken,params,value) => 
+    await axios.put(process.env.REACT_APP_API+'/quiz/createexaminer/'+params,{value},
+    {
+    headers:{
+        authtoken,
+    }
+});
 
 export const listQuizby  = async(authtoken,params) => 
     await axios.get(process.env.REACT_APP_API+'/quiz/listquizby/'+params,
