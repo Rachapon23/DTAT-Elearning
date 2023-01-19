@@ -27,6 +27,7 @@ import HomePageStudent from "./component/page/student page/HomePageStudent";
 import CoursesPageStudent from "./component/page/student page/CoursesPageStudent";
 import CreateCoursePageTeacher from "./component/page/teacher page/CreateCoursePageTeacher";
 import CoursePageStudent from "./component/page/student page/CoursePageStudent";
+import EditCoursePageTeacher from "./component/page/teacher page/EditCoursePageTeacher";
 
 
 
@@ -57,6 +58,7 @@ function App() {
 
         <Route path="/hometeacher/quiz" element={<TeacherQuiz />} />
         <Route path="/create_course_teacher" element={<CreateCoursePageTeacher />} />
+        <Route path="/edit_course_teacher/:id" element={<EditCoursePageTeacher />} />
 
 
 
