@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
         type:String,
     },
     material: {
-        type: {}
+        type: [String],
     },
     enabled:{
         type:Boolean,
@@ -18,4 +18,4 @@ const UserSchema = new mongoose.Schema({
     },
 }, {timestamps: true});
 
-module.exports = User = mongoose.model("users",UserSchema);
+module.exports = User = mongoose.model("topic",UserSchema);

@@ -18,6 +18,10 @@ const CourseSchema = new mongoose.Schema({
     password: {
         type: String,
         Text:true
+    },
+    material: {
+        type: ObjectId,
+        ref: "topic",
     }
 }, {timestamps: true});
 
