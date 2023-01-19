@@ -10,25 +10,46 @@ const EditCoursePageTeacher = () => {
     const course_id = useParams();
     const [course, setCourse] = useState("");
     const quillToolbar = {
-        toolbar: false
+        toolbar: false,
     }
     
-    const [materials, setMaterials] = useState({});
+    const [materials, setMaterials] = useState([]);
     const [courseTopics, setCourseTopics] = useState([]);
     
 
     const handleAddCourseTopics = () => {
         setCourseTopics([...courseTopics, {
-            name: "",
-            description: "",
-            materials: {},
+            name: "<h1> </h1>",
+            description: "<h3> </h3>",
+            materials: [""]
         }])
+    }
+
+    const handleAddMaterial = (t_index) => {
+        // console.log(courseTopics[t_index].materials[])
+        courseTopics[t_index].materials.push("")
+        setMaterials([...materials])
+    }
+
+    const handleDeleteMaterial = (t_index, m_index) => {
+        // console.log(index)
+        courseTopics[t_index].materials.splice(m_index, 1)
+        setMaterials([...materials])
+        // console.log(materials)
     }
 
     const handleTopicNameChange = (e, index) => {
         console.log(index,courseTopics[index])
         courseTopics[index].name = e
-        console.log(...courseTopics)
+        // console.log(...courseTopics)
+        // setCourseTopics(...courseTopics)
+        
+    };
+
+    const handleTopicDescriptionChange = (e, index) => {
+        console.log(index,courseTopics[index])
+        courseTopics[index].description = e
+        // console.log(...courseTopics)
         // setCourseTopics(...courseTopics)
         
     };
@@ -56,6 +77,10 @@ const EditCoursePageTeacher = () => {
     useEffect(() => {
         fetchCourse()
     }, []);
+
+    // useEffect(() => {
+    //     ReactQuill()
+    // }, [courseTopics])
     
     return (
         <div>
@@ -68,9 +93,21 @@ const EditCoursePageTeacher = () => {
                     <div className="container p-5 border border-primary">
                         <div className="row">
                             <div className="col-11">
-                                <ReactQuill theme="snow" modules={quillToolbar} name="name" value={`<h1>${course.name}</h1>`}/>
-                                <ReactQuill theme="snow" modules={quillToolbar} name="description" value={`<p>${course.description}</p>`} className="pt-1"/>
-                                <p className="text-muted">{course.teacher.firstname}</p>
+                                <div className="row"> 
+                                    <h4 className="col-2 pt-3">Course: </h4>
+                                    <ReactQuill className="col-10 " theme="snow" modules={quillToolbar} name="name" value={`<h1>${course.name}</h1>`}/>
+                                </div>
+                                <div className="row">
+                                    <h4 className="col-2 pt-4">Description: </h4>
+                                    <ReactQuill className="col-10 pt-3" theme="snow" modules={quillToolbar} name="description" value={`<h2>${course.description}</h2>`}/>
+                                </div>
+                                <div className="row">
+                                    <h4 className="col-2 pt-4">Teacher: </h4>
+                                    <ReactQuill className="text-muted col-10 pt-3" theme="snow" modules={quillToolbar} name="description" readOnly value={`<h2>${course.teacher.firstname}</h2>`}/>
+                                    {/* <input type="text" id="disabledTextInput" className="form-control" value={`<h2>${course.teacher.firstname}</h2>`} disabled/> */}
+                                </div>
+                                
+                                
                             </div>
                         </div> 
                     </div> 
@@ -79,13 +116,26 @@ const EditCoursePageTeacher = () => {
                         {
                             courseTopics && (
                                 courseTopics.map((topic, index) => (
-                                    <div key={index}>
+                                    <div key={index} >
                                         {JSON.stringify(topic)}
-                                        <div className="container pb-2 pt-2 ps-5  border border-primary">
-                                            <ReactQuill theme="snow" modules={quillToolbar} value={`<h1>${topic.name}</h1>`} onChange={(e) => handleTopicNameChange(e, index)}/>
-                                            <ReactQuill className="pt-1" theme="snow" modules={quillToolbar} value={`<h1>${topic.description}</h1>`} />
-                                            <ReactQuill className="pt-1" theme="snow" modules={quillToolbar} value={`<h1>${topic.materials}</h1>`} />
-                                        </div>
+                                        <div className="container pb-2 pt-2   border border-primary">
+                                            <h4 className="col-2 pt-3">Topic </h4>
+                                            <ReactQuill className="pt-1" theme="snow" modules={quillToolbar} name="name" value={`<h1>${course.name}</h1>`} onChange={(e) => handleTopicNameChange(e, index)}/>
+                                            <h4 className="col-2 pt-3">Description </h4>
+                                            <ReactQuill className="pt-1" theme="snow" modules={quillToolbar} value={`${topic.description}`} onChange={(e) => handleTopicDescriptionChange(e, index)} />
+                                            <h4 className="col-2 pt-3">Materials </h4>
+                                            {
+                                                topic.materials.map((material, m_index) => (
+                                                    <div key={m_index}>
+                                                        <ReactQuill  className="pt-1" theme="snow" modules={quillToolbar} value={material} />
+                                                        <button type="button" className=" btn btn-primary btn-sm" onClick={() => handleDeleteMaterial(index, m_index)}>delete</button>    
+                                                    </div>
+                                                ))
+                                            }
+                                            <div className="d-flex justify-content-end">
+                                                <button type="button" className=" btn btn-primary btn-sm" onClick={() => handleAddMaterial(index)}>add</button>
+                                            </div>  
+                                    </div>
                                         <div className="container p-1"/>
                                     </div>
                                 ))
