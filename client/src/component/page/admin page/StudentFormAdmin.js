@@ -1,6 +1,6 @@
 import React from 'react'
 import NavAdmin from '../../layout/NavAdmin'
-import { listStudentuser, changeRole } from '../../../function/funcFromAdmin'
+import { listStudentuser, changeRole, changeEnable } from '../../../function/funcFromAdmin'
 import { useState, useEffect } from "react";
 
 const StudentFormAdmin = () => {
@@ -17,7 +17,6 @@ const StudentFormAdmin = () => {
 
     listStudentuser(sessionStorage.getItem("token"))
       .then(res => {
-
         setData(res.data)
       })
       .catch(err => {
@@ -35,7 +34,6 @@ const StudentFormAdmin = () => {
     }
     changeRole(sessionStorage.getItem("token"), value)
       .then(res => {
-        console.log(res)
         loadData()
       })
       .catch(err => {
@@ -44,6 +42,22 @@ const StudentFormAdmin = () => {
     // console.log(value)
   }
   // console.log(data)
+
+  const handleChangeEanble = (e, id) => {
+
+    let data = {
+      id: id,
+      enabled: e.target.checked !== true
+    }
+
+    changeEnable(sessionStorage.getItem("token"), data)
+    .then(res => {
+      loadData()
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
   return (
     <div>
@@ -89,10 +103,12 @@ const StudentFormAdmin = () => {
 
                     </select>
                   </td>
-                  <td><div className="form-check form-switch">
-                    <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
-                    />
-                  </div></td>
+                  <td>
+                    <div className="form-check form-switch">
+                      <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked={item.enabled} onChange={(e) => handleChangeEanble(e, item._id)}/>
+                      {/* {console.log(item.enabled)} */}
+                    </div>
+                  </td>
 
 
 

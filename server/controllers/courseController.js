@@ -73,6 +73,8 @@ exports.addCourse = async (req, res) => {
         user.course.push(id)
         const  user_push = user.course
 
+        console.log(courseSearch)
+        
         if(password == courseSearch.password){
             console.log('math')
             const user_update = await User.findByIdAndUpdate(

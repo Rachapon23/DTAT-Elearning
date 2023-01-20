@@ -71,8 +71,11 @@ exports.login = async (req, res) => {
           if (err) throw err;
           res.json({ token, Payload });
         });
-      } else {
-        // console.log("user: ",user)
+      } 
+      else if(user.enabled === false) {
+        return res.status(400).send("User not active!!! Please contact admin");
+      }
+      else {
         return res.status(400).send("User not found!!!");
       }
     } catch (err) {

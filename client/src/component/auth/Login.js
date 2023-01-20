@@ -29,7 +29,7 @@ const Login = () => {
         roleBaseRedirect(res.data.Payload.user.role);
       })
       .catch((err) => {
-        Swal.fire("erroe", err.response.data, "error");
+        Swal.fire("error", err.response.data, "error");
       });
   };
 
