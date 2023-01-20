@@ -19,10 +19,17 @@ const CourseSchema = new mongoose.Schema({
         type: String,
         Text:true
     },
-    material: {
+    password:{
+        type:String
+    },
+    status:{
+        type:String,
+        default:"private"
+    },
+    topic: [{
         type: ObjectId,
         ref: "topic",
-    }
+    }]
 }, {timestamps: true});
 
 module.exports = Course = mongoose.model("course", CourseSchema);

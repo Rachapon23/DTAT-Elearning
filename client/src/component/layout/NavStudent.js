@@ -28,7 +28,7 @@ const NavStudent = () => {
           <Nav className="me-auto">
             <Nav.Link href="/courses_student">คอร์สทั้งหมด</Nav.Link>
             <Nav.Link href="/create_course_teacher">สร้างคอร์ส</Nav.Link>
-            <Nav.Link href="/homeadmin">page3</Nav.Link>
+            <Nav.Link href="/teacher/test">แบบทดสอบ</Nav.Link>
             <Nav.Link href="/homeadmin">page4</Nav.Link>
           </Nav>
         </Navbar.Collapse>

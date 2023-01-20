@@ -12,7 +12,8 @@ const QuizSchema = new mongoose.Schema({
         type:Object
     }],
     examiner_data: [{
-        type:Object
+        type: ObjectId,
+        ref: "examiner",
     }],
     teacher: {
         type: ObjectId,

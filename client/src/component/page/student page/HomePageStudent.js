@@ -2,6 +2,7 @@ import React from 'react'
 import NavStudent from '../../layout/NavStudent'
 import Mycourse from './ChildrenHome/Mycourse'
 import Search from './ChildrenHome/Search'
+import PublicCourse from './ChildrenHome/PublicCourse'
 
 import { getMycourse } from '../../../function/funcFromStudent'
 import { useState, useEffect } from 'react'
@@ -32,6 +33,7 @@ const HomePageStudent = () => {
     <div>
       <NavStudent />
       <div className='container'>
+        <PublicCourse/>
         <Search loadMycourse={loadMycourse}/>
         <Mycourse data={data} loadMycourse={loadMycourse}/>
 
