@@ -30,3 +30,12 @@ await axios.post(process.env.REACT_APP_API+'/change-role',value,
         authtoken,
     }
 });
+
+export const changeEnable = async(authtoken ,data) => {
+    return await axios.post(process.env.REACT_APP_API+"/change_enable", data, 
+    {
+        headers: {
+            authtoken,
+        }
+    });
+}

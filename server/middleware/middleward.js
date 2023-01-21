@@ -11,7 +11,7 @@ exports.checkUser = (req,res,next) =>{
         const decoded = jwt.verify(token,"jwtSecret")
         
 
-        console.log("Middleware: ",decoded)
+        // console.log("Middleware: ",decoded)
         req.user = decoded.user
         next()
     }catch(err){

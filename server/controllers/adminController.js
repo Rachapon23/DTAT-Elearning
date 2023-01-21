@@ -54,3 +54,19 @@ exports.ChangeRole = async (req, res) => {
     }
 };
 
+exports.changeEnable = async (req, res) => {
+    try {
+        const data = req.body
+        const status = data.enabled !== true
+        const user = await User.findOneAndUpdate(
+            {_id: data.id},
+            {enabled: status}
+        ).select("-password")
+
+        res.send(user);
+    }
+    catch(err) {
+        console.log(err);
+        res.status(500).send("Server Error!!! on change enanbled");
+    }
+}

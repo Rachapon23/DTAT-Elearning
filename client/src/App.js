@@ -30,6 +30,7 @@ import CoursesPageStudent from "./component/page/student page/CoursesPageStudent
 import CreateCoursePageTeacher from "./component/page/teacher page/CreateCoursePageTeacher";
 import CoursePageStudent from "./component/page/student page/CoursePageStudent";
 import EditCoursePageTeacher from "./component/page/teacher page/EditCoursePageTeacher";
+import CalendarPageTeacher from "./component/page/teacher page/CalendarPageTeacher";
 
 
 
@@ -62,8 +63,10 @@ function App() {
         <Route path="/create_course_teacher" element={<CreateCoursePageTeacher />} />
         <Route path="/edit_course_teacher/:id" element={<EditCoursePageTeacher />} />
 
- <Route path="/teacher/score" element={<Score />} />
- <Route path="/teacher/score/:params" element={<ScoreDetail />} />
+        <Route path="/teacher/score" element={<Score />} />
+        <Route path="/teacher/score/:params" element={<ScoreDetail />} />
+
+        <Route path="/teacher/calendar" element={<CalendarPageTeacher />} />
 
         {/* student */}
         <Route path="/homestudent" element={<HomePageStudent />} />

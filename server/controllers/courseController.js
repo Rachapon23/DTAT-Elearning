@@ -99,8 +99,11 @@ exports.addCourse = async (req, res) => {
         let user = await User.findOne({ _id: id_user }).exec()
         user.course.push(id)
         const  user_push = user.course
-    
-console.log(courseSearch.password)
+
+
+        console.log(courseSearch)
+        console.log(courseSearch.password)
+
         if(password == courseSearch.password){
             console.log('math')
             const user_update = await User.findByIdAndUpdate(
