@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const User = require('../models/userModel')
 
 exports.checkUser = (req,res,next) =>{
     try{
@@ -23,7 +24,7 @@ exports.checkTeacher = async(req,res,next) =>{
     try{
         const {user_id} = req.user
         const teacherUser = await User.findOne({_id:user_id}).exec()
-        
+        // console.log(teacherUser)
        if(teacherUser.role == 'teacher' ||
        teacherUser.role == 'admin'
         ){

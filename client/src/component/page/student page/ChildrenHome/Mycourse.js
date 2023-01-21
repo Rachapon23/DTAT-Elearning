@@ -1,10 +1,13 @@
 import React from 'react'
 import { deleteMyCourse } from '../../../../function/funcFromStudent'
 import Swal from 'sweetalert2'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 
 
 const Mycourse = ({ data, loadMycourse }) => {
+
+  const navigate = useNavigate()
 
   const handleRemove = (id) => {
     Swal.fire({
@@ -34,6 +37,10 @@ const Mycourse = ({ data, loadMycourse }) => {
 
 
   }
+  const nextToCourse = (params) =>{
+console.log(params)
+navigate('/course_student/'+params)
+  }
 
   return (
     <div>
@@ -50,7 +57,9 @@ const Mycourse = ({ data, loadMycourse }) => {
                     <p className="card-text">รหัสวิชา : {item.course_number}</p>
                     <p className="card-text">รายละเอียด : {item.description}</p>
                     <div className='d-flex justify-content-between'>
-                      <a href="#" className="btn btn-success btn-sm">เข้าเรียน</a>
+                      <button className="btn btn-success btn-sm"
+                      onClick={()=>nextToCourse(item._id)}
+                      >เข้าเรียน</button>
                       <button className="btn btn-danger btn-sm"
                         onClick={() => handleRemove(item._id)}>ลบ</button>
                     </div>
