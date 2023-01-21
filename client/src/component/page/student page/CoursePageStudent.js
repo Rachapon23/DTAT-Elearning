@@ -9,12 +9,14 @@ import { Link } from "react-router-dom";
 const CoursePageStudent = () => {
     const course_id = useParams();
     const [course, setCourse] = useState("");
+    const [topic, setTopic] = useState();
 
     const fetchCourse = () => {
         getCourse(course_id)
         .then((response) => {
             console.log(response)
             setCourse(response.data)
+            setTopic(response.data.topic)
         })
         .catch((err) => {
             console.log(err)
@@ -28,17 +30,19 @@ const CoursePageStudent = () => {
 
     useEffect(() => {
         fetchCourse()
+        // console.log("5")
     }, []);
 
-    
+    // console.log(topic)
     return (
         <div>
             <NavStudent/>
-            {JSON.stringify(course_id)}
+            <div className="container ">
+            {/* {JSON.stringify(course_id)} */}
             {course &&
                 
                 
-                <div className="container p-5 border border-primary">
+                <div className="p-5 border border-primary mt-5">
                     <div className="row">
                         <div className="col-11">
                             <h1>{course.name}</h1>
@@ -54,9 +58,24 @@ const CoursePageStudent = () => {
                                 <div/>
                             )
                         }
-                    </div>   
+                    </div>  
+                   
                 </div> 
             }
+             <div>
+                        {topic && topic.map((item,index)=>(
+                            <div key={index} className="p-5 border border-primary mt-3">
+                                <h1 className="">{item.name}</h1>
+                                <p>{item.description}</p>
+                                {item.materials.map((mtem,mdex)=>(
+                                    <p key={mdex}>
+                                        {mtem}
+                                    </p>
+                                ))}
+                            </div>
+                        ))}
+                        </div> 
+            </div>
         </div>
     );
 }

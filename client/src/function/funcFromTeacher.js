@@ -11,6 +11,7 @@ export const createQuiz  = async(authtoken,value) =>
         authtoken,
     }
 });
+
 export const createQusetion  = async(authtoken,params,value) => 
     await axios.put(process.env.REACT_APP_API+'/quiz/createqusetion/'+params,{value},
     {
@@ -28,6 +29,13 @@ export const createExaminer = async(authtoken,params,value) =>
 
 export const listQuizby  = async(authtoken,params) => 
     await axios.get(process.env.REACT_APP_API+'/quiz/listquizby/'+params,
+    {
+    headers:{
+        authtoken,
+    }
+});
+export const listquizUser  = async(authtoken,{params}) => 
+    await axios.get(process.env.REACT_APP_API+'/quiz/listquizuser/'+params,
     {
     headers:{
         authtoken,
@@ -63,3 +71,10 @@ export const getStudentby  = async(authtoken,{params}) =>
 //         authtoken,
 //     }
 // });
+export const CreateTopic  = async(authtoken,courseTopics) => 
+    await axios.post(process.env.REACT_APP_API+'/create_course_topic',courseTopics,
+    {
+    headers:{
+        authtoken,
+    }
+});

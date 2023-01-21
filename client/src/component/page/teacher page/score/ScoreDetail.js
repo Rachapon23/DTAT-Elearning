@@ -2,7 +2,7 @@ import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from "react";
-import { getStudentby } from '../../../../function/funcFromTeacher'
+import { getStudentby,listquizUser } from '../../../../function/funcFromTeacher'
 const ScoreDetail = () => {
     const params = useParams()
 
@@ -10,6 +10,7 @@ const ScoreDetail = () => {
 
     const [data, setData] = useState([])
     const [dataCourse, setDataCourse] = useState([])
+    const [dataScore, setDataScore] = useState([])
     // const Navigate = useNavigate()
 
     useEffect(() => {
@@ -25,6 +26,16 @@ const ScoreDetail = () => {
                 console.log(res)
                 setData(res.data)
                 setDataCourse(res.data.course)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            listquizUser(sessionStorage.getItem("token"), params)
+            .then(res => {
+
+                console.log(res)
+                setDataScore(res.data)
+              
             })
             .catch(err => {
                 console.log(err)
@@ -57,7 +68,7 @@ const ScoreDetail = () => {
                     </div>
                 </div>
                <div>
-               <label className='form-label mt-4'></label>
+               <label className='form-label mt-4'>คอร์สที่เรียน</label>
                 <table className="table ">
                     <thead>
                         <tr>
@@ -90,16 +101,20 @@ const ScoreDetail = () => {
                             <th scope="col">ลำดับ</th>
                             <th scope="col">รหัสวิชา</th>
                             <th scope="col">ชื่อวิชา</th>
+                            <th scope="col">ชื่อการสอบ</th>
+                            <th scope="col">คะแนน</th>
                            
                 
                         </tr>
                     </thead>
                     <tbody>
-                        {dataCourse && dataCourse.map((item, index) =>
+                        {dataScore && dataScore.map((item, index) =>
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
-                                <td>{item.course_number}</td>
-                                <td>{item.description}</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>{item.quiz.title}</td>
+                                <td className='text-center'>{item.score} / {item.quiz.question_data.length}</td>
                                
                             </tr>
                         )}

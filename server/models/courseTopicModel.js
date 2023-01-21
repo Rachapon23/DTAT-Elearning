@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const {ObjectId} = mongoose.Schema;
 
-const UserSchema = new mongoose.Schema({
+const TopicSchema = new mongoose.Schema({
 
     name: {
         type: String,
@@ -9,13 +10,18 @@ const UserSchema = new mongoose.Schema({
     description:{
         type:String,
     },
-    material: {
-        type: [String],
+    materials: {
+        type: Array,
     },
-    enabled:{
-        type:Boolean,
-        default: true,
+    course:{
+        type:ObjectId,
+        
+    },
+    quiz:{
+        type:ObjectId,
+        ref:"quiz"
+        
     },
 }, {timestamps: true});
 
-module.exports = User = mongoose.model("topic",UserSchema);
+module.exports = Topic = mongoose.model("topic",TopicSchema);
