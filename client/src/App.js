@@ -54,10 +54,10 @@ function App() {
         {/* teacher */}
         <Route path="/hometeacher" element={<HomePageTeacher />} />
 
-        <Route path="/teacher/quiz" element={<TeacherQuiz />} />
-        <Route path="/teacher/test" element={<Test />} />
-        <Route path="/teacher/test/:params" element={<Dotest />} />
-        <Route path="/teacher/quiz/:params" element={<Question />} />
+        <Route path="/teacher/create_quiz" element={<TeacherQuiz />} />
+        <Route path="/teacher/list_quiz" element={<Test />} /> {/*belong to student*/}
+        <Route path="/teacher/test/:params" element={<Dotest />} /> {/**/}
+        <Route path="/teacher/quiz/:params" element={<Question />} /> {/*add new question*/}
         <Route path="/teacher/quizdetail/:params" element={<QuizDetail />} />
        
         <Route path="/hometeacher/quiz" element={<TeacherQuiz />} />

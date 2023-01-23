@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import "./course.css"
 import { CreateTopic,listQuiz, } from "../../../function/funcFromTeacher";
 
+
 const EditCoursePageTeacher = () => {
     const course_id = useParams();
     const [course, setCourse] = useState("");
@@ -248,8 +249,9 @@ const EditCoursePageTeacher = () => {
                     </div>
                     {/* <div className=" my-4 fixed-bottom d-flex justify-content-center"> */}
                     <div className="d-grid p-5">
-                        <button className="btn btn-success"
+                        <button className="btn" id="back"
                             onClick={createCourseTopic}
+                            
                         >save</button>
                     </div>
                     {/* </div> */}
