@@ -39,7 +39,7 @@ const Mycourse = ({ data, loadMycourse }) => {
   }
   const nextToCourse = (params) =>{
 console.log(params)
-navigate('/course_student/'+params)
+navigate('/student/get-course/'+params)
   }
 
   return (
