@@ -30,7 +30,7 @@ const CoursePageStudent = () => {
 
     useEffect(() => {
         fetchCourse()
-        // console.log("5")
+        console.log(topic)
     }, []);
 
     // console.log(topic)
@@ -72,6 +72,7 @@ const CoursePageStudent = () => {
                                         {mtem}
                                     </p>
                                 ))}
+                                 <a href={`/teacher/test/${item.quiz._id}`}>{item.quiz.title}</a>
                             </div>
                         ))}
                         </div> 
