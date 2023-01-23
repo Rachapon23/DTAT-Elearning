@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { createCourse, getCurrentTeacher } from "../../../function/funcFromTeacher";
-import NavTeacher from "../../layout/NavTeacher";
+import { createCourse, getCurrentTeacher } from "../../../../function/funcFromTeacher";
+import NavTeacher from "../../../layout/NavTeacher";
 import Swal from "sweetalert2";
 
 const CreateCoursePageTeacher = () => {

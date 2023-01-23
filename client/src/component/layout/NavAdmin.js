@@ -20,17 +20,17 @@ const NavAdmin = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/homeadmin" className="text-danger">
+        <Navbar.Brand href="/admin/home" className="text-danger">
           Denso elearning Admin
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/homeadmin">หน้าแรก</Nav.Link>
-            <Nav.Link href="/homeadmin/listalluser">สมาชิกทั้งหมด</Nav.Link>
-            <Nav.Link href="/homeadmin">จัดการแอดมิน</Nav.Link>
-            <Nav.Link href="/homeadmin/listteacheruser">จัดการผู้สอน</Nav.Link>
-            <Nav.Link href="/homeadmin/lisstudentuser">จัดการผู้เรียน</Nav.Link>
+            <Nav.Link href="/admin/home">หน้าแรก</Nav.Link>
+            <Nav.Link href="/admin/list-users">สมาชิกทั้งหมด</Nav.Link>
+            {/* <Nav.Link href="/homeadmin">จัดการแอดมิน</Nav.Link> */}
+            <Nav.Link href="/admin/list-teachers">จัดการผู้สอน</Nav.Link>
+            <Nav.Link href="/admin/list-students">จัดการผู้เรียน</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">

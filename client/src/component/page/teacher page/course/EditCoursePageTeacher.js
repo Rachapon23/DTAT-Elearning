@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavStudent from "../../layout/NavStudent";
-import { getCourse } from "../../../function/funcFromStudent";
+import NavStudent from "../../../layout/NavStudent";
+import { getCourse } from "../../../../function/funcFromStudent";
 import Swal from "sweetalert2";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./course.css"
-import { CreateTopic,listQuiz, } from "../../../function/funcFromTeacher";
+import { CreateTopic,listQuiz, } from "../../../../function/funcFromTeacher";
 
 const EditCoursePageTeacher = () => {
     const course_id = useParams();
@@ -152,6 +152,7 @@ const EditCoursePageTeacher = () => {
                                         {mtem}
                                     </p>
                                 ))}
+                                 <a href="">{item.quiz.title}</a>
                             </div>
                         ))}
                     </div>

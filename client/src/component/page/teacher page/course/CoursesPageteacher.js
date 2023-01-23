@@ -1,12 +1,11 @@
-import NavStudent from "../../layout/NavStudent"
+import React from 'react'
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import {listCourses} from "../../../function/funcFromStudent";
+import {listCourses} from "../../../../function/funcFromStudent";
+import NavTeacher from "../../../layout/NavTeacher";
 
-
-const CoursePageStudent = () => {
-
+const CoursesPageteacher = () => {
     const [courses, setCourses] = useState([]);
 
     const fetchData = () => {
@@ -31,14 +30,14 @@ const CoursePageStudent = () => {
 
     return (
         <div>
-            <NavStudent/>
+            <NavTeacher />
             {/* {JSON.stringify(courses)} */}
             <div className="container p-5">
                 {
                     courses.map((course, index) => (
                         <div className="row" key={index}>
                             <div className="col pt-3 pb-2">
-                                <Link to={`/student/get-course/${course._id}`}><h2>{course.name}</h2></Link>
+                                <Link to={`/teacher/get-course/${course._id}`}><h2>{course.name}</h2></Link>
                                 <p>{course.description}</p>
                                 <p className="text-muted">ผู้สอน {course.teacher.firstname}</p>
                             </div>
@@ -50,4 +49,4 @@ const CoursePageStudent = () => {
     )
 }
 
-export default CoursePageStudent;
+export default CoursesPageteacher

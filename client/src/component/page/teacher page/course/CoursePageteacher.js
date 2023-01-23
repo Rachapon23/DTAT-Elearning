@@ -1,12 +1,12 @@
+import React from 'react'
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavStudent from "../../layout/NavStudent";
-import { getCourse } from "../../../function/funcFromStudent";
+import NavTeacher from "../../../layout/NavTeacher";
+import { getCourse } from "../../../../function/funcFromStudent";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-
-const CoursePageStudent = () => {
+const CoursePageteacher = () => {
     const course_id = useParams();
     const [course, setCourse] = useState("");
     const [topic, setTopic] = useState();
@@ -36,7 +36,7 @@ const CoursePageStudent = () => {
     // console.log(topic)
     return (
         <div>
-            <NavStudent/>
+             <NavTeacher />
             <div className="container ">
             {/* {JSON.stringify(course_id)} */}
             {course &&
@@ -52,7 +52,7 @@ const CoursePageStudent = () => {
                         {
                             sessionStorage.getItem("user_id") === course.teacher._id ? (
                                 <div className="col-1 pt-4">
-                                    <Link to={`/edit_course_teacher/${course._id}`}><button type="button" className="btn btn-primary btn-lg"> Edit </button></Link>
+                                    <Link to={`/teacher/edit-course/${course._id}`}><button type="button" className="btn btn-primary btn-lg"> Edit </button></Link>
                                 </div>
                             ): (
                                 <div/>
@@ -72,7 +72,7 @@ const CoursePageStudent = () => {
                                         {mtem}
                                     </p>
                                 ))}
-                                 <a href={`/student/test/${item.quiz._id}`}>{item.quiz.title}</a>
+                                 <a href="">{item.quiz.title}</a>
                             </div>
                         ))}
                         </div> 
@@ -81,4 +81,4 @@ const CoursePageStudent = () => {
     );
 }
 
-export default CoursePageStudent;
+export default CoursePageteacher

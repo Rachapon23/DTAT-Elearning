@@ -36,11 +36,11 @@ const Login = () => {
   //ไปที่ page ตาม role
   const roleBaseRedirect = (role) => {
     if (role === "admin") {
-      navigate("/homeadmin");
+      navigate("/admin/home");
     } else if (role === "teacher") {
-      navigate("/hometeacher");
+      navigate("/teacher/home");
     } else {
-      navigate("/homestudent");
+      navigate("/student/home");
     }
   };
 
