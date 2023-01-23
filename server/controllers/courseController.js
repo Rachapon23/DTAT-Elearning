@@ -70,10 +70,25 @@ exports.getCourse = async (req, res) => {
     const { id } = req.body
 console.log("ID : ",id)
     try {
-        await Courses.findOne({ _id: id }).populate("teacher topic", "-password").exec((err, course) => {
-            console.log(course)
-            res.json(course);
-        })
+        const course = await Courses.findOne({ _id: id })
+        .populate({
+                path:'topic',
+                populate:[
+                    {
+                        path:"quiz",
+                        model:"quiz"
+                    }
+                ]
+        },
+       ).populate("teacher")
+        // .exec()
+        // .populate('quiz')
+        // .exec((err, course) => {
+        //     console.log(course)
+        //     res.json(course);
+        // })
+        // console.log(course)
+        res.send(course)
     }
     catch (err) {
 

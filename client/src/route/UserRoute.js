@@ -1,18 +1,9 @@
 import React from "react";
-import Redirec from "./Redirec";
-import {  useSelector } from "react-redux";
+import { Outlet, Navigate } from "react-router-dom";
 
-const UserRoute = ({children}) => {
-
-
-    const {user} = useSelector((state)=>({...state}))
-    console.log(user)
-
-    return user 
-    ? children
-    : <Redirec/> 
+const UserRoute = () => {
+    return sessionStorage.getItem("token") ? <Outlet/> : <Navigate to="/"/> 
   
-
 }
 
 export default UserRoute
