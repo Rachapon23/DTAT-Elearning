@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { createCourse, getCurrentTeacher } from "../../../../function/funcFromTeacher";
 import NavTeacher from "../../../layout/NavTeacher";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const CreateCoursePageTeacher = () => {
 
+    const navigate = useNavigate()
     const [value, setValue] = useState({
         course_number:"",
         name: "",
@@ -15,19 +17,21 @@ const CreateCoursePageTeacher = () => {
 
     const handleChange = (e) => {
         setValue({ ...value, [e.target.name]: e.target.value });
-        console.log(value)
+        // console.log(value)
     };
 
     const submit = (e) => {
         e.preventDefault();
         createCourse(value)
         .then(res => {
+            console.log(res)
             Swal.fire(
                 'Create Success',
                 'Create Success',
                 'success'
               )
-              window.location.reload(false);
+            //   window.location.reload(false);
+            navigate('/teacher/edit-course/'+res.data._id)
         })
         
         .catch(err => {
