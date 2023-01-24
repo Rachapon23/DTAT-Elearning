@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavStudent from "../../../layout/NavStudent";
+// import NavStudent from "../../../layout/NavStudent";
 import { getCourse } from "../../../../function/funcFromStudent";
 import Swal from "sweetalert2";
 import ReactQuill from 'react-quill';
@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import "./course.css"
 import { CreateTopic, listQuiz, UpdateTopic} from "../../../../function/funcFromTeacher";
 import EditToppic from "./EditToppic";
+import NavTeacher from "../../../layout/NavTeacher";
 
 const EditCoursePageTeacher = () => {
     const course_id = useParams();
@@ -79,7 +80,7 @@ const EditCoursePageTeacher = () => {
     const fetchCourse = () => {
         getCourse(course_id)
             .then((response) => {
-                // console.log(response)
+                console.log(response)
                 setCourse(response.data)
                 setTopic(response.data.topic)
             })
@@ -95,14 +96,8 @@ const EditCoursePageTeacher = () => {
 
     const createCourseTopic = () => {
         
-        // CreateTopic(sessionStorage.getItem('token'), courseTopics)
-        //     .then(res => {
-        //         console.log(res)
-        //         window.location.reload(false);
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
-        // console.log(topic)
+      //quiz ห้ามว่าง create
+        console.log(courseTopics.length)
         UpdateTopic(sessionStorage.getItem('token'), topic)
             .then(res => {
                 console.log(res)
@@ -110,6 +105,16 @@ const EditCoursePageTeacher = () => {
             }).catch(err => {
                 console.log(err)
             })
+
+            if(courseTopics.length !=0 ){
+            CreateTopic(sessionStorage.getItem('token'), courseTopics)
+            .then(res => {
+                console.log(res)
+                window.location.reload(false);
+            }).catch(err => {
+                console.log(err)
+            })
+            }
     }
 
     // const handleAddQuiz = (index) => {
@@ -126,7 +131,7 @@ const EditCoursePageTeacher = () => {
 
     return (
         <div>
-            <NavStudent />
+            <NavTeacher />
             {course &&
                 <div className="container ">
                     <div className="p-5 border border-primary my-3">
