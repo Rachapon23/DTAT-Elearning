@@ -27,7 +27,7 @@ const EditCoursePageTeacher = () => {
     const handleAddCourseTopics = () => {
         setCourseTopics([...courseTopics, {
             name: "<h1> </h1>",
-            description: "<h3> </h3>",
+            description: "",
             materials: [],
             quiz: {},
             course: id
