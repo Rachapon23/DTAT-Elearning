@@ -34,7 +34,7 @@ exports.UpdateTopic = async (req, res) => {
     try {
         const topic = req.body
 
-        console.log(topic[1].name)
+        // console.log(topic[1].name)
 
         // const create = await CourseTopics.aggregate({$replaceWith:topic}).exec()
 

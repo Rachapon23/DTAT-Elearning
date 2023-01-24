@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
+import  './Nav.css'
 import { useNavigate } from "react-router-dom";
 
 const NavAdmin = () => {
@@ -18,9 +18,9 @@ const NavAdmin = () => {
       };
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar id="navBack" expand="lg">
       <Container>
-        <Navbar.Brand href="/admin/home" className="text-danger">
+        <Navbar.Brand href="/admin/home" className="text-white">
           Denso elearning Admin
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
