@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { Searchcourse, Addchcourse } from '../../../../function/funcFromStudent'
 import Swal from 'sweetalert2'
+import '../student.css'
 
 const Search = ({ loadMycourse }) => {
 
@@ -75,13 +76,13 @@ const Search = ({ loadMycourse }) => {
 
     return (
         <div>
-            <div className="row mt-5">
-                <div className="col-md-4">
-                    <label className="form-label">ค้นหาคอร์สเรียน</label>
+            <div className="row">
+                <div className="col-md-8">
+                 
                     <div className="input-group">
                         <input type="text" name='query' className="form-control" onChange={handleChange} />
                         <button onClick={handleSubmit}
-                            className="btn btn-outline-secondary" type="button">ค้นหา</button>
+                            className="btn" id='search' type="button"><i className="bi bi-search"></i></button>
                     </div>
                 </div>
             </div>

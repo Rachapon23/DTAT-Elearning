@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
+import  './Nav.css'
 import { useNavigate } from "react-router-dom";
 
 const NavTeacher = () => {
@@ -19,9 +19,9 @@ const NavTeacher = () => {
   };
   // console.log(user.firstname)
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar id="navBack" expand="lg">
       <Container>
-        <Navbar.Brand href="/teacher/home" className="text-danger">
+        <Navbar.Brand href="/teacher/home" className="text-white">
           Denso elearning Teacher
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

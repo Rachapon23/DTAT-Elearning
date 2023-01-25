@@ -44,22 +44,25 @@ navigate('/student/get-course/'+params)
 
   return (
     <div>
-      <div className="row mt-5">
+      <div className="row">
+
         <div className="col-md-12">
-          <label className="form-label">คอร์สเรียนของฉัน</label>
           <div className="row">
             {data && data.map((item, index) =>
               <div className="col-md-3" key={index}>
-                <div className="card" style={{ width: "18rem" }}>
+                <div className="card mt-3"  onClick={()=>nextToCourse(item._id)}
+                //  style={{ width: "20rem" }}
+                 >
                   <img src="https://cdn.pixabay.com/photo/2015/11/15/07/47/geometry-1044090_960_720.jpg" className="card-img-top" alt="..." />
                   <div className="card-body">
                     <h5 className="card-title">{item.name}</h5>
                     <p className="card-text">รหัสวิชา : {item.course_number}</p>
-                    <p className="card-text">รายละเอียด : {item.description}</p>
+                   
                     <div className='d-flex justify-content-between'>
-                      <button className="btn btn-success btn-sm"
+                      {/* <button className="btn btn-success btn-sm"
                       onClick={()=>nextToCourse(item._id)}
-                      >เข้าเรียน</button>
+                      >เข้าเรียน</button> */} 
+                      <p className="card-text">รายละเอียด : {item.description}</p>
                       <button className="btn btn-danger btn-sm"
                         onClick={() => handleRemove(item._id)}>ลบ</button>
                     </div>

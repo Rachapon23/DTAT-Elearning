@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavStudent from "../../../layout/NavStudent";
+// import NavStudent from "../../../layout/NavStudent";
 import { getCourse } from "../../../../function/funcFromStudent";
 import Swal from "sweetalert2";
 import ReactQuill from 'react-quill';
@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import "./course.css"
 import { CreateTopic, listQuiz, UpdateTopic} from "../../../../function/funcFromTeacher";
 import EditToppic from "./EditToppic";
+import NavTeacher from "../../../layout/NavTeacher";
 
 
 const EditCoursePageTeacher = () => {
@@ -27,7 +28,7 @@ const EditCoursePageTeacher = () => {
     const handleAddCourseTopics = () => {
         setCourseTopics([...courseTopics, {
             name: "<h1> </h1>",
-            description: "<h3> </h3>",
+            description: "",
             materials: [],
             quiz: "63cf8323cc09a371b149c3d6",
             course: id
@@ -81,7 +82,7 @@ const EditCoursePageTeacher = () => {
     const fetchCourse = () => {
         getCourse(course_id)
             .then((response) => {
-                // console.log(response)
+                console.log(response)
                 setCourse(response.data)
                 setTopic(response.data.topic)
             })
@@ -96,22 +97,27 @@ const EditCoursePageTeacher = () => {
     }
 
     const createCourseTopic = () => {
-        console.log(courseTopics)
-        CreateTopic(sessionStorage.getItem('token'), courseTopics)
+        
+      //quiz ห้ามว่าง create
+        console.log(courseTopics.length)
+        UpdateTopic(sessionStorage.getItem('token'), topic)
             .then(res => {
                 console.log(res)
                 window.location.reload(false);
             }).catch(err => {
                 console.log(err)
             })
-        console.log(topic)
-        // UpdateTopic(sessionStorage.getItem('token'), topic)
-        //     .then(res => {
-        //         console.log(res)
-        //         // window.location.reload(false);
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
+
+            if(courseTopics.length !=0 ){
+            CreateTopic(sessionStorage.getItem('token'), courseTopics)
+            .then(res => {
+                console.log(res)
+                window.location.reload(false);
+            }).catch(err => {
+                console.log(err)
+            })
+            }
+
     }
 
     // const handleAddQuiz = (index) => {
@@ -128,7 +134,7 @@ const EditCoursePageTeacher = () => {
 
     return (
         <div>
-            <NavStudent />
+            <NavTeacher />
             {course &&
                 <div className="container ">
                     <div className="p-5 border border-primary my-3">
