@@ -65,17 +65,14 @@ const CreateCoursePageTeacher = () => {
                 <div className="mb-3">
                     <label className="form-label">Course Number</label>
                     <input type="text" className="form-control" name="course_number" onChange={handleChange}/>
-                    {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Course Password</label>
                     <input type="text" className="form-control" name="password" onChange={handleChange}/>
-                    {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Course Name</label>
                     <input type="text" className="form-control" name="name" onChange={handleChange}/>
-                    {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Course Description</label>

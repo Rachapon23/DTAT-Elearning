@@ -10,6 +10,7 @@ import { CreateTopic, listQuiz, UpdateTopic} from "../../../../function/funcFrom
 import EditToppic from "./EditToppic";
 import NavTeacher from "../../../layout/NavTeacher";
 
+
 const EditCoursePageTeacher = () => {
     const course_id = useParams();
     const [course, setCourse] = useState("");
@@ -29,7 +30,7 @@ const EditCoursePageTeacher = () => {
             name: "<h1> </h1>",
             description: "",
             materials: [],
-            quiz: {},
+            quiz: "63cf8323cc09a371b149c3d6",
             course: id
         }])
     }
@@ -74,6 +75,7 @@ const EditCoursePageTeacher = () => {
         courseTopics[index].description = e
     };
     const handleMaterial = (e, index, m_index) => {
+        console.log(e.target.value)
         courseTopics[index].materials[m_index] = e.target.value
     };
 
@@ -101,7 +103,7 @@ const EditCoursePageTeacher = () => {
         UpdateTopic(sessionStorage.getItem('token'), topic)
             .then(res => {
                 console.log(res)
-                // window.location.reload(false);
+                window.location.reload(false);
             }).catch(err => {
                 console.log(err)
             })
@@ -115,6 +117,7 @@ const EditCoursePageTeacher = () => {
                 console.log(err)
             })
             }
+
     }
 
     // const handleAddQuiz = (index) => {
@@ -255,8 +258,9 @@ const EditCoursePageTeacher = () => {
                     </div>
                     {/* <div className=" my-4 fixed-bottom d-flex justify-content-center"> */}
                     <div className="d-grid p-5">
-                        <button className="btn btn-success"
+                        <button className="btn" id="back"
                             onClick={createCourseTopic}
+                            
                         >save</button>
                     </div>
                     {/* </div> */}

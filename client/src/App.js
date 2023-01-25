@@ -40,7 +40,6 @@ import UserRoute from "./route/UserRoute";
 
 function App() {
 
-
   return (
     <div>
       <Routes>
@@ -56,7 +55,6 @@ function App() {
 
         {/* teacher */}
         <Route path="/teacher/home" element={<HomePageTeacher />} />
-
         <Route path="/teacher/create-quiz" element={<TeacherQuiz />} />
         <Route path="/teacher/create-quiz/create-question/:params" element={<Question />} />
         <Route path="/teacher/detail-quiz/:params" element={<QuizDetail />} />
@@ -65,7 +63,6 @@ function App() {
         <Route path="/teacher/list-courses" element={<CoursesPageteacher />} />
         <Route path="/teacher/edit-course/:id" element={<EditCoursePageTeacher />} />
         <Route path="/teacher/get-course/:id" element={<CoursePageteacher />} />
-
 
         <Route path="/teacher/list-score" element={<Score />} />
         <Route path="/teacher/get-score/:params" element={<ScoreDetail />} />

@@ -19,9 +19,9 @@ const TopicSchema = new mongoose.Schema({
     },
     quiz:{
         type:ObjectId,
-        ref:"quiz"
+        ref:"quiz",
         
     },
-}, {timestamps: true});
+}, {timestamps: true, minimize: false});
 
 module.exports = Topic = mongoose.model("topic",TopicSchema);
