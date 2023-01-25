@@ -5,7 +5,7 @@ exports.createCourseTopic = async (req, res) => {
     try {
         const couseTopic = req.body
 
-        console.log(couseTopic)
+        // console.log(couseTopic)
         const create = await CourseTopics.insertMany(couseTopic)
 
         let course_be = await Courses.findOne({ _id: couseTopic[0].course }).exec()
@@ -22,13 +22,14 @@ exports.createCourseTopic = async (req, res) => {
             { _id: couseTopic[0].course },
             { topic: course_be.topic }
         )
-        res.send("course_af")
+        res.send(course_af)
 
     }
     catch (err) {
         console.log("fail to create the course  topic: ", err);
         res.status(500).json({ error: "fail to create the course topic" })
     }
+    
 }
 exports.UpdateTopic = async (req, res) => {
     try {

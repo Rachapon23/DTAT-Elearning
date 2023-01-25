@@ -62,14 +62,14 @@ const HomePageStudent = () => {
               <label className="form-label mb-3">Add a new course for teacher</label>
               <div className="d-flex justify-content-center">
                 
-                <img src="https://elearning2.sut.ac.th/pluginfile.php/7319498/block_html/content/createnewcourse64.png?time=1617337458174"
-                 alt="" />
+                <img src="https://cdn-icons-png.flaticon.com/512/2659/2659360.png"
+              alt="" style={{ width: "12rem" }}/>
               </div>
             </div>
             <div className="bg-white p-4 border mt-3">
               <label className="form-label mb-3">Reset course for teacher</label>
               <div className="d-flex justify-content-center">
-                <img src="https://elearning2.sut.ac.th/pluginfile.php/7319501/block_html/content/resetCourse_btn2.png"
+                <img src="https://cdn-icons-png.flaticon.com/512/7875/7875442.png"
                  alt="" style={{ width: "12rem" }}/>
               </div>
               <p className='mt-3'>

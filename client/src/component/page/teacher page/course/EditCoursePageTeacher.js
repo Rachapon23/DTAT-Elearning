@@ -6,9 +6,11 @@ import Swal from "sweetalert2";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./course.css"
-import { CreateTopic, listQuiz, UpdateTopic} from "../../../../function/funcFromTeacher";
+import { CreateTopic, listQuiz, UpdateTopic } from "../../../../function/funcFromTeacher";
 import EditToppic from "./EditToppic";
 import NavTeacher from "../../../layout/NavTeacher";
+import Topic from "./Topic";
+
 
 const EditCoursePageTeacher = () => {
     const course_id = useParams();
@@ -23,46 +25,35 @@ const EditCoursePageTeacher = () => {
     const [topic, setTopic] = useState();
     const [dataQuiz, setDataQuiz] = useState([])
 
+    const [content, setContent] = useState({
+        type: "",
+        content: ""
+    })
 
     const handleAddCourseTopics = () => {
         setCourseTopics([...courseTopics, {
-            name: "<h1> </h1>",
+            name: "",
             description: "",
             materials: [],
-            quiz: {},
             course: id
         }])
     }
 
     const loadData = () => {
-        // setLoading(true)
         listQuiz(sessionStorage.getItem("token"))
             .then(res => {
-                // console.log(res)
                 setDataQuiz(res.data)
-                // setLoading(false)
             })
             .catch(err => {
                 console.log(err)
-                // setLoading(false)
             })
     }
 
-    const handleAddMaterial = (t_index) => {
-        // console.log(courseTopics[t_index].materials[])
-        courseTopics[t_index].materials.push("")
-        setMaterials([...materials])
-    }
 
-    const handleDeleteMaterial = (t_index, m_index) => {
-        // console.log(index)
-        courseTopics[t_index].materials.splice(m_index, 1)
-        setMaterials([...materials])
-        // console.log(materials)
-    }
     const handleDeleteTopic = (index) => {
         courseTopics.splice(index, 1)
-        setMaterials([...materials])
+        setCourseTopics([...courseTopics])
+        // setMaterials([...materials])
 
     }
 
@@ -73,9 +64,10 @@ const EditCoursePageTeacher = () => {
     const handleTopicDescriptionChange = (e, index) => {
         courseTopics[index].description = e
     };
-    const handleMaterial = (e, index, m_index) => {
-        courseTopics[index].materials[m_index] = e.target.value
+    const handleshowTopic = () => {
+        console.log(courseTopics)
     };
+
 
     const fetchCourse = () => {
         getCourse(course_id)
@@ -95,8 +87,8 @@ const EditCoursePageTeacher = () => {
     }
 
     const createCourseTopic = () => {
-        
-      //quiz ห้ามว่าง create
+
+        //quiz ห้ามว่าง create
         console.log(courseTopics.length)
         UpdateTopic(sessionStorage.getItem('token'), topic)
             .then(res => {
@@ -106,24 +98,19 @@ const EditCoursePageTeacher = () => {
                 console.log(err)
             })
 
-            if(courseTopics.length !=0 ){
+        if (courseTopics.length != 0) {
             CreateTopic(sessionStorage.getItem('token'), courseTopics)
-            .then(res => {
-                console.log(res)
-                window.location.reload(false);
-            }).catch(err => {
-                console.log(err)
-            })
-            }
+                .then(res => {
+                    console.log(res)
+                    window.location.reload(false);
+                }).catch(err => {
+                    console.log(err)
+                })
+        }
     }
-
-    // const handleAddQuiz = (index) => {
-    //     console.log(index)
+    // const handlechangeQuiz = (e, index,) => {
+    //     courseTopics[index].quiz = e.target.value
     // }
-    const handlechangeQuiz = (e, index,) => {
-        courseTopics[index].quiz = e.target.value
-        // console.log(e.target.value)
-    }
     useEffect(() => {
         fetchCourse()
         loadData()
@@ -159,20 +146,21 @@ const EditCoursePageTeacher = () => {
 
 
                     {topic && topic.map((item, index) => (
-                        <EditToppic key={index} item={item} setTopic={setTopic} topic={topic}  index={index}/>
+                        <EditToppic key={index} item={item} setTopic={setTopic} topic={topic} index={index} />
                     ))}
+                    <div className="p-2">
+                        <button className="btn btn-info" onClick={handleshowTopic}>Show CourseTopic</button>
+                    </div>
 
                     {
                         courseTopics && (
                             courseTopics.map((topic, index) => (
                                 <div key={index} className="mb-3" >
-                                    {/* <div className="p-2">{JSON.stringify(topic)}</div> */}
                                     <div className="border border-primary">
                                         <div className="d-flex justify-content-end p-2">
                                             <button type="button" className="btn"
                                                 onClick={() => handleDeleteTopic(index)}
                                             >
-                                                {/* <h5><i class="bi bi-x-lg"></i></h5> */}
                                                 <span className="bi bi-x iconx" ></span>
                                             </button>
                                         </div>
@@ -187,52 +175,9 @@ const EditCoursePageTeacher = () => {
                                                     <ReactQuill className="" theme="snow" modules={quillToolbar} value={`${topic.description}`} onChange={(e) => handleTopicDescriptionChange(e, index)} />
                                                 </div>
                                             </div>
-                                            <div className="">
-                                                <label className="form-label">Materials </label>
-                                                {
-                                                    topic.materials.map((material, m_index) => (
-                                                        <div key={m_index}>
+                                            <Topic dataQuiz={dataQuiz} topic={topic} index={index} courseTopics={courseTopics} setMaterials={setMaterials} materials={materials}/>
+ 
 
-                                                            <div className="input-group mb-3">
-                                                                <input type="text" className="form-control"
-                                                                    onChange={(e) => handleMaterial(e, index, m_index)}
-                                                                />
-                                                                <button className="btn btn-outline-secondary "
-                                                                    onClick={() => handleDeleteMaterial(index, m_index)}>
-                                                                    <i className="bi bi-trash"></i>
-                                                                </button>
-                                                            </div>
-
-                                                        </div>
-                                                    ))
-                                                }
-
-                                            </div>
-                                            <div className="my-2">
-                                                <div className="d-flex justify-content-between ">
-                                                    <button type="button" className=" btn btn-primary btn-sm" onClick={() => handleAddMaterial(index)}>add</button>
-                                                    <button className="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
-                                                    // onClick={() => handleAddQuiz(index)}
-                                                    >add Quiz</button>
-
-                                                </div>
-                                                <div className="my-2">
-                                                    <div className="collapse" id="collapseExample">
-                                                        <div className="">
-                                                            <select
-                                                                onChange={(e) => handlechangeQuiz(e, index)}
-                                                                className="form-select" >
-                                                                <option disabled selected value="">เลือกควิชที่ต้องการ</option>
-                                                                {dataQuiz.map((item, index) => (
-                                                                    <option key={index} value={item._id}>{item.title}</option>
-                                                                ))}
-
-
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -247,19 +192,19 @@ const EditCoursePageTeacher = () => {
 
                                     onClick={handleAddCourseTopics}
                                 >
-                                    <i className="bi bi-plus-lg iconPlus"></i>
+                                    <i className="bi bi-folder-plus h5"></i>
                                 </button>
                             </div>
 
                         </div>
                     </div>
-                    {/* <div className=" my-4 fixed-bottom d-flex justify-content-center"> */}
+        
                     <div className="d-grid p-5">
                         <button className="btn btn-success"
                             onClick={createCourseTopic}
                         >save</button>
                     </div>
-                    {/* </div> */}
+    
                 </div>
             }
         </div>
@@ -267,3 +212,5 @@ const EditCoursePageTeacher = () => {
 }
 
 export default EditCoursePageTeacher;
+
+
