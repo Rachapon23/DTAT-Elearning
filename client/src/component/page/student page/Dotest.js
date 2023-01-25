@@ -1,6 +1,6 @@
 import React from 'react'
-import NavTeacher from '../../../layout/NavTeacher'
-import { listQuizby, createExaminer } from '../../../../function/funcFromTeacher'
+import NavStudent from "../../layout/NavStudent"
+import { listQuizby, createExaminer } from '../../../function/funcFromTeacher'
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Swal from 'sweetalert2'
@@ -57,7 +57,7 @@ const Dotest = () => {
 
     return (
         <div>
-            <NavTeacher />
+            <NavStudent />
             <div className="container">
                 <div className='mt-5'>
                     {dataQuiz &&

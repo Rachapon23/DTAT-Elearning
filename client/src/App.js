@@ -20,23 +20,25 @@ import Question from "./component/page/teacher page/quiz/Question";
 import QuizDetail from "./component/page/teacher page/quiz/QuizDetail";
 import Score from "./component/page/teacher page/score/Score";
 import ScoreDetail from "./component/page/teacher page/score/ScoreDetail";
-//test
-import Test from "./component/page/teacher page/test/Test";
-import Dotest from "./component/page/teacher page/test/Dotest";
+import CoursesPageteacher from "./component/page/teacher page/course/CoursesPageteacher";
+import CoursePageteacher from "./component/page/teacher page/course/CoursePageteacher";
+
+
+
 //student
 import HomePageStudent from "./component/page/student page/HomePageStudent";
+import Dotest from "./component/page/student page/Dotest";
 
 import CoursesPageStudent from "./component/page/student page/CoursesPageStudent";
-import CreateCoursePageTeacher from "./component/page/teacher page/CreateCoursePageTeacher";
+import CreateCoursePageTeacher from "./component/page/teacher page/course/CreateCoursePageTeacher";
 import CoursePageStudent from "./component/page/student page/CoursePageStudent";
-import EditCoursePageTeacher from "./component/page/teacher page/EditCoursePageTeacher";
+import EditCoursePageTeacher from "./component/page/teacher page/course/EditCoursePageTeacher";
 import CalendarPageTeacher from "./component/page/teacher page/CalendarPageTeacher";
 import UserRoute from "./route/UserRoute";
 
 
 
 function App() {
-
 
   return (
     <div>
@@ -46,35 +48,31 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* admin */}
-        <Route path="/homeadmin" element={<HomePageadmin />} />
-        <Route path="/homeadmin/listalluser" element={<AlluserFromadmin />} />
-        <Route path="/homeadmin/lisstudentuser" element={<StudentFormAdmin />} />
-        <Route path="/homeadmin/listteacheruser" element={<TeacherFromAdmin />} />
+        <Route path="/admin/home" element={<HomePageadmin />} />
+        <Route path="/admin/list-users" element={<AlluserFromadmin />} />
+        <Route path="/admin/list-students" element={<StudentFormAdmin />} />
+        <Route path="/admin/list-teachers" element={<TeacherFromAdmin />} />
 
         {/* teacher */}
-        <Route path="/hometeacher" element={<HomePageTeacher />} />
+        <Route path="/teacher/home" element={<HomePageTeacher />} />
+        <Route path="/teacher/create-quiz" element={<TeacherQuiz />} />
+        <Route path="/teacher/create-quiz/create-question/:params" element={<Question />} />
+        <Route path="/teacher/detail-quiz/:params" element={<QuizDetail />} />
 
-        <Route path="/teacher/create_quiz" element={<TeacherQuiz />} />
-        <Route path="/teacher/list_quiz" element={<Test />} /> {/*belong to student*/}
-        <Route path="/teacher/test/:params" element={<Dotest />} /> {/**/}
-        <Route path="/teacher/quiz/:params" element={<Question />} /> {/*add new question*/}
-        <Route path="/teacher/quizdetail/:params" element={<QuizDetail />} />
-       
-        <Route path="/hometeacher/quiz" element={<TeacherQuiz />} />
-        <Route path="/create_course_teacher" element={<CreateCoursePageTeacher />} />
-        <Route path="/edit_course_teacher/:id" element={<EditCoursePageTeacher />} />
+        <Route path="/teacher/create-course" element={<CreateCoursePageTeacher />} />
+        <Route path="/teacher/list-courses" element={<CoursesPageteacher />} />
+        <Route path="/teacher/edit-course/:id" element={<EditCoursePageTeacher />} />
+        <Route path="/teacher/get-course/:id" element={<CoursePageteacher />} />
 
-        <Route path="/teacher/score" element={<Score />} />
-        <Route path="/teacher/score/:params" element={<ScoreDetail />} />
-
+        <Route path="/teacher/list-score" element={<Score />} />
+        <Route path="/teacher/get-score/:params" element={<ScoreDetail />} />
         <Route path="/teacher/calendar" element={<CalendarPageTeacher />} />
 
         {/* student */}
-        <Route element={<UserRoute/>}>
-          <Route path="/homestudent" element={<HomePageStudent />} />
-          <Route path="/courses_student" element={<CoursesPageStudent />} />
-          <Route path="/course_student/:id" element={<CoursePageStudent />} />
-        </Route>
+        <Route path="/student/home" element={<HomePageStudent />} />
+        <Route path="/student/list-courses" element={<CoursesPageStudent />} />
+        <Route path="/student/get-course/:id" element={<CoursePageStudent />} />
+        <Route path="/student/test/:params" element={<Dotest />} />
 
 
       </Routes>

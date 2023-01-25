@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavStudent from "../../layout/NavStudent";
-import { getCourse } from "../../../function/funcFromStudent";
+import NavStudent from "../../../layout/NavStudent";
+import { getCourse } from "../../../../function/funcFromStudent";
 import Swal from "sweetalert2";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./course.css"
-import { CreateTopic,listQuiz, } from "../../../function/funcFromTeacher";
+import { CreateTopic, listQuiz, UpdateTopic} from "../../../../function/funcFromTeacher";
+import EditToppic from "./EditToppic";
 
 
 const EditCoursePageTeacher = () => {
@@ -28,7 +29,7 @@ const EditCoursePageTeacher = () => {
             name: "<h1> </h1>",
             description: "<h3> </h3>",
             materials: [],
-            quiz:{},
+            quiz: "63cf8323cc09a371b149c3d6",
             course: id
         }])
     }
@@ -36,16 +37,16 @@ const EditCoursePageTeacher = () => {
     const loadData = () => {
         // setLoading(true)
         listQuiz(sessionStorage.getItem("token"))
-          .then(res => {
-            console.log(res)
-            setDataQuiz(res.data)
-            // setLoading(false)
-          })
-          .catch(err => {
-            console.log(err)
-            // setLoading(false)
-          })
-      }
+            .then(res => {
+                // console.log(res)
+                setDataQuiz(res.data)
+                // setLoading(false)
+            })
+            .catch(err => {
+                console.log(err)
+                // setLoading(false)
+            })
+    }
 
     const handleAddMaterial = (t_index) => {
         // console.log(courseTopics[t_index].materials[])
@@ -73,6 +74,7 @@ const EditCoursePageTeacher = () => {
         courseTopics[index].description = e
     };
     const handleMaterial = (e, index, m_index) => {
+        console.log(e.target.value)
         courseTopics[index].materials[m_index] = e.target.value
     };
 
@@ -94,7 +96,7 @@ const EditCoursePageTeacher = () => {
     }
 
     const createCourseTopic = () => {
-        // console.log(courseTopics)
+        console.log(courseTopics)
         CreateTopic(sessionStorage.getItem('token'), courseTopics)
             .then(res => {
                 console.log(res)
@@ -102,6 +104,14 @@ const EditCoursePageTeacher = () => {
             }).catch(err => {
                 console.log(err)
             })
+        console.log(topic)
+        // UpdateTopic(sessionStorage.getItem('token'), topic)
+        //     .then(res => {
+        //         console.log(res)
+        //         // window.location.reload(false);
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
     }
 
     // const handleAddQuiz = (index) => {
@@ -143,19 +153,12 @@ const EditCoursePageTeacher = () => {
                         </div>
                     </div>
 
-                    <div>
-                        {topic && topic.map((item, index) => (
-                            <div key={index} className="p-5 border border-primary my-3 ">
-                                <h1 className="">{item.name}</h1>
-                                <p>{item.description}</p>
-                                {item.materials.map((mtem, mdex) => (
-                                    <p key={mdex}>
-                                        {mtem}
-                                    </p>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
+
+
+                    {topic && topic.map((item, index) => (
+                        <EditToppic key={index} item={item} setTopic={setTopic} topic={topic}  index={index}/>
+                    ))}
+
                     {
                         courseTopics && (
                             courseTopics.map((topic, index) => (
@@ -214,13 +217,13 @@ const EditCoursePageTeacher = () => {
                                                     <div className="collapse" id="collapseExample">
                                                         <div className="">
                                                             <select
-                                                                onChange={(e) =>handlechangeQuiz(e,index)}
+                                                                onChange={(e) => handlechangeQuiz(e, index)}
                                                                 className="form-select" >
-                                                                    <option disabled selected value="">เลือกควิชที่ต้องการ</option>
-                                                                {dataQuiz.map((item,index)=>(
-                                                                     <option key={index} value={item._id}>{item.title}</option>
+                                                                <option disabled selected value="">เลือกควิชที่ต้องการ</option>
+                                                                {dataQuiz.map((item, index) => (
+                                                                    <option key={index} value={item._id}>{item.title}</option>
                                                                 ))}
-                                                               
+
 
                                                             </select>
                                                         </div>

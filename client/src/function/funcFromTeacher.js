@@ -78,3 +78,11 @@ export const CreateTopic  = async(authtoken,courseTopics) =>
         authtoken,
     }
 });
+
+export const UpdateTopic  = async(authtoken,topic) => 
+    await axios.put(process.env.REACT_APP_API+'/update_course_topic',topic,
+    {
+    headers:{
+        authtoken,
+    }
+});

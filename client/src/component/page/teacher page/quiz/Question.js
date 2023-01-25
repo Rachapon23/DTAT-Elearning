@@ -142,7 +142,7 @@ const Question = () => {
                     <div className='row'>
                         <div className='col'>
                             <div className="d-grid">
-                                <a href='/teacher/quiz'  className='btn btn-primary'>จบการสร้างแบบทดสอบ</a>
+                                <a href='/teacher/create-quiz'  className='btn btn-primary'>จบการสร้างแบบทดสอบ</a>
                                 {/* <a onClick={handdleFinish} className='btn btn-primary'>จบการสร้างแบบทดสอบ</a> */}
                             </div>
 

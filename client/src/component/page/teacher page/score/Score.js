@@ -53,7 +53,7 @@ const Score = () => {
      <td>{item.firstname}</td>
      <td><a className="bi bi-file-earmark-ruled text-primary"
 
-    href={'/teacher/score/'+item._id}
+    href={'/teacher/get-score/'+item._id}
      ></a></td>
 
    </tr>

@@ -26,7 +26,7 @@ const TeacherQuiz = () => {
     createQuiz(sessionStorage.getItem("token"), value)
       .then(res => {
         console.log(res)
-        navigate("/teacher/quiz/" + res.data._id);
+        navigate("/teacher/create-quiz/create-question/" + res.data._id);
       })
       .catch(err => {
         console.log(err)
@@ -35,7 +35,7 @@ const TeacherQuiz = () => {
   const handdleDetail = (e) => {
     // e.preventDefault();
     console.log(e)
-  navigate("/teacher/quizdetail/" + e);
+  navigate("/teacher/detail-quiz/" + e);
     
   };
   useEffect(() => {
@@ -95,7 +95,23 @@ const TeacherQuiz = () => {
       <div className='container'>
         <div className='mt-5'>
           <div className="row">
-            <div className="col-md-6">
+          
+            <div className="">
+              <form onSubmit={handleSubmit} className="row g-3">
+                <div className="col-12">
+                  <label className="form-label">สร้างแบบทดสอบ</label>
+                  <input type="text" className="form-control" name='title'
+                    onChange={handleChange} />
+                </div>
+                <div className='d-grid'>
+                  <button type='submit' className='btn btn-success'>สร้างแบบทดสอบ</button>
+                </div>
+
+
+
+              </form>
+            </div> 
+             <div className="mt-4">
               <label className="form-label">แบบทดสอบทั้งหมด</label>
               <div>
                 <table className="table">
@@ -140,21 +156,6 @@ const TeacherQuiz = () => {
 
                     </div>}
               </div>
-            </div>
-            <div className="col-md-6">
-              <form onSubmit={handleSubmit} className="row g-3">
-                <div className="col-12">
-                  <label className="form-label">สร้างแบบทดสอบ</label>
-                  <input type="text" className="form-control" name='title'
-                    onChange={handleChange} />
-                </div>
-                <div className='d-grid'>
-                  <button type='submit' className='btn btn-success'>สร้างแบบทดสอบ</button>
-                </div>
-
-
-
-              </form>
             </div>
           </div>
         </div>
