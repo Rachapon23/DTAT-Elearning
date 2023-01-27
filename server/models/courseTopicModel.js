@@ -17,7 +17,6 @@ const TopicSchema = new mongoose.Schema({
         type: ObjectId,
 
     },
-
 }, { timestamps: true });
 
 module.exports = Topic = mongoose.model("topic", TopicSchema);

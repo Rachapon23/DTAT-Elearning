@@ -48,11 +48,11 @@ const Login = () => {
 
     if (sessionStorage.length != 0) {
       if (sessionStorage.getItem("role") === "admin") {
-        navigate("/homeadmin");
+        navigate("/admin/home");
       } else if (sessionStorage.getItem("role") === "teacher") {
-        navigate("/hometeacher");
+        navigate("/teacher/home");
       } else {
-        navigate("/homestudent");
+        navigate("/student/home");
       }
     }
   }, [])

@@ -12,6 +12,7 @@ import NavTeacher from "../../../layout/NavTeacher";
 import Topic from "./Topic";
 
 
+
 const EditCoursePageTeacher = () => {
     const course_id = useParams();
     const [course, setCourse] = useState("");
@@ -35,6 +36,7 @@ const EditCoursePageTeacher = () => {
             name: "",
             description: "",
             materials: [],
+            quiz: "63cf8323cc09a371b149c3d6",
             course: id
         }])
     }
@@ -64,8 +66,10 @@ const EditCoursePageTeacher = () => {
     const handleTopicDescriptionChange = (e, index) => {
         courseTopics[index].description = e
     };
-    const handleshowTopic = () => {
-        console.log(courseTopics)
+
+    const handleMaterial = (e, index, m_index) => {
+        console.log(e.target.value)
+        courseTopics[index].materials[m_index] = e.target.value
     };
 
 
@@ -93,13 +97,14 @@ const EditCoursePageTeacher = () => {
         UpdateTopic(sessionStorage.getItem('token'), topic)
             .then(res => {
                 console.log(res)
-                // window.location.reload(false);
+                window.location.reload(false);
             }).catch(err => {
                 console.log(err)
             })
 
         if (courseTopics.length != 0) {
             CreateTopic(sessionStorage.getItem('token'), courseTopics)
+
                 .then(res => {
                     console.log(res)
                     window.location.reload(false);
@@ -107,6 +112,7 @@ const EditCoursePageTeacher = () => {
                     console.log(err)
                 })
         }
+
     }
     // const handlechangeQuiz = (e, index,) => {
     //     courseTopics[index].quiz = e.target.value
@@ -200,8 +206,9 @@ const EditCoursePageTeacher = () => {
                     </div>
         
                     <div className="d-grid p-5">
-                        <button className="btn btn-success"
+                        <button className="btn" id="back"
                             onClick={createCourseTopic}
+                            
                         >save</button>
                     </div>
     

@@ -8,6 +8,7 @@ exports.createCourseTopic = async (req, res) => {
         // console.log(couseTopic)
         const create = await CourseTopics.insertMany(couseTopic)
 
+
         let course_be = await Courses.findOne({ _id: couseTopic[0].course }).exec()
         console.log(course_be)
         // console.log(create)
@@ -24,6 +25,7 @@ exports.createCourseTopic = async (req, res) => {
         )
         res.send(course_af)
 
+
     }
     catch (err) {
         console.log("fail to create the course  topic: ", err);
@@ -35,10 +37,10 @@ exports.UpdateTopic = async (req, res) => {
     try {
         const topic = req.body
 
+
         // console.log(topic[1].name)
 
         // const create = await CourseTopics.aggregate({$replaceWith:topic}).exec()
-
 
         for (let i = 0; i < topic.length; i++) {
             let id = topic[i]._id
