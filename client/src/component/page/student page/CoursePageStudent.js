@@ -53,15 +53,7 @@ const CoursePageStudent = () => {
                             </div>
                             
                         </div>
-                        {
-                            sessionStorage.getItem("user_id") === course.teacher._id ? (
-                                <div className="col-1 pt-4">
-                                    <Link to={`/teacher/edit-course/${course._id}`}><button type="button" className="btn btn-primary btn-lg"> Edit </button></Link>
-                                </div>
-                            ): (
-                                <div/>
-                            )
-                        }
+                       
                     </div>  
                    
                 </div> 
@@ -72,14 +64,24 @@ const CoursePageStudent = () => {
                                 <h3 id="titleTopic">{Parser(item.name)}</h3>
                                 <p className="">{Parser(item.description)}</p>
                                 {item.materials.map((mtem,mdex)=>(
-                                    <p key={mdex}>
-                                        {mtem}
-                                    </p>
+                                    <div className="row">
+                                        {
+                                            mtem.type == 'link'
+                                            ? <a href={mtem.url}>{mtem.content}</a>
+                                            : <>
+                                            {mtem.type == 'quiz'
+                                            ?<><p>ID QUIZ : {mtem.content}</p></>
+                                        :<>
+                                        <p>{mtem.content}</p>
+                                        </>}
+                                            </>
+                                        }
+                                    </div>
                                 ))}
-                                <div className="d-flex">
+                                {/* <div className="d-flex">
                                     <img src="https://elearning2.sut.ac.th/theme/image.php/suranaree/quiz/1674452536/icon" alt="" />
                                     <a href={`/student/test/${item.quiz._id}`} className="">{item.quiz.title}</a>
-                                </div>
+                                </div> */}
                                  
                            <hr className="my-4" />
                             </div>

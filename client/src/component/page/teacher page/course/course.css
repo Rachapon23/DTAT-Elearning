@@ -7,6 +7,7 @@
     -webkit-text-stroke-width: 0.3px;
     color: grey;
 }
-#back{
-    background-color: aquamarine;
+#select{
+    max-width: 100px;
+
 }

@@ -12,6 +12,7 @@ const CoursePageteacher = () => {
     const [topic, setTopic] = useState([]);
 
     const fetchCourse = () => {
+        console.log("p--")
         getCourse(course_id)
             .then((response) => {
                 console.log(response)
@@ -30,19 +31,17 @@ const CoursePageteacher = () => {
 
     useEffect(() => {
         fetchCourse()
-        console.log(topic)
+        console.log("p")
     }, []);
 
     // console.log(topic)
     return (
         <div>
             <NavTeacher />
+      
             <div className="container ">
-                {/* {JSON.stringify(course_id)} */}
                 {course &&
-
-
-                    <div className="p-5 border border-primary mt-5">
+                <div className="p-5 border border-primary mt-5">
                         <div className="row">
                             <div className="col-11">
                                 <h1>{course.name}</h1>
@@ -58,21 +57,27 @@ const CoursePageteacher = () => {
                                     <div />
                                 )
                             }
+
+                            
                         </div>
 
                     </div>
                 }
                 <div>
-                    {topic && topic.map((item, index) => (
+                     {topic && topic.map((item, index) => (
                         <div key={index} className="p-5 border border-primary mt-3">
                             <h1 className="">{item.name}</h1>
-                            <p>{item.description}</p>
+                            <p className="mb-3" >{item.description}</p>
                             {item.materials.map((mtem, mdex) => (
-                                <p key={mdex}>
-                                    {mtem}
-                                </p>
+                                
+                                <div key={mdex} >
+                                 <p>{mtem.content}</p>  
+
+                                 <p>ค่อยมาแก้ตรงนี้ ให้มันแยก type</p> 
+                                </div>
+                                
                             ))}
-                            <a href="">{item.quiz.title}</a>
+                          
 
                         </div>
                     ))}
