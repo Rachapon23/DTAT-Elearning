@@ -22,6 +22,7 @@ import Score from "./component/page/teacher page/score/Score";
 import ScoreDetail from "./component/page/teacher page/score/ScoreDetail";
 import CoursesPageteacher from "./component/page/teacher page/course/CoursesPageteacher";
 import CoursePageteacher from "./component/page/teacher page/course/CoursePageteacher";
+import CreateTeachTimePageTeacher from "./component/page/teacher page/CreateTeachTimePageTeacher";
 
 
 
@@ -67,6 +68,7 @@ function App() {
         <Route path="/teacher/list-score" element={<Score />} />
         <Route path="/teacher/get-score/:params" element={<ScoreDetail />} />
         <Route path="/teacher/calendar" element={<CalendarPageTeacher />} />
+        <Route path="/teacher/create-teach-time" element={<CreateTeachTimePageTeacher />} />
 
         {/* student */}
         <Route path="/student/home" element={<HomePageStudent />} />

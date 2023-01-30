@@ -1,36 +1,72 @@
 const User = require('../models/userModel')
+const TeachDate = require("../models/teachDateModel")
 
 exports.createTeachTime = async (req, res) => {
     try {
         const {
-            course_number,
-            name,
+            course,
+            start,
+            end,
             teacher,
-            description,
-            password,
-
         } = req.body;
 
-        if(!password){
-            const status = "public"
-            Courses.create({ course_number, name, teacher, description, password,status }, (err, course) => {
+        console.log(req.body)
+
+        TeachDate.create({ course, start, start, end, teacher }, (err, teachTime) => {
             if (err) {
-                return res.status(500).json({ error: "fail to create the course" });
+                return res.status(500).json({ error: "fail to create the teach time" });
             }
-            res.json(course);
+            res.json(teachTime);
         })
-        }else{
-            Courses.create({ course_number, name, teacher, description, password }, (err, course) => {
-                if (err) {
-                    return res.status(500).json({ error: "fail to create the course" });
-                }
-                res.json(course);
-            })
-        }
-       
     }
     catch (err) {
-        console.log("fail to create the course");
-        res.status(500).json({ error: "fail to create the course" })
+        console.log("fail to create the teach time");
+        res.status(500).json({ error: "fail to create the teach time" })
+    }
+}
+
+exports.listTeachTimes = async (req, res) => {
+    try {
+        await TeachDate.find({}).exec((err, teachTime) => {
+            console.log(teachTime)
+            res.json(teachTime);
+        });
+
+    }
+    catch (err) {
+        console.log("fail to fetch teach time");
+        res.status(500).json({ error: "fail to fetch teach time" });
+    }
+}
+
+exports.listCoursesInTeachTime = async (req, res) => {
+    try {
+
+        const {time, user_id} = req.body
+        // console.log(req.body)
+
+        const teachTimes = await TeachDate.find({teacher: user_id}).populate("course teacher").exec()
+        // console.log(teachTimes)
+        const payload = []
+        teachTimes.forEach((teachTime) => {
+            console.log(teachTime)
+            // console.log("start--------------------")
+            if(new Date(time).getFullYear() >= new Date(teachTime.start).getFullYear() && new Date(time).getFullYear() <= new Date(teachTime.start).getFullYear()) {
+                if(new Date(time).getMonth()>= new Date(teachTime.start).getMonth() && new Date(time).getMonth() <= new Date(teachTime.end).getMonth()) {
+                    if(new Date(time).getDate()>= new Date(teachTime.start).getDate() && new Date(time).getDate() <= new Date(teachTime.end).getDate()) {
+                        // console.log(teachTime)
+                        payload.push(teachTime)
+                    }
+                }
+            }
+            
+            // console.log("end--------------------")
+        })
+        res.json(payload);
+    }
+    catch (err) {
+        console.log("fail to fetch teach time");
+        console.log(err);
+        res.status(500).json({ error: "fail to fetch teach time" });
     }
 }

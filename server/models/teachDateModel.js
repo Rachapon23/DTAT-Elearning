@@ -8,11 +8,15 @@ const TeachTimeSchema = new mongoose.Schema({
         ref:"course",
         require: true,
     },
-    date_time: [],
+    start: {
+        type: Date,
+    },
+    end: {
+        type: Date,
+    },
     teacher: {
         type: ObjectId,
-        ref:"users"
-    
+        ref:"users",
     },
 
 }, { timestamps: true });
