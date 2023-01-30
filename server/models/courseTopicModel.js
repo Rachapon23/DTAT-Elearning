@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {ObjectId} = mongoose.Schema;
+const { ObjectId } = mongoose.Schema;
 
 const TopicSchema = new mongoose.Schema({
 
@@ -7,21 +7,16 @@ const TopicSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    description:{
-        type:String,
+    description: {
+        type: String,
     },
     materials: {
-        type: Array,
+        type: Array
     },
-    course:{
-        type:ObjectId,
-        
-    },
-    quiz:{
-        type:ObjectId,
-        ref:"quiz",
-        
-    },
-}, {timestamps: true, minimize: false});
+    course: {
+        type: ObjectId,
 
-module.exports = Topic = mongoose.model("topic",TopicSchema);
+    },
+}, { timestamps: true });
+
+module.exports = Topic = mongoose.model("topic", TopicSchema);

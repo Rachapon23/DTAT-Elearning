@@ -3,7 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useEffect, useState } from "react";
 
-const EditToppic = ({ item ,setTopic,topic, index}) => {
+const EditToppic = ({ item, setTopic, topic, index }) => {
     const quillToolbar = {
         toolbar: false,
     }
@@ -23,8 +23,8 @@ const EditToppic = ({ item ,setTopic,topic, index}) => {
         // console.log(value)
         // topic[index] = value
     };
- 
 
+    // console.log(value)
 
     return (
         <div>
@@ -53,7 +53,18 @@ const EditToppic = ({ item ,setTopic,topic, index}) => {
                         //  onChange={(e) => handleTopicDescriptionChange(e, index)}
                         />
                     </div>
-                    <a onClick={testIndex}>{item.quiz.title}</a>
+                    <div className="mb-3">
+                        <label className="form-label">material </label>
+                        {value.materials.map((mtem, mdex) => (
+                            <div key={mdex}>
+                                <p>{mtem.content}</p>
+                                <p>ค่อยมาแก้ตรงนี้ ให้มันแยก type</p>
+                            </div>
+
+
+                        ))}
+                    </div>
+
                 </div>
             </div>
 
