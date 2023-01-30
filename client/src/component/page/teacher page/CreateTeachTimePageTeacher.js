@@ -400,35 +400,11 @@ const CalendarPageTeacher = () => {
                         </tbody>
                     </table>
                     <div className="pe-4 d-flex justify-content-end">
-                        <Link to="/teacher/create-teach-time"> <button className="btn btn-primary" type="button" > create time table</button></Link>
+                        <Link to="/teacher/calendar"><button className="btn btn-primary" type="button" > back</button></Link>
                     </div>
-                
                 </div>
                 
-
-
-                <div className="p-4 mt-3 border border-primary">
-                    {
-                        
-                        displayData.length !== 0 ? (
-                            displayData.map((data, index) => (
-                                <div className="p-1">
-                                    <Link to={`/teacher/get-course/${data.course._id}`}><h3>{data.course.name}</h3></Link>
-                                    <p className="pt-2">เวลาสอน: {new Date(data.start).toLocaleDateString()} to {new Date(data.end).toLocaleDateString()}</p>
-                                    <p>ผู้สอน: {data.teacher.firstname}</p>
-                                </div>
-                            ))
-                        ):(
-                            <h3 className="p-1">
-                                No Courses Available on This Day
-                            </h3>
-                        )
-                        
-                    
-                    }
-                </div>
-
-                {/* <form className="p-2">
+                <form className="p-2">
                     <div className="mb-2">
                         <label className="form-label">Course Name</label>
                         <select
@@ -458,7 +434,7 @@ const CalendarPageTeacher = () => {
                     </div>
                 
                     <button type="button" className="btn btn-primary" onClick={submit}>Create</button>
-                </form> */}
+                </form>
                 {/* {JSON.stringify(displayData)} */}
             </div>
         </div>

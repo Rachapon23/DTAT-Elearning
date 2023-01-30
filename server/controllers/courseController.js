@@ -68,7 +68,7 @@ exports.publicCourses = async (req, res) => {
 exports.getCourse = async (req, res) => {
 
     const { id } = req.body
-console.log("ID : ",id)
+    console.log("ID : ",id)
     try {
         const course = await Courses.findOne({ _id: id })
         .populate({

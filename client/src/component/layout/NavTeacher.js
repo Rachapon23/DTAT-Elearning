@@ -33,14 +33,16 @@ const NavTeacher = () => {
             
             <Nav.Link href="/teacher/create-quiz">สร้างแบบทดสอบ</Nav.Link>
             <Nav.Link href="/teacher/list-score">ดูคะแนน</Nav.Link>
+            <Nav.Link href="/teacher/calendar">ตารางสอน</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
 
           <Navbar.Text
-          className="text-danger">
+            className="text-danger"
+          >
             Signed in {sessionStorage.getItem("role")} as: 
-</Navbar.Text>
+          </Navbar.Text>
             <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
               <NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>
             </NavDropdown>
