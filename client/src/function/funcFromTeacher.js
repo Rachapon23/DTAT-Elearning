@@ -110,3 +110,7 @@ export const listCoursesInTeachTime  = async(authtoken, data) =>
         authtoken,
     }
 });
+
+export const getCourseByFilter  = async( data) => {
+    return await axios.post(process.env.REACT_APP_API+'/get_course_filter', data)
+}

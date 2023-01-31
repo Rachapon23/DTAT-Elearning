@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { listCourses, createCourse, getCourse, searchCourse, addCourse, getMyCourse, deleteMyCourse,publicCourses } = require("../controllers/courseController");
+const { listCourses, createCourse, getCourse, searchCourse, addCourse, getMyCourse, deleteMyCourse,publicCourses, getCourseByFilter } = require("../controllers/courseController");
 
 // student
 router.get("/list_courses", listCourses);
@@ -16,5 +16,6 @@ router.post("/addchcourse", addCourse);
 
 // teacher
 router.post("/create_course", createCourse);
+router.post("/get_course_filter", getCourseByFilter);
 
 module.exports = router

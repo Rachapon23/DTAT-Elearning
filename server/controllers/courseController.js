@@ -1,5 +1,6 @@
 const Courses = require("../models/courseModel");
 const User = require('../models/userModel')
+const  ObjectId = require('mongoose').Types.ObjectId; 
 
 exports.createCourse = async (req, res) => {
     try {
@@ -178,5 +179,35 @@ exports.deleteMyCourse = async (req, res) => {
     catch (err) {
         console.log(err);
         res.status(500).send("Server Error!!! on  deleteMyCourse");
+    }
+}
+
+exports.getCourseByFilter = async (req, res) => {
+    try {
+        const {user_id} = req.body;
+        const {filter} = req.body;
+        console.log(req.body)
+
+        console.log(typeof(filter))
+        console.log(filter === "my_course")
+
+        if(filter === "my_course") {
+            console.log(filter)
+            const isValidUser = await User.findOne({ _id: user_id }).exec()
+            if(isValidUser) {
+                const courses = await Courses.find({ teacher: ObjectId(user_id) }).populate("teacher", "-password").exec()
+                res.send(courses)
+            }
+        }
+        else {
+            await Courses.find({}).populate("teacher", "-password")
+            .exec((err, courses) => {
+                res.json(courses);
+            });
+        }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send("Server Error!!! on getMyCourse");
     }
 }
