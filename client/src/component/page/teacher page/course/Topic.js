@@ -25,7 +25,10 @@ const Topic = ({ topic, index, courseTopics, dataQuiz, materials, setMaterials }
     const handleMaterial = (e, index, m_index) => {
    
         courseTopics[index].materials[m_index].content = e.target.value
+        courseTopics[index].materials[m_index].quiz = e.target.title
         setMaterials([...materials])
+
+        // console.log(e.target.name)
 
         
     };
@@ -37,11 +40,11 @@ const Topic = ({ topic, index, courseTopics, dataQuiz, materials, setMaterials }
         courseTopics[index].materials[m_index].type = e.target.value
         setMaterials([...materials])
     };
-    // const handleQuiz = (e, index, m_index) => {
-    //     courseTopics[index].materials[m_index].quiz = e.target.value
-    //     setMaterials([...materials])
+    // const handleQuiz = (title, index, m_index) => {
+    //     // courseTopics[index].materials[m_index].quiz = title
+    //     // setMaterials([...materials])
+    //     console.log(title)
     // };
-    // console.log(dataQuiz)
 
     return (
         <div className="mt-5">
@@ -68,17 +71,20 @@ const Topic = ({ topic, index, courseTopics, dataQuiz, materials, setMaterials }
                                             <option value="link">link</option>
                                             <option value="quiz">quiz</option>
                                         </select>
-                                        <select
+                                        <select 
                                             onChange={(e) => handleMaterial(e, index, m_index)}
                                
                                             className="form-select" >
                                             <option disabled selected value="">เลือกควิชที่ต้องการ</option>
                                             {dataQuiz.map((item, index) => (
-                                                <option key={index} value={item._id}>{item.title}</option>
+                                                <option key={index} value={item._id}
+                                               
+                                                 >{item.title}</option>
                                             ))}
 
 
-                                        </select></div></>
+                                        </select>
+                                        </div></>
                                 :
                                 <>{material.type == 'link'
                                     ? <>

@@ -39,7 +39,7 @@ const StudentFormAdmin = () => {
       .catch(err => {
         console.log(err)
       })
-    // console.log(value)
+
   }
   // console.log(data)
 

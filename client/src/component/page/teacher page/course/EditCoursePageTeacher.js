@@ -72,6 +72,9 @@ const EditCoursePageTeacher = () => {
         courseTopics[index].materials[m_index] = e.target.value
     };
 
+    const handleshowTopic = () => {
+        console.log(courseTopics);    
+    }
 
     const fetchCourse = () => {
         getCourse(course_id)

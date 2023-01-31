@@ -6,11 +6,13 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import Parser from 'html-react-parser';
 import './student.css'
+import { listQuiz, } from "../../../function/funcFromTeacher";
 
 const CoursePageStudent = () => {
     const course_id = useParams();
     const [course, setCourse] = useState("");
     const [topic, setTopic] = useState();
+    const [dataQuiz, setDataQuiz] = useState([])
 
     const fetchCourse = () => {
         getCourse(course_id)
@@ -29,12 +31,23 @@ const CoursePageStudent = () => {
         })
     } 
 
+    const loadData = () => {
+        listQuiz(sessionStorage.getItem("token"))
+            .then(res => {
+                setDataQuiz(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     useEffect(() => {
         fetchCourse()
-        console.log(topic)
+        // console.log(topic)
+        loadData()
     }, []);
 
-    // console.log(topic)
+    console.log(dataQuiz)
     return (
         <div>
             <NavStudent/>
@@ -67,10 +80,26 @@ const CoursePageStudent = () => {
                                     <div className="row">
                                         {
                                             mtem.type == 'link'
-                                            ? <a href={mtem.url}>{mtem.content}</a>
+                                            ? <a href={mtem.url}>
+                                                <i class="bi bi-link"></i>  {mtem.content}</a>
                                             : <>
                                             {mtem.type == 'quiz'
-                                            ?<><p>ID QUIZ : {mtem.content}</p></>
+                                            ?<>
+                                            {dataQuiz.map((qtem,qdex)=>(
+                                                <>
+                                                {mtem.content == qtem._id
+                                                
+                                                ? <a href={`/student/test/`+qtem._id} className="text-danger mb-2">
+                                                    
+                                                    <i class="bi bi-clipboard2-check"></i>
+                                                    {qtem.title}</a>
+                                            
+                                            : <></>
+                                            
+                                            }
+                                                </>
+                                            ))}
+                                            </>
                                         :<>
                                         <p>{mtem.content}</p>
                                         </>}
