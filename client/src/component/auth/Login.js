@@ -92,7 +92,7 @@ const Login = () => {
                 </div>
               </form>
               <div className="d-flex justify-content-between">
-                <a className="text-muted">ลืมรหัสผ่าน</a>
+                <a className="text-muted" href="reset-password">ลืมรหัสผ่าน</a>
                 <a className="text-muted" href="register">
                   สมัครสมาชิก
                 </a>
