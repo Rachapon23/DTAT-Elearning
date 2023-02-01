@@ -36,13 +36,14 @@ import CoursePageStudent from "./component/page/student page/CoursePageStudent";
 import EditCoursePageTeacher from "./component/page/teacher page/course/EditCoursePageTeacher";
 import CalendarPageTeacher from "./component/page/teacher page/CalendarPageTeacher";
 import UserRoute from "./route/UserRoute";
-
-
+//
+import Allpage from "./component/layout/Allpage";
 
 function App() {
 
   return (
     <div>
+      <Allpage/>
       <Routes>
         {/* auth */}
         <Route path="/" element={<Login />} />
