@@ -11,16 +11,16 @@ const Allpage = () => {
 
 
    
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasExampleLabel">ทางลัด</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div className="offcanvas-header">
+    <h5 className="offcanvas-title" id="offcanvasExampleLabel">ทางลัด</h5>
+    <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
-  <div class="offcanvas-body">
+  <div className="offcanvas-body">
 <div>
     <h3>admin</h3>
     <ul>
-        <li><a href="/admin/home">หน้าแรก</a></li>
+        <li ><a href="/admin/home">หน้าแรก</a></li>
         <li><a href="/admin/list-users">สมาชิกทั้งหมด</a></li>
         <li><a  href="/admin/list-teachers">จัดการผู้สอน </a></li>
         <li><a href="/admin/list-students">จัดการผู้เรียน</a></li>

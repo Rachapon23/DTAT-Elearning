@@ -38,6 +38,7 @@ import CalendarPageTeacher from "./component/page/teacher page/CalendarPageTeach
 import UserRoute from "./route/UserRoute";
 //
 import Allpage from "./component/layout/Allpage";
+import './App.css'
 
 function App() {
 

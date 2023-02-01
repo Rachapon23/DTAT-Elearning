@@ -70,7 +70,6 @@ const CreateCoursePageTeacher = () => {
                     <button type="submit" className="btn btn-primary" onClick={submit}>Create</button>
                 </form>
             </div>
-            
         </div>
     );
 }

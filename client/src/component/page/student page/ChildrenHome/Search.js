@@ -76,6 +76,7 @@ const Search = ({ loadMycourse }) => {
 
     return (
         <div>
+            
             <div className="row">
                 <div className="col-md-8">
                  
@@ -96,27 +97,12 @@ const Search = ({ loadMycourse }) => {
                     </>
                     : <> <div className="row">
                         {data && data.map((course, index) => (
-
-                            <div key={index} className="col-md-4">
-
-                                <h5 className='mt-5 mb-3'>วิชา : {course.name}</h5>
-                                <div className="row">
-                                    <div className="col-md-6">
-
-                                        <div className="row">
-                                            <div className="col-md-6">รหัสวิชา : </div>
-                                            <div className="col-md-6">{course.course_number}</div>
+                            <div key={index} className="search mt-2 p-3">
+                                <h5 className='mb-2'>วิชา : {course.name}</h5>
+                                        <div className="" >
+                                            <p className=" text-muted mb-0">รหัสวิชา :  {course.course_number} </p>
+                                            <p className=" text-muted">ผู้สอน : {course.teacher.firstname}</p>
                                         </div>
-                                        <div className="row">
-                                            <div className="col-md-6">รายละเอียด : </div>
-                                            <div className="col-md-6">{course.description}</div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-6">ผู้สอน : </div>
-                                            <div className="col-md-6">{course.teacher.firstname}</div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div className="mt-3">
                                     <button className="btn btn-primary btn-sm"
                                         onClick={() => handleAddcourse(course._id)}
