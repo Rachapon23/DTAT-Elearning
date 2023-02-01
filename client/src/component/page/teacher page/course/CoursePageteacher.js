@@ -12,7 +12,7 @@ const CoursePageteacher = () => {
     const [topic, setTopic] = useState([]);
 
     const fetchCourse = () => {
-        console.log("p--")
+        // console.log("p--")
         getCourse(course_id)
             .then((response) => {
                 console.log(response)
@@ -31,7 +31,7 @@ const CoursePageteacher = () => {
 
     useEffect(() => {
         fetchCourse()
-        console.log("p")
+        // console.log("p")
     }, []);
 
     // console.log(topic)

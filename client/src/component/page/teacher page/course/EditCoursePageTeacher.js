@@ -73,8 +73,9 @@ const EditCoursePageTeacher = () => {
     };
 
     const handleshowTopic = () => {
-        console.log(courseTopics)
-    };
+
+        console.log(courseTopics);    
+    }
 
     const fetchCourse = () => {
         getCourse(course_id)

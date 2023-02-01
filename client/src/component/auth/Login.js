@@ -3,7 +3,7 @@ import { login } from "../../function/auth";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, location } from "react-router-dom";
-
+import './auth.css'
 const Login = () => {
   const navigate = useNavigate();
 
@@ -58,50 +58,56 @@ const Login = () => {
   }, [])
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-4">
-          <div className="card">
-            <div className="card-body">
-              <h3 className="text-center my-4">เข้าสู่ระบบ</h3>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label className="form-label">รหัสพนักงาน</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="employee_ID"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group mt-3">
-                  <label className="form-label">รหัสผ่าน</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="password"
-                    onChange={handleChange}
-                  />
-                </div>
+    <div className="log">
+<nav class="navbar navbar-dark bg-dark">
+  <div className="container">
+    <a class="navbar-brand" href="/">E-learning</a>
+  </div>
 
-                <br />
-                <div className="d-flex justify-content-center">
-                  <button type="submit" className="btn btn-outline-primary">
-                    เข้าสู่ระบบ
-                  </button>
-                </div>
-              </form>
-              <div className="d-flex justify-content-between">
-                <a className="text-muted" href="reset-password">ลืมรหัสผ่าน</a>
-                <a className="text-muted" href="register">
-                  สมัครสมาชิก
-                </a>
+
+  </nav>
+    <div className="container mt-5">
+      <div className="d-flex justify-content-center">
+        <div className="card w-75">
+          <div className="card-body">
+            <h3 className="text-center my-4">เข้าสู่ระบบ</h3>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">รหัสพนักงาน</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="employee_ID"
+                  onChange={handleChange}
+                />
               </div>
+              <div className="form-group mt-3">
+                <label className="form-label">รหัสผ่าน</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="password"
+                  onChange={handleChange}
+                />
+              </div>
+
+              <br />
+              <div className="d-flex justify-content-center">
+                <button type="submit" className="btn btn-outline-primary">
+                  เข้าสู่ระบบ
+                </button>
+              </div>
+            </form>
+            <div className="d-flex justify-content-between">
+              <a className="text-muted">ลืมรหัสผ่าน</a>
+              <a className="text-muted" href="register">
+                สมัครสมาชิก
+              </a>
             </div>
           </div>
         </div>
-        <div className="col-md-8"></div>
       </div>
+    </div>
     </div>
   );
 };
