@@ -16,6 +16,7 @@ import Topic from "./Topic";
 const EditCoursePageTeacher = () => {
     const course_id = useParams();
     const [course, setCourse] = useState("");
+    // const [value, setValue] = useState('');
     const quillToolbar = {
         toolbar: false,
     }
@@ -60,7 +61,8 @@ const EditCoursePageTeacher = () => {
     }
 
     const handleTopicNameChange = (e, index) => {
-        courseTopics[index].name = e
+        courseTopics[index].name = e.target.value
+        // console.log(e)
     };
 
     const handleTopicDescriptionChange = (e, index) => {
@@ -71,10 +73,6 @@ const EditCoursePageTeacher = () => {
         console.log(e.target.value)
         courseTopics[index].materials[m_index] = e.target.value
     };
-
-    const handleshowTopic = () => {
-        console.log(courseTopics);    
-    }
 
     const fetchCourse = () => {
         getCourse(course_id)
@@ -94,9 +92,6 @@ const EditCoursePageTeacher = () => {
     }
 
     const createCourseTopic = () => {
-
-        //quiz ห้ามว่าง create
-        console.log(courseTopics.length)
         UpdateTopic(sessionStorage.getItem('token'), topic)
             .then(res => {
                 console.log(res)
@@ -117,33 +112,38 @@ const EditCoursePageTeacher = () => {
         }
 
     }
-    // const handlechangeQuiz = (e, index,) => {
-    //     courseTopics[index].quiz = e.target.value
-    // }
+
     useEffect(() => {
         fetchCourse()
         loadData()
     }, []);
 
+    // console.log(courseTopics)
+
     return (
         <div>
             <NavTeacher />
             {course &&
-                <div className="container ">
-                    <div className="p-5 border border-primary my-3">
+                <div className="container">
+                    <div className="px-5 py-3 border bg-white  mt-3">
                         <div className="row">
                             <div className="">
                                 <div className="mb-3">
                                     <label className=" form-label">Course: </label>
-                                    <ReactQuill className=" " theme="snow" modules={quillToolbar} name="name" value={`<h1>${course.name}</h1>`} />
+                                    {/* <ReactQuill className=" " theme="snow" modules={quillToolbar} name="name" value={course.name}/> */}
+                                    <input type="text" value={course.name} className="form-control" />
                                 </div>
                                 <div className="mb-3">
                                     <label className=" form-label">Description: </label>
-                                    <ReactQuill className="" theme="snow" modules={quillToolbar} name="description" value={`<h2>${course.description}</h2>`} />
+                                    {/* <ReactQuill className="" theme="snow" modules={quillToolbar} name="description" value={course.description} /> */}
+                                    <ReactQuill theme="snow" value={course.description}
+                                    // onChange={setValue} 
+                                    />
                                 </div>
                                 <div className="mb-3">
                                     <label className=" form-label">Teacher: </label>
-                                    <ReactQuill className="text-muted" theme="snow" modules={quillToolbar} name="description" readOnly value={`<h2>${course.teacher.firstname}</h2>`} />
+                                    <input type="text" value={course.teacher.firstname} disabled className="form-control" />
+                                    {/* <ReactQuill className="text-muted" theme="snow" modules={quillToolbar} name="description" readOnly value={course.teacher.firstname} /> */}
 
                                 </div>
 
@@ -157,35 +157,40 @@ const EditCoursePageTeacher = () => {
                     {topic && topic.map((item, index) => (
                         <EditToppic key={index} item={item} setTopic={setTopic} topic={topic} index={index} />
                     ))}
-                    <div className="p-2">
-                        <button className="btn btn-info" onClick={handleshowTopic}>Show CourseTopic</button>
-                    </div>
 
                     {
                         courseTopics && (
                             courseTopics.map((topic, index) => (
                                 <div key={index} className="mb-3" >
-                                    <div className="border border-primary">
-                                        <div className="d-flex justify-content-end p-2">
-                                            <button type="button" className="btn"
-                                                onClick={() => handleDeleteTopic(index)}
-                                            >
-                                                <span className="bi bi-x iconx" ></span>
-                                            </button>
-                                        </div>
+                                    <div className="position-relative">
+                                        <button type="button" className="btn position-absolute top-0 end-0 "
+                                            onClick={() => handleDeleteTopic(index)}
+                                        >
+                                            <span className="bi bi-x iconx" ></span>
+                                        </button>
+                                    </div>
+                                    <div className="py-3 border bg-white  mt-3">
                                         <div className="px-5">
                                             <div className="">
                                                 <div className="mb-3">
                                                     <label className="form-label">Topic </label>
-                                                    <ReactQuill className="" theme="snow" modules={quillToolbar} name="name" value={`<h1>${topic.name}</h1>`} onChange={(e) => handleTopicNameChange(e, index)} />
+                                                    {/* <ReactQuill className="" theme="snow" modules={quillToolbar} name="name" value={`${topic.name}`}
+                                                        onChange={(e) => handleTopicNameChange(e, index)} /> */}
+                                                        <input type="text" className="form-control"
+                                                         onChange={(e) => handleTopicNameChange(e, index)}
+                                                        />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label className="form-label">Description </label>
-                                                    <ReactQuill className="" theme="snow" modules={quillToolbar} value={`${topic.description}`} onChange={(e) => handleTopicDescriptionChange(e, index)} />
+                                                    {/* <ReactQuill className="" theme="snow" modules={quillToolbar} value={`${topic.description}`}
+                                                        onChange={(e) => handleTopicDescriptionChange(e, index)} /> */}
+                                                    <ReactQuill theme="snow" value={topic.description}
+                                                        onChange={(e) => handleTopicDescriptionChange(e, index)}
+                                                    />
                                                 </div>
                                             </div>
-                                            <Topic dataQuiz={dataQuiz} topic={topic} index={index} courseTopics={courseTopics} setMaterials={setMaterials} materials={materials}/>
- 
+                                            <Topic dataQuiz={dataQuiz} topic={topic} index={index} courseTopics={courseTopics} setMaterials={setMaterials} materials={materials} />
+
 
                                         </div>
                                     </div>
@@ -195,7 +200,7 @@ const EditCoursePageTeacher = () => {
                     }
                     <div  >
 
-                        <div className="border border-primary mt-3">
+                        <div className=" py-3 border bg-white  mt-3">
                             <div className="d-flex justify-content-end p-2">
                                 <button type="button" className="btn"
 
@@ -207,14 +212,14 @@ const EditCoursePageTeacher = () => {
 
                         </div>
                     </div>
-        
+
                     <div className="d-grid p-5">
-                        <button className="btn" id="back"
+                        <button className="btn btn-outline-success"
                             onClick={createCourseTopic}
-                            
+
                         >save</button>
                     </div>
-    
+
                 </div>
             }
         </div>

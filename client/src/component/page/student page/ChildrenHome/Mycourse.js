@@ -2,6 +2,7 @@ import React from 'react'
 import { deleteMyCourse } from '../../../../function/funcFromStudent'
 import Swal from 'sweetalert2'
 import { Navigate, useNavigate } from 'react-router-dom'
+import '../student.css'
 
 
 
@@ -50,22 +51,20 @@ navigate('/student/get-course/'+params)
           <div className="row">
             {data && data.map((item, index) =>
               <div className="col-md-3" key={index}>
-                <div className="card mt-3"  onClick={()=>nextToCourse(item._id)}
+                <div className="card mt-3 card-h"  onClick={()=>nextToCourse(item._id)}
                 //  style={{ width: "20rem" }}
                  >
                   <img src="https://cdn.pixabay.com/photo/2015/11/15/07/47/geometry-1044090_960_720.jpg" className="card-img-top" alt="..." />
                   <div className="card-body">
                     <h5 className="card-title">{item.name}</h5>
-                    <p className="card-text">รหัสวิชา : {item.course_number}</p>
-                   
-                    <div className='d-flex justify-content-between'>
-                      {/* <button className="btn btn-success btn-sm"
-                      onClick={()=>nextToCourse(item._id)}
-                      >เข้าเรียน</button> */} 
-                      <p className="card-text">รายละเอียด : {item.description}</p>
-                      <button className="btn btn-danger btn-sm"
-                        onClick={() => handleRemove(item._id)}>ลบ</button>
-                    </div>
+
+                    <p style={{fontSize:'14px'}} className="card-text text-muted mb-0">รหัสวิชา : {item.course_number}</p>
+                    <p style={{fontSize:'14px'}} className="card-text text-muted">รายละเอียด : {(item.description.substring(0,45))}...</p>
+
+                     
+                      {/* <button className="btn btn-danger btn-sm"
+                        onClick={() => handleRemove(item._id)}>ลบ</button> */}
+
 
                   </div>
                 </div>

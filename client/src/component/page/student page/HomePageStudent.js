@@ -36,7 +36,7 @@ const HomePageStudent = () => {
         <div className="row mb-4 ">
           <div className="col-md-9">
             <div className="bg-white p-4 mt-3 border">
-              <label className="form-label mb-2">Public คอร์ส</label>
+              <label className="form-label mb-2">บทเรียนทั่วไป</label>
               <div className="">
                 <PublicCourse />
               </div>
@@ -44,7 +44,7 @@ const HomePageStudent = () => {
 
 
             <div className="bg-white p-4 borderl mt-3">
-              <label className="form-labe">Course overview</label>
+              <label className="form-labe mb-2">บทเรียนของฉัน</label>
               <div className="">
                 <Mycourse data={data} loadMycourse={loadMycourse} />
               </div>
@@ -79,8 +79,8 @@ const HomePageStudent = () => {
             <div className="bg-white p-4 border mt-3">
               <label className="form-label mb-3">ติดต่อ Line@</label>
               <div className="d-flex justify-content-center">
-                <img src="https://elearning2.sut.ac.th/pluginfile.php/7319500/block_html/content/S__8544268.jpg"
-                 alt="" style={{ width: "12rem" }}/>
+                {/* <img src="https://elearning2.sut.ac.th/pluginfile.php/7319500/block_html/content/S__8544268.jpg"
+                 alt="" style={{ width: "12rem" }}/> */}
               </div>
               <h4 className='mt-3 text-center'>
               LINE: @sutelearning
