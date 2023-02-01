@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 //auth
 import Login from "./component/auth/Login";
 import Register from "./component/auth/Register";
-import { currentUser } from "../src/function/auth";
+import ResetPassword from "./component/auth/ResetPassword";
 //admin
 import HomePageadmin from "./component/page/admin page/HomePageAdmin";
 import AlluserFromadmin from "./component/page/admin page/AlluserFromadmin";
@@ -49,6 +49,7 @@ function App() {
         {/* auth */}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/reset-password" element={<ResetPassword/>}></Route>
 
         {/* admin */}
         <Route path="/admin/home" element={<HomePageadmin />} />
