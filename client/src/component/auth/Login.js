@@ -64,21 +64,8 @@ const Login = () => {
     <a class="navbar-brand" href="/">E-learning</a>
   </div>
 
-<<<<<<< HEAD
-                <br />
-                <div className="d-flex justify-content-center">
-                  <button type="submit" className="btn btn-outline-primary">
-                    เข้าสู่ระบบ
-                  </button>
-                </div>
-              </form>
-              <div className="d-flex justify-content-between">
-                <a className="text-muted" href="reset-password">ลืมรหัสผ่าน</a>
-                <a className="text-muted" href="register">
-                  สมัครสมาชิก
-                </a>
-=======
-</nav>
+
+  </nav>
     <div className="container mt-5">
       <div className="d-flex justify-content-center">
         <div className="card w-75">
@@ -93,7 +80,6 @@ const Login = () => {
                   name="employee_ID"
                   onChange={handleChange}
                 />
->>>>>>> 8fed052730c4c4c9f87017b22ef7f48930b9a8b9
               </div>
               <div className="form-group mt-3">
                 <label className="form-label">รหัสผ่าน</label>
