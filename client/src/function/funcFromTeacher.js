@@ -114,3 +114,7 @@ export const listCoursesInTeachTime  = async(authtoken, data) =>
 export const getCourseByFilter  = async( data) => {
     return await axios.post(process.env.REACT_APP_API+'/get_course_filter', data)
 }
+
+export const getTeacherByCourseId  = async(data) => {
+    return await axios.post(process.env.REACT_APP_API+'/get_teacher_by_course_id', data)
+}

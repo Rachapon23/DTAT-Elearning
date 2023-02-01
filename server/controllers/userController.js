@@ -1,7 +1,9 @@
 
 const User = require('../models/userModel')
+const Course = require('../models/courseModel')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 //สมัครสมาชิก
 exports.register = async(req,res)=>{
@@ -98,3 +100,18 @@ exports.login = async (req, res) => {
       res.status(500).send("Server Error!!! on current user");
     }
   };
+  
+exports.getTeacherByCourseId = async (req, res) => {
+    try {
+      const {course_id} = req.body
+      const teacher = await Course.findOne({_id: course_id})
+      .populate("teacher")
+      .select("-password")
+      .exec();
+      console.log(teacher)
+      res.send(teacher);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Server Error!!! on get teacher by ID");
+    }
+};

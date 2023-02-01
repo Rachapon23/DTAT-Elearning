@@ -18,7 +18,9 @@ const TeachTimeSchema = new mongoose.Schema({
         type: ObjectId,
         ref:"users",
     },
-
+    floor: {
+        type: Number
+    }
 }, { timestamps: true });
 
 module.exports = TeachTime = mongoose.model("teachTime", TeachTimeSchema);

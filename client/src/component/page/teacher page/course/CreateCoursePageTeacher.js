@@ -17,7 +17,6 @@ const CreateCoursePageTeacher = () => {
 
     const handleChange = (e) => {
         setValue({ ...value, [e.target.name]: e.target.value });
-        // console.log(value)
     };
 
     const submit = (e) => {
@@ -43,48 +42,34 @@ const CreateCoursePageTeacher = () => {
         })
     }
 
-    // const getCurrentTeacher = () => {
-    //     currentTeacher(sessionStorage.getItem("token"))
-    //     .then(res => {
-    //         console.log("get current teacher success");
-    //         console.log(res.data)
-    //     })
-    //     .catch(err => {
-    //         console.log("fail to get current teacher");
-    //     })
-    // }
-
-    // useEffect(() => {
-    //     getCurrentTeacher();
-    // }, [])
-
     return (
         <div >
             <NavTeacher/>
-<div className="container">
-            <form className="p-5">
-                <div className="mb-3">
-                    <label className="form-label">Course Number</label>
-                    <input type="text" className="form-control" name="course_number" onChange={handleChange}/>
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Course Password</label>
-                    <input type="text" className="form-control" name="password" onChange={handleChange}/>
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Course Name</label>
-                    <input type="text" className="form-control" name="name" onChange={handleChange}/>
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Course Description</label>
-                    <input type="text" className="form-control" name="description" onChange={handleChange}/>
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Teacher</label>
-                    <input type="text" className="form-control" name="teacher" disabled value={sessionStorage.getItem("firstname")}/>
-                </div>
-                <button type="submit" className="btn btn-primary" onClick={submit}>Create</button>
-            </form></div>
+            <div className="border bg-white m-5">
+                <form className="p-5">
+                    <div className="mb-3">
+                        <label className="form-label">Course Number</label>
+                        <input type="text" className="form-control" name="course_number" onChange={handleChange}/>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Course Password</label>
+                        <input type="text" className="form-control" name="password" onChange={handleChange}/>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Course Name</label>
+                        <input type="text" className="form-control" name="name" onChange={handleChange}/>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Course Description</label>
+                        <input type="text" className="form-control" name="description" onChange={handleChange}/>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Teacher</label>
+                        <input type="text" className="form-control" name="teacher" disabled value={sessionStorage.getItem("firstname")}/>
+                    </div>
+                    <button type="submit" className="btn btn-primary" onClick={submit}>Create</button>
+                </form>
+            </div>
         </div>
     );
 }

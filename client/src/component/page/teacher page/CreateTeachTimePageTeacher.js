@@ -2,62 +2,87 @@ import { useEffect, useState } from "react";
 import NavTeacher from "../../layout/NavTeacher";
 import { listCourses } from "../../../function/funcFromStudent";
 import Swal from "sweetalert2";
-import { createTeachTime, listCoursesInTeachTime, listTeachTimes } from "../../../function/funcFromTeacher";
+import { createTeachTime, getTeacherByCourseId, listCoursesInTeachTime, listTeachTimes } from "../../../function/funcFromTeacher";
 import { Link } from "react-router-dom";
+import "./teacher.css";
 
 const CalendarPageTeacher = () => {
     const [value, setValue] = useState({
         course:"",
         start: undefined,
         end: undefined,
+        floor: 0,
         teacher: sessionStorage.getItem("user_id"),
     })
 
     const [courses, setCourses] = useState([]);
     const [teachTime, setTeachTime] = useState([]);
-
-    const [displayData, setDisplayData] = useState([]);
+    const [teacher, setTeacher] = useState("no teacher for this course");
 
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date().getMonth());
+
     const date = new Date(new Date().getFullYear(), month+1, 0);
     const date_start = new Date(year, month, 1)
-    // const date_end = new Date(2023, month, (new Date(2023, month, 0).getDate()))
+
     const today = new Date().getDate()
     const thisMonth = new Date().getMonth()
     const thisYear = new Date().getFullYear()
+    const finalDayInMonth = new Date(year, month+1, 0).getDate()
+    const [dayArray, setDayArray] = useState([]);
 
+    const renderCalendar = () => {
+        let day_counter = 0
+        let day_of_week_counter = 1
+        let dayArrayTemp = []
+        for(let i=1; i <= finalDayInMonth + date_start.getDay(); i++) {
+            if(day_of_week_counter %8 == 0) day_of_week_counter = 1; 
+            if(i <= date_start.getDay()) {
+                dayArrayTemp.push("");
+            }
+            else {
+                
+                day_counter++;
+                dayArrayTemp.push(day_counter);
+            }
+            day_of_week_counter++;
 
-    const finalDayInMonth = new Date(year, month, 0).getDate()
-    const dayArray = [];
-
-    let counter = 0
-    for(let i=1; i <= finalDayInMonth + date_start.getDay(); i++) {
-        // if(counter == finalDayInMonth) break
-        if(i <= date_start.getDay()) {
-            dayArray.push("");
-            // console.log(0);
         }
-        else {
-            counter++;
-            dayArray.push(counter);
-            // console.log(counter);
+        for(let i=0; i < 8-day_of_week_counter ; i++) {
+            dayArrayTemp.push("");
         }
-
+        setDayArray(dayArrayTemp)
     }
 
     
     const handleChange = (e) => {
-        console.log(e.target.name, e.target.value)
         setValue({ ...value, [e.target.name]: e.target.value });
-        // console.log(value)
+        
     };
+
+    const fetchTeacherByCourseId = () => {
+        if(value.course === "") return;
+        getTeacherByCourseId({course_id: value.course})
+        .then((response) => {
+            // setCourses(response.data)
+            console.log(response.data)
+            setTeacher(response.data.teacher.firstname)
+        })
+        .catch((err) => {
+            console.log(err)
+            Swal.fire(
+                "Alert!",
+                "Cannot fetch blogs data",
+                "error"
+            )
+        })
+    }
 
     const fetchCourse = () => {
         listCourses()
         .then((response) => {
-            // console.log(response)
             setCourses(response.data)
+            
         })
         .catch((err) => {
             console.log(err)
@@ -96,64 +121,6 @@ const CalendarPageTeacher = () => {
         })
     }
 
-    const dispalyCourse = (time) => {
-        // console.log(time)
-        let data = {
-            time: new Date(time),
-            user_id: sessionStorage.getItem("user_id"),
-        }
-        console.log(data)
-        listCoursesInTeachTime(sessionStorage.getItem("token"), data)
-        .then((response) => {
-            console.log(response)
-            setDisplayData(response.data)
-        })
-        .catch((err) => {
-            console.log(err)
-            Swal.fire(
-                "Alert!",
-                "Cannot fetch blogs data",
-                "error"
-            )
-        })
-        // teachTime.forEach((time, i) => {
-        //     if(index >= new Date(time.start).getDate() && index <= new Date(time.end).getDate()) {
-        //         console.log(index ,new Date(time.start).getDate() , index , new Date(time.end).getDate())
-        //         console.log(time.course)
-        //         setDisplayData(time.course)
-        //         setDisplayData(...displayData)
-                
-                
-        //     }
-        //     else {
-        //         console.log(index ,new Date(time.start).getDate() , index , new Date(time.end).getDate())
-        //         setDisplayData([]);
-        //     }
-            
-        // })
-    }
-
-    const dispalyCourseFirstLoad = () => {
-        // console.log(time)
-        let data = {
-            time: new Date(),
-            user_id: sessionStorage.getItem("user_id"),
-        }
-        listCoursesInTeachTime(sessionStorage.getItem("token"), data)
-        .then((response) => {
-            console.log(response)
-            setDisplayData(response.data)
-        })
-        .catch((err) => {
-            console.log(err)
-            Swal.fire(
-                "Alert!",
-                "Cannot fetch blogs data",
-                "error"
-            )
-        })
-    }
-
     const [backgroundTableColor, setBackgroundTableColor] = useState("table-secondary")
     const [mouseHover, setMouseHover] = useState(false)
     const [mouseOn, setMouseOn] = useState(0)
@@ -188,11 +155,21 @@ const CalendarPageTeacher = () => {
         setMonth(newMonth)
     }
 
+    const handleSelect = (index) => {
+        console.log("teacher",index)
+        // setTeacher(courses[index].teacher.firstname)
+        // console.log(teacher)
+    }
+
     useEffect(() => {
         fetchCourse();
         fetchTeachTime();
-        dispalyCourseFirstLoad();
+        renderCalendar()
     }, [])
+
+    useEffect(() => {
+        fetchTeacherByCourseId()
+    }, [value])
 
     return (
         <div >
@@ -205,20 +182,16 @@ const CalendarPageTeacher = () => {
                     <Link><h2 className="bi bi-arrow-right-circle pt-3 me-4" onClick={changeMonthUp}></h2></Link>
                 </div>
                 
-                {/* {new Date(2023, 1, 0).getDate()} */}
-                {/* {date_start.getDay()} {date_end.getDay()} */}
-                {/* {month}{year} */}
-                {/* {JSON.stringify(displayData)} */}
-                    <table className="table text-center">
+                    <table className="table text-center table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col"> Sunday</th>
-                                <th scope="col"> Monday</th>
-                                <th scope="col"> Thursday</th>
-                                <th scope="col"> Wednesday</th>
-                                <th scope="col"> Thursday</th>
-                                <th scope="col"> Friday</th>
-                                <th scope="col"> Saturday</th>
+                                <th scope="col" id="table_header"> Sunday</th>
+                                <th scope="col" id="table_header"> Monday</th>
+                                <th scope="col" id="table_header"> Thursday</th>
+                                <th scope="col" id="table_header"> Wednesday</th>
+                                <th scope="col" id="table_header"> Thursday</th>
+                                <th scope="col" id="table_header"> Friday</th>
+                                <th scope="col" id="table_header"> Saturday</th>
                             </tr>
                         </thead>
                         
@@ -231,7 +204,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     className="table-primary"
                                                 > 
                                                     {day}
@@ -241,7 +213,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     onMouseEnter={() => changeBackgroundColor(index)}
                                                     onMouseOut={() => changeBackgroundColorBack()}
                                                     className={`${mouseHover && index === mouseOn ? backgroundTableColor:""}`}
@@ -260,7 +231,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     className="table-primary"
                                                 > 
                                                     {day}
@@ -270,7 +240,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     onMouseEnter={() => changeBackgroundColor(index+7)}
                                                     onMouseOut={() => changeBackgroundColorBack()}
                                                     className={`${mouseHover && index+7 === mouseOn ? backgroundTableColor:""}`}
@@ -288,8 +257,7 @@ const CalendarPageTeacher = () => {
                                             (
                                                 <th 
                                                     scope="col" 
-                                                    key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
+                                                    key={index}
                                                     className="table-primary"
                                                 > 
                                                     {day}
@@ -299,7 +267,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     onMouseEnter={() => changeBackgroundColor(index+14)}
                                                     onMouseOut={() => changeBackgroundColorBack()}
                                                     className={`${mouseHover && index+14 === mouseOn ? backgroundTableColor:""}`}
@@ -318,7 +285,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     className="table-primary"
                                                 > 
                                                     {day}
@@ -328,7 +294,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     onMouseEnter={() => changeBackgroundColor(index+21)}
                                                     onMouseOut={() => changeBackgroundColorBack()}
                                                     className={`${mouseHover && index+21 === mouseOn ? backgroundTableColor:""}`}
@@ -347,7 +312,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     className="table-primary"
                                                 > 
                                                     {day}
@@ -357,7 +321,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     onMouseEnter={() => changeBackgroundColor(index+28)}
                                                     onMouseOut={() => changeBackgroundColorBack()}
                                                     className={`${mouseHover && index+28 === mouseOn ? backgroundTableColor:""}`}
@@ -376,7 +339,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     className="table-primary"
                                                 > 
                                                     {day}
@@ -386,7 +348,6 @@ const CalendarPageTeacher = () => {
                                                 <th 
                                                     scope="col" 
                                                     key={index} 
-                                                    onClick={() => dispalyCourse(new Date(year, month, day))}
                                                     onMouseEnter={() => changeBackgroundColor(index+5)}
                                                     onMouseOut={() => changeBackgroundColorBack(index)}
                                                     className={`${mouseHover && index+5 === mouseOn ? backgroundTableColor:""}`}
@@ -415,22 +376,28 @@ const CalendarPageTeacher = () => {
                             <option disabled selected value="">เลือกวิชาที่ต้องการ</option>
                             {courses.map((item, index) => (
                                 <option key={index} value={item._id}>{item.name}</option>
+                                
                             ))}
                         </select>
                     </div>
                     <div className="mb-2">
                         <label className="form-label mb-2">Start</label>
-                        <input type="date" className="form-control" name="start" onChange={handleChange}/>
+                        <input type="date" className="form-control" name="start" onSelect={handleChange}/>
                     </div>
                     
                     <div className="mb-2">
                         <label className="form-label">End</label>
                         <input type="date" className="form-control" name="end" onChange={handleChange}/>
                     </div>
+
+                    <div className="mb-2">
+                        <label className="form-label">Floor</label>
+                        <input type="number" className="form-control" name="floor" onChange={handleChange}/>
+                    </div>
                     
                     <div className="mb-2">
                         <label className="form-label">Teacher</label>
-                        <input type="text" className="form-control" name="teacher" disabled value={sessionStorage.getItem("firstname")} onChange={handleChange}/>
+                        <input type="text" className="form-control" name="teacher" disabled value={teacher} onChange={handleChange}/>
                     </div>
                 
                     <button type="button" className="btn btn-primary" onClick={submit}>Create</button>
