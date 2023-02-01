@@ -8,7 +8,8 @@ const {checkUser,checkAdmin,checkTeacher} = require('../middleware/middleward')
 const {
     register,
     login,
-    currentUser
+    currentUser,
+    getTeacherByCourseId,
 } = require('../controllers/userController')
 
 //สมัครสมาชิก
@@ -19,6 +20,8 @@ router.post('/login',login)
 router.post('/current-user',checkUser,currentUser)
 router.post('/current-teacher',checkUser,checkTeacher,currentUser)
 router.post('/current-admin',checkUser,checkAdmin,currentUser)
+router.post('/get_teacher_by_course_id', getTeacherByCourseId)
+
 
 
 

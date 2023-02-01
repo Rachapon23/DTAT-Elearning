@@ -22,12 +22,8 @@ const CalendarPageTeacher = () => {
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date().getMonth());
 
-    const [cellSelected, setCellSelected] = useState(false)
-
     const date = new Date(new Date().getFullYear(), month+1, 0);
     const date_start = new Date(year, month, 1)
-    const next_mount_date_start = new Date(year, month+1, 1)
-    // const date_end = new Date(2023, month, (new Date(2023, month, 0).getDate()))
     const today = new Date().getDate()
     const thisMonth = new Date().getMonth()
     const thisYear = new Date().getFullYear()
@@ -111,7 +107,6 @@ const CalendarPageTeacher = () => {
     }
 
     const dispalyCourse = (time) => {
-        setCellSelected(true)
         let data = {
             time: new Date(time),
             user_id: sessionStorage.getItem("user_id"),

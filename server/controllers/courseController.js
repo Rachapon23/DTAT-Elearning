@@ -1,6 +1,6 @@
 const Courses = require("../models/courseModel");
 const User = require('../models/userModel')
-const  ObjectId = require('mongoose').Types.ObjectId; 
+const ObjectId = require('mongoose').Types.ObjectId; 
 
 exports.createCourse = async (req, res) => {
     try {
