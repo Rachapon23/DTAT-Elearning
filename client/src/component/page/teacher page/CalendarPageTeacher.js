@@ -4,6 +4,7 @@ import { listCourses } from "../../../function/funcFromStudent";
 import Swal from "sweetalert2";
 import { createTeachTime, listCoursesInTeachTime, listTeachTimes } from "../../../function/funcFromTeacher";
 import { Link } from "react-router-dom";
+import "./teacher.css";
 
 const CalendarPageTeacher = () => {
     const [value, setValue] = useState({
@@ -20,32 +21,45 @@ const CalendarPageTeacher = () => {
 
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date().getMonth());
+
+    const [cellSelected, setCellSelected] = useState(false)
+
     const date = new Date(new Date().getFullYear(), month+1, 0);
     const date_start = new Date(year, month, 1)
+    const next_mount_date_start = new Date(year, month+1, 1)
     // const date_end = new Date(2023, month, (new Date(2023, month, 0).getDate()))
     const today = new Date().getDate()
     const thisMonth = new Date().getMonth()
     const thisYear = new Date().getFullYear()
+    const finalDayInMonth = new Date(year, month+1, 0).getDate()
+    const [dayArray, setDayArray] = useState([]);
 
+    const renderCalendar = () => {
+        let day_counter = 0
+        let day_of_week_counter = 1
+        let dayArrayTemp = []
+        for(let i=1; i <= finalDayInMonth + date_start.getDay(); i++) {
+            if(day_of_week_counter %8 == 0) day_of_week_counter = 1; 
+            if(i <= date_start.getDay()) {
+                dayArrayTemp.push("");
+                // console.log(0);
+            }
+            else {
+                
+                day_counter++;
+                dayArrayTemp.push(day_counter);
+                // console.log(counter);
+            }
+            day_of_week_counter++;
+            // console.log(i)
 
-    const finalDayInMonth = new Date(year, month, 0).getDate()
-    const dayArray = [];
-
-    let counter = 0
-    for(let i=1; i <= finalDayInMonth + date_start.getDay(); i++) {
-        // if(counter == finalDayInMonth) break
-        if(i <= date_start.getDay()) {
-            dayArray.push("");
-            // console.log(0);
         }
-        else {
-            counter++;
-            dayArray.push(counter);
-            // console.log(counter);
+        // console.log(day_of_week_counter)
+        for(let i=0; i < 8-day_of_week_counter ; i++) {
+            dayArrayTemp.push("");
         }
-
+        setDayArray(dayArrayTemp)
     }
-
     
     const handleChange = (e) => {
         console.log(e.target.name, e.target.value)
@@ -97,7 +111,7 @@ const CalendarPageTeacher = () => {
     }
 
     const dispalyCourse = (time) => {
-        // console.log(time)
+        setCellSelected(true)
         let data = {
             time: new Date(time),
             user_id: sessionStorage.getItem("user_id"),
@@ -194,6 +208,10 @@ const CalendarPageTeacher = () => {
         dispalyCourseFirstLoad();
     }, [])
 
+    useEffect(() => {
+        renderCalendar()
+    }, [])
+
     return (
         <div >
             <NavTeacher />
@@ -209,16 +227,16 @@ const CalendarPageTeacher = () => {
                 {/* {date_start.getDay()} {date_end.getDay()} */}
                 {/* {month}{year} */}
                 {/* {JSON.stringify(displayData)} */}
-                    <table className="table text-center">
+                    <table className="table text-center table-bordered" >
                         <thead>
-                            <tr>
-                                <th scope="col"> Sunday</th>
-                                <th scope="col"> Monday</th>
-                                <th scope="col"> Thursday</th>
-                                <th scope="col"> Wednesday</th>
-                                <th scope="col"> Thursday</th>
-                                <th scope="col"> Friday</th>
-                                <th scope="col"> Saturday</th>
+                            <tr >
+                                <th scope="col" id="table_header"> Sunday</th>
+                                <th scope="col" id="table_header"> Monday</th>
+                                <th scope="col" id="table_header"> Thursday</th>
+                                <th scope="col" id="table_header"> Wednesday</th>
+                                <th scope="col" id="table_header"> Thursday</th>
+                                <th scope="col" id="table_header"> Friday</th>
+                                <th scope="col" id="table_header"> Saturday</th>
                             </tr>
                         </thead>
                         
