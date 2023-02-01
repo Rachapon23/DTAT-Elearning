@@ -61,6 +61,7 @@ const CreateCoursePageTeacher = () => {
     return (
         <div >
             <NavTeacher/>
+<div className="container">
             <form className="p-5">
                 <div className="mb-3">
                     <label className="form-label">Course Number</label>
@@ -83,7 +84,7 @@ const CreateCoursePageTeacher = () => {
                     <input type="text" className="form-control" name="teacher" disabled value={sessionStorage.getItem("firstname")}/>
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={submit}>Create</button>
-            </form>
+            </form></div>
         </div>
     );
 }

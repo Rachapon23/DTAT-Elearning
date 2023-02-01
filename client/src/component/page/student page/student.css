@@ -5,3 +5,12 @@
     background-color: #ff7518;
 
 }
+.body-card{
+    background-color: rgba(225, 245, 254, 1);
+}
+.search{
+    background-color: rgba(225, 245, 254, 1);
+}
+.card-h{
+    height: 350px;
+}
