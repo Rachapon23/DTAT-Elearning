@@ -1,46 +1,46 @@
 const Courses = require("../models/courseModel");
 const User = require('../models/userModel')
-const ObjectId = require('mongoose').Types.ObjectId; 
+const ObjectId = require('mongoose').Types.ObjectId;
 
 
 const Coursee = require('../models/course')
- 
+
 exports.createCourse = async (req, res) => {
     try {
 
 
-        const {head,body} = req.body
+        const { head, body } = req.body
 
 
 
-        if(!head.password){
+        if (!head.password) {
             const status = "public"
-                   const course = new Coursee(
-            {
-               name:head.name,
-               description:head.description,
-               course_number:head.course_number,
-               password:head.password,
-              teacher:head.teacher,
-              status:status,
-              topic:body,
-
-            }
-        )
-        // console.log(course)
-        await course.save()
-        res.send('OK Public')
-        
-        }else{
             const course = new Coursee(
                 {
-                   name:head.name,
-                   description:head.description,
-                   course_number:head.course_number,
-                   password:head.password,
-                  teacher:head.teacher,
-                  topic:body,
-    
+                    name: head.name,
+                    description: head.description,
+                    course_number: head.course_number,
+                    password: head.password,
+                    teacher: head.teacher,
+                    status: status,
+                    topic: body,
+
+                }
+            )
+            // console.log(course)
+            await course.save()
+            res.send('OK Public')
+
+        } else {
+            const course = new Coursee(
+                {
+                    name: head.name,
+                    description: head.description,
+                    course_number: head.course_number,
+                    password: head.password,
+                    teacher: head.teacher,
+                    topic: body,
+
                 }
             )
             // console.log(course)
@@ -50,7 +50,7 @@ exports.createCourse = async (req, res) => {
 
 
 
-       
+
     }
     catch (err) {
         console.log("fail to create the course");
@@ -85,7 +85,7 @@ exports.createCourse = async (req, res) => {
 //                 res.json(course);
 //             })
 //         }
-       
+
 //     }
 //     catch (err) {
 //         console.log("fail to create the course");
@@ -97,9 +97,9 @@ exports.listCourses = async (req, res) => {
     try {
 
         await Coursee.find({}).populate("teacher", "-password")
-        .exec((err, courses) => {
-            res.json(courses);
-        });
+            .exec((err, courses) => {
+                res.json(courses);
+            });
 
     }
     catch (err) {
@@ -111,10 +111,10 @@ exports.listCourses = async (req, res) => {
 exports.publicCourses = async (req, res) => {
     try {
 
-        await Coursee.find({status:"public"})
-        .exec((err, courses) => {
-            res.json(courses);
-        });
+        await Coursee.find({ status: "public" })
+            .exec((err, courses) => {
+                res.json(courses);
+            });
 
     }
     catch (err) {
@@ -124,11 +124,11 @@ exports.publicCourses = async (req, res) => {
 }
 
 exports.getCourse = async (req, res) => {
-try {
-    const { id } = req.params
-    const course = await Coursee.findOne({ _id: id })
-        .populate('teacher')
-        .exec()
+    try {
+        const { id } = req.params
+        const course = await Coursee.findOne({ _id: id })
+            .populate('teacher')
+            .exec()
         res.send(course)
     }
     catch (err) {
@@ -139,8 +139,8 @@ try {
 exports.searchCourse = async (req, res) => {
     try {
         const { query } = req.body
-           console.log(query)
-        let courseSearch = await Coursee.find({ course_number: { $regex: query },status:"private" }).populate("teacher", "firstname").exec()
+        console.log(query)
+        let courseSearch = await Coursee.find({ course_number: { $regex: query }, status: "private" }).populate("teacher", "firstname").exec()
         //$text:{$search:"110011"}
         res.send(courseSearch)
     }
@@ -157,25 +157,25 @@ exports.addCourse = async (req, res) => {
         const courseSearch = await Coursee.findOne({ _id: id }).exec()
         let user = await User.findOne({ _id: id_user }).exec()
         user.coursee.push(id)
-        const  user_push = user.coursee
+        const user_push = user.coursee
 
 
         // console.log(user_push)
         // console.log(courseSearch.password)
 
-        if(password == courseSearch.password){
+        if (password == courseSearch.password) {
             console.log('math')
             const user_update = await User.findByIdAndUpdate(
                 { _id: id_user },
                 { coursee: user_push }
             ).exec()
-             res.send(user_update)
+            res.send(user_update)
 
-        }else{
+        } else {
             return res.status(400).send("Password Invalid!!!");
         }
         // res.send("ok")
-   
+
     }
     catch (err) {
         console.log(err);
@@ -186,11 +186,11 @@ exports.addCourse = async (req, res) => {
 
 exports.getMyCourse = async (req, res) => {
     try {
-        const {id} = req.params
+        const { id } = req.params
         const user = await User.findOne({ _id: id })
-        .populate("coursee")
-        .select("coursee")
-        .exec()
+            .populate("coursee")
+            .select("coursee")
+            .exec()
         res.send(user)
     }
     catch (err) {
@@ -202,17 +202,17 @@ exports.getMyCourse = async (req, res) => {
 
 exports.deleteMyCourse = async (req, res) => {
     try {
-        const {id} = req.params
-        const {user_id} = req.body
-        const {coursee} = await User.findOne({ _id: user_id })
-        .select("coursee")
-        .exec()
+        const { id } = req.params
+        const { user_id } = req.body
+        const { coursee } = await User.findOne({ _id: user_id })
+            .select("coursee")
+            .exec()
         // console.log("before:",coursee)
-        for(let i = 0 ; i<coursee.length; i++){
-            
-            if(coursee[i] == id){
-            //   console.log(course[i],"--",id)  
-            coursee.splice(coursee.indexOf(coursee[i]), 1);
+        for (let i = 0; i < coursee.length; i++) {
+
+            if (coursee[i] == id) {
+                //   console.log(course[i],"--",id)  
+                coursee.splice(coursee.indexOf(coursee[i]), 1);
 
             }
         }
@@ -221,7 +221,7 @@ exports.deleteMyCourse = async (req, res) => {
             { _id: user_id },
             { coursee: coursee }
         ).exec()
-// console.log(id,user_id)
+        // console.log(id,user_id)
         res.send(user_update)
     }
     catch (err) {
@@ -232,30 +232,57 @@ exports.deleteMyCourse = async (req, res) => {
 
 exports.getCourseByFilter = async (req, res) => {
     try {
-        const {user_id} = req.body;
-        const {filter} = req.body;
+        const { user_id } = req.body;
+        const { filter } = req.body;
         console.log(req.body)
 
-        console.log(typeof(filter))
+        console.log(typeof (filter))
         console.log(filter === "my_course")
 
-        if(filter === "my_course") {
+        if (filter === "my_course") {
             console.log(filter)
             const isValidUser = await User.findOne({ _id: user_id }).exec()
-            if(isValidUser) {
+            if (isValidUser) {
                 const courses = await Coursee.find({ teacher: ObjectId(user_id) }).populate("teacher", "-password").exec()
                 res.send(courses)
             }
         }
         else {
             await Coursee.find({}).populate("teacher", "-password")
-            .exec((err, courses) => {
-                res.json(courses);
-            });
+                .exec((err, courses) => {
+                    res.json(courses);
+                });
         }
     }
     catch (err) {
         console.log(err);
         res.status(500).send("Server Error!!! on getMyCourse");
+    }
+}
+exports.updateCourse = async (req, res) => {
+    try {
+        const { head, body } = req.body
+        // console.log(head,body)
+
+        const course = await Coursee.findOneAndUpdate(
+            { _id: head._id }
+            , { new: true, 
+                name: head.name,
+                description: head.description,
+                course_number:head.course_number,
+                password:head.password,
+                topic:body
+             },
+     
+
+        ).exec()
+
+
+        res.send("update success")
+
+    }
+    catch (err) {
+        console.log("fail to update the course topic: ", err);
+        res.status(500).json({ error: "fail to update the course topic" })
     }
 }
