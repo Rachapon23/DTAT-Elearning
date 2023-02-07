@@ -28,9 +28,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: "student",
     },
-    course: [{
+    coursee: [{
         type: ObjectId,
-        ref:"course"
+        ref:"coursee"
     }],
     enabled:{
         type:Boolean,

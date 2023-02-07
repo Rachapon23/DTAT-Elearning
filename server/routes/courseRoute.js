@@ -1,21 +1,45 @@
 const express = require("express");
 const router = express.Router();
 
-const { listCourses, createCourse, getCourse, searchCourse, addCourse, getMyCourse, deleteMyCourse,publicCourses, getCourseByFilter } = require("../controllers/courseController");
+const {
+    listCourses,
+    createCourse,
+    searchCourse,
+    addCourse,
+    getMyCourse,
+    getCourse,
+    publicCourses,
+    deleteMyCourse,
+    getCourseByFilter
+} = require("../controllers/courseController");
 
 // student
-router.get("/list_courses", listCourses);
-router.get("/list_public_courses", publicCourses);
-router.post("/get_course", getCourse);
-//my course
-router.post("/get_my_course/:id", getMyCourse);
-router.post("/delete_my_course/:id", deleteMyCourse);
+// router.get("/list_courses", listCourses);
 
+// router.post("/get_course", getCourse);
+// //my course
+// router.post("/get_my_course/:id", getMyCourse);
+// router.post("/delete_my_course/:id", deleteMyCourse);
+
+// router.post("/searchcourse", searchCourse);
+// router.post("/addchcourse", addCourse);
+
+// // teacher
+// router.post("/create_course", createCourse);
+
+
+// // teacher
+router.post("/create-course", createCourse);
+router.get("/list-courses", listCourses);
+router.post("/get-course-filter", getCourseByFilter);
+
+// student
 router.post("/searchcourse", searchCourse);
 router.post("/addchcourse", addCourse);
+router.post("/get-my-course/:id", getMyCourse);
+router.post("/get-course/:id", getCourse);
+router.get("/list-public-courses", publicCourses);
+router.post("/delete-my-course/:id", deleteMyCourse);
 
-// teacher
-router.post("/create_course", createCourse);
-router.post("/get_course_filter", getCourseByFilter);
 
 module.exports = router

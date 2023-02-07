@@ -53,7 +53,7 @@ const Topic = ({ topic, index, courseTopics, dataQuiz, materials, setMaterials }
                 <h4 onClick={() => handleAddMaterial(index)}
                     className="text-primary mb-0 " data-bs-toggle="dropdown" aria-expanded="false">+</h4>
             </div>
-            <hr className="mt-0" />
+            
             {
                 topic.materials.map((material, m_index) => (
                     <div key={m_index}>

@@ -1,16 +1,28 @@
 import axios from 'axios';
 
-export const createCourse  = async(data) => {
-    return await axios.post(process.env.REACT_APP_API+'/create_course', data);
-}
+// export const createCourse  = async(data) => {
+//     return await axios.post(process.env.REACT_APP_API+'/create_course', data);
+// }
 
-export const createQuiz  = async(authtoken,value) => 
-    await axios.post(process.env.REACT_APP_API+'/quiz/create',value,
-    {
-    headers:{
-        authtoken,
-    }
-});
+// export const createQuiz  = async(authtoken,nameQuiz,value) => 
+//     await axios.post(process.env.REACT_APP_API+'/quiz/create',nameQuiz,value,
+//     {
+//     headers:{
+//         authtoken,
+//     }
+// });
+
+// export const listQuiz  = async(authtoken,id) =>  
+//     await axios.get(process.env.REACT_APP_API+'/quiz/listquiz/'+id,  //parame ค่อยมาคิดว่าจะเอาอะไร
+//     {
+//     headers:{
+//         authtoken,
+//     }
+// });
+
+
+
+//----------------------------------------------------------------------------------------.
 
 export const createQusetion  = async(authtoken,params,value) => 
     await axios.put(process.env.REACT_APP_API+'/quiz/createqusetion/'+params,{value},
@@ -19,6 +31,7 @@ export const createQusetion  = async(authtoken,params,value) =>
         authtoken,
     }
 });
+
 export const createExaminer = async(authtoken,params,value) => 
     await axios.put(process.env.REACT_APP_API+'/quiz/createexaminer/'+params,{value},
     {
@@ -27,13 +40,7 @@ export const createExaminer = async(authtoken,params,value) =>
     }
 });
 
-export const listQuizby  = async(authtoken,params) => 
-    await axios.get(process.env.REACT_APP_API+'/quiz/listquizby/'+params,
-    {
-    headers:{
-        authtoken,
-    }
-});
+
 export const listquizUser  = async(authtoken,{params}) => 
     await axios.get(process.env.REACT_APP_API+'/quiz/listquizuser/'+params,
     {
@@ -48,7 +55,7 @@ export const removeQuiz  = async(authtoken,params) =>
         authtoken,
     }
 });
-export const listQuiz  = async(authtoken) => 
+export const listQuizzz  = async(authtoken) => 
     await axios.get(process.env.REACT_APP_API+'/quiz/listquiz/',
     {
     headers:{
@@ -64,13 +71,8 @@ export const getStudentby  = async(authtoken,{params}) =>
     }
 });
 
-// export const listQuizbyUser  = async(authtoken,params) => 
-//     await axios.get(process.env.REACT_APP_API+'/quiz/listquizbyuser/'+params,
-//     {
-//     headers:{
-//         authtoken,
-//     }
-// });
+//-------------------------------------------------------------------------------------.
+
 export const CreateTopic  = async(authtoken,courseTopics) => 
     await axios.post(process.env.REACT_APP_API+'/create_course_topic',courseTopics,
     {
@@ -111,9 +113,7 @@ export const listCoursesInTeachTime  = async(authtoken, data) =>
     }
 });
 
-export const getCourseByFilter  = async( data) => {
-    return await axios.post(process.env.REACT_APP_API+'/get_course_filter', data)
-}
+
 
 export const getTeacherByCourseId  = async(data) => {
     return await axios.post(process.env.REACT_APP_API+'/get_teacher_by_course_id', data)

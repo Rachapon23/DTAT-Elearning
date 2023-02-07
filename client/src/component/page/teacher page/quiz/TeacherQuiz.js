@@ -1,6 +1,6 @@
 import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
-import { createQuiz, listQuiz, removeQuiz } from '../../../../function/funcFromTeacher'
+// import { createQuiz, listQuiz, removeQuiz } from '../../../../function/funcFromTeacher'
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Swal from 'sweetalert2'
@@ -23,19 +23,19 @@ const TeacherQuiz = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     //  console.log(value)
-    createQuiz(sessionStorage.getItem("token"), value)
-      .then(res => {
-        console.log(res)
-        navigate("/teacher/create-quiz/create-question/" + res.data._id);
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  //   createQuiz(sessionStorage.getItem("token"), value)
+  //     .then(res => {
+  //       console.log(res)
+  //       navigate("/teacher/create-quiz/create-question/" + res.data._id);
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
   };
   const handdleDetail = (e) => {
     // e.preventDefault();
     console.log(e)
-  navigate("/teacher/detail-quiz/" + e);
+  // navigate("/teacher/detail-quiz/" + e);
     
   };
   useEffect(() => {
@@ -43,50 +43,50 @@ const TeacherQuiz = () => {
   }, [])
   const loadData = () => {
     setLoading(true)
-    listQuiz(sessionStorage.getItem("token"))
-      .then(res => {
-        console.log(res)
-        setDataQuiz(res.data)
-        setLoading(false)
-      })
-      .catch(err => {
-        console.log(err)
-        setLoading(false)
-      })
+    // listQuiz(sessionStorage.getItem("token"))
+    //   .then(res => {
+    //     console.log(res)
+    //     setDataQuiz(res.data)
+    //     setLoading(false)
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     setLoading(false)
+    //   })
   }
   const remove = (params) => {
     console.log(params)
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        removeQuiz(sessionStorage.getItem("token"),
-          params).then(res => {
-            console.log(res)
-            Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
-            loadData()
-          }).catch(err => {
-            console.log(err)
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-              footer: '<a href="">Why do I have this issue?</a>'
-            })
-          })
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, delete it!'
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     removeQuiz(sessionStorage.getItem("token"),
+    //       params).then(res => {
+    //         console.log(res)
+    //         Swal.fire(
+    //           'Deleted!',
+    //           'Your file has been deleted.',
+    //           'success'
+    //         )
+    //         loadData()
+    //       }).catch(err => {
+    //         console.log(err)
+    //         Swal.fire({
+    //           icon: 'error',
+    //           title: 'Oops...',
+    //           text: 'Something went wrong!',
+    //           footer: '<a href="">Why do I have this issue?</a>'
+    //         })
+    //       })
 
-      }
-    })
+    //   }
+    // })
   }
 
   return (

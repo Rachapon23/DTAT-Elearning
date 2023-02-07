@@ -59,11 +59,7 @@ const Login = () => {
 
   return (
     <div className="">
-      <nav class="navbar">
-
-       <div className="arrow-d1 w-75 h-100"></div>
-        <div className="arrow-d2 w-25 h-100"></div>
-
+      <nav class="navbar navbar-expand-md navbar-light nav-bg">
         <div className="container">
           <a class="navbar-brand text-white brand" href="/">E-learning</a>
         </div>
