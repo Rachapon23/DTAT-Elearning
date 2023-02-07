@@ -12,7 +12,7 @@ const CalendarPageTeacher = () => {
         start: undefined,
         end: undefined,
         floor: 0,
-        teacher: sessionStorage.getItem("user_id"),
+        teacher: "",
     })
 
     const [courses, setCourses] = useState([]);
@@ -111,8 +111,21 @@ const CalendarPageTeacher = () => {
     }
 
     const submit = () => {
-        console.log(value)
-        createTeachTime(sessionStorage.getItem("token"), value)
+        const {
+            course,
+            start,
+            end,
+            floor,
+        } = value
+        let data = {
+            course: course,
+            start: start,
+            end: end,
+            floor: floor,
+            teacher: teacher._id
+        }
+        console.log(teacher)
+        createTeachTime(sessionStorage.getItem("token"), data)
         .then((response) => {
             // console.log(response)
         })
