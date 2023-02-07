@@ -2,7 +2,7 @@ import React from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useEffect, useState } from "react";
-import { listQuiz, } from "../../../../function/funcFromTeacher";
+// import { listQuiz, } from "../../../../function/funcFromTeacher";
 
 const EditToppic = ({ item, setTopic, topic, index }) => {
     const quillToolbar = {
@@ -34,13 +34,13 @@ const EditToppic = ({ item, setTopic, topic, index }) => {
     
     // console.log(value)
     const loadData = () => {
-        listQuiz(sessionStorage.getItem("token"))
-            .then(res => {
-                setDataQuiz(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        // listQuiz(sessionStorage.getItem("token"))
+        //     .then(res => {
+        //         setDataQuiz(res.data)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
     }
 
     return (

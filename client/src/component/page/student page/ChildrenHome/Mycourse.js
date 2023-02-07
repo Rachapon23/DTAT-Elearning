@@ -1,5 +1,4 @@
 import React from 'react'
-import { deleteMyCourse } from '../../../../function/funcFromStudent'
 import Swal from 'sweetalert2'
 import { Navigate, useNavigate } from 'react-router-dom'
 import '../student.css'
@@ -10,34 +9,6 @@ const Mycourse = ({ data, loadMycourse }) => {
 
   const navigate = useNavigate()
 
-  const handleRemove = (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteMyCourse(sessionStorage.getItem("user_id"), id).then(res => {
-          console.log(res)
-          loadMycourse()
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }).catch(err => {
-          console.log(err)
-        })
-
-      }
-    })
-
-
-  }
   const nextToCourse = (params) =>{
 console.log(params)
 navigate('/student/get-course/'+params)

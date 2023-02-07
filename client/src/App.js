@@ -23,6 +23,10 @@ import ScoreDetail from "./component/page/teacher page/score/ScoreDetail";
 import CoursesPageteacher from "./component/page/teacher page/course/CoursesPageteacher";
 import CoursePageteacher from "./component/page/teacher page/course/CoursePageteacher";
 import CreateTeachTimePageTeacher from "./component/page/teacher page/CreateTeachTimePageTeacher";
+// --new--
+import Quiz from "./component/page/teacher page/quiz/Quiz";
+import Course from "./component/page/teacher page/course/Course";
+import EditCourse from "./component/page/teacher page/course/EditCourse";
 
 
 
@@ -44,12 +48,12 @@ function App() {
 
   return (
     <div>
-      <Allpage/>
+      <Allpage />
       <Routes>
         {/* auth */}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/reset-password" element={<ResetPassword/>}></Route>
+        <Route path="/reset-password" element={<ResetPassword />}></Route>
 
         {/* admin */}
         <Route path="/admin/home" element={<HomePageadmin />} />
@@ -59,13 +63,18 @@ function App() {
 
         {/* teacher */}
         <Route path="/teacher/home" element={<HomePageTeacher />} />
-        <Route path="/teacher/create-quiz" element={<TeacherQuiz />} />
-        <Route path="/teacher/create-quiz/create-question/:params" element={<Question />} />
-        <Route path="/teacher/detail-quiz/:params" element={<QuizDetail />} />
+        {/* <Route path="/teacher/create-quiz" element={<TeacherQuiz />} /> */}
+        {/* <Route path="/teacher/create-quiz/create-question/:params" element={<Question />} /> */}
+        {/* <Route path="/teacher/detail-quiz/:params" element={<QuizDetail />} /> */}
 
-        <Route path="/teacher/create-course" element={<CreateCoursePageTeacher />} />
+        {/* new */}
+        <Route path="/teacher/quiz" element={<Quiz />} />
+        <Route path="/teacher/course" element={<Course />} />
+        <Route path="/teacher/edit-course/:id" element={<EditCourse />} />
+
+        {/* <Route path="/teacher/create-course" element={<CreateCoursePageTeacher />} /> */}
         <Route path="/teacher/list-courses" element={<CoursesPageteacher />} />
-        <Route path="/teacher/edit-course/:id" element={<EditCoursePageTeacher />} />
+
         <Route path="/teacher/get-course/:id" element={<CoursePageteacher />} />
 
         <Route path="/teacher/list-score" element={<Score />} />
@@ -75,7 +84,7 @@ function App() {
 
         {/* student */}
         <Route path="/student/home" element={<HomePageStudent />} />
-        <Route path="/student/list-courses" element={<CoursesPageStudent />} />
+        {/* <Route path="/student/list-courses" element={<CoursesPageStudent />} /> */}
         <Route path="/student/get-course/:id" element={<CoursePageStudent />} />
         <Route path="/student/test/:params" element={<Dotest />} />
 

@@ -21,25 +21,25 @@ const CreateCoursePageTeacher = () => {
 
     const submit = (e) => {
         e.preventDefault();
-        createCourse(value)
-        .then(res => {
-            console.log(res)
-            Swal.fire(
-                'Create Success',
-                'Create Success',
-                'success'
-              )
-            //   window.location.reload(false);
-            navigate('/teacher/edit-course/'+res.data._id)
-        })
+        // createCourse(value)
+        // .then(res => {
+        //     console.log(res)
+        //     Swal.fire(
+        //         'Create Success',
+        //         'Create Success',
+        //         'success'
+        //       )
+        //     //   window.location.reload(false);
+        //     navigate('/teacher/edit-course/'+res.data._id)
+        // })
         
-        .catch(err => {
-            Swal.fire(
-                'Fail to Create Success',
-                'Fail to Create Success',
-                'error'
-              )
-        })
+        // .catch(err => {
+        //     Swal.fire(
+        //         'Fail to Create Success',
+        //         'Fail to Create Success',
+        //         'error'
+        //       )
+        // })
     }
 
     return (

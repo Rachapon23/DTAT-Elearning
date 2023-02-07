@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import NavTeacher from "../../layout/NavTeacher";
-import { listCourses } from "../../../function/funcFromStudent";
+// import { listCourses } from "../../../function/funcFromStudent";
 import Swal from "sweetalert2";
 import { createTeachTime, getTeacherByCourseId, listCoursesInTeachTime, listTeachTimes } from "../../../function/funcFromTeacher";
 import { Link } from "react-router-dom";
@@ -79,19 +79,19 @@ const CalendarPageTeacher = () => {
     }
 
     const fetchCourse = () => {
-        listCourses()
-        .then((response) => {
-            setCourses(response.data)
+        // listCourses()
+        // .then((response) => {
+        //     setCourses(response.data)
             
-        })
-        .catch((err) => {
-            console.log(err)
-            Swal.fire(
-                "Alert!",
-                "Cannot fetch blogs data",
-                "error"
-            )
-        })
+        // })
+        // .catch((err) => {
+        //     console.log(err)
+        //     Swal.fire(
+        //         "Alert!",
+        //         "Cannot fetch blogs data",
+        //         "error"
+        //     )
+        // })
     }
 
     const fetchTeachTime = () => {

@@ -84,7 +84,7 @@ const ScoreDetail = () => {
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
                                 <td>{item.course_number}</td>
-                                <td>{item.description}</td>
+                                <td>{item.name}</td>
                                
                             </tr>
                         )}

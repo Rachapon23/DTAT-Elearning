@@ -28,8 +28,8 @@ const NavStudent = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-          <Nav.Link className="text-white" href="/student/home">หน้าแรก</Nav.Link>
-            <Nav.Link className="text-white" href="/student/list-courses">คอร์สทั้งหมด</Nav.Link>
+          {/* <Nav.Link className="text-white" href="/student/home">หน้าแรก</Nav.Link> */}
+            {/* <Nav.Link className="text-white" href="/student/list-courses">คอร์สทั้งหมด</Nav.Link> */}
             {/* <Nav.Link href="/student/get-course/:id">/student/get-course/:id</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
@@ -39,7 +39,7 @@ const NavStudent = () => {
           className="text-white">
             Signed in {sessionStorage.getItem("role")} as: 
 </Navbar.Text>
-            <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
+            <NavDropdown  title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
               <NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>
             </NavDropdown>
           {/* <Nav.Link onClick={logout}>logout</Nav.Link> */}

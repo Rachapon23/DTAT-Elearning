@@ -35,7 +35,7 @@ const NavAdmin = () => {
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
 
-          <Navbar.Text className="text-danger">
+          <Navbar.Text className="text-white">
             Signed in {sessionStorage.getItem("role")} as: 
           </Navbar.Text>
 
