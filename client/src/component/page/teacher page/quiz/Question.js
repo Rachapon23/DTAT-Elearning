@@ -3,7 +3,7 @@ import NavTeacher from '../../../layout/NavTeacher'
 import { useState, useEffect } from 'react'
 import ReactQuill from 'react-quill'
 import "react-quill/dist/quill.snow.css"
-import { listQuizby, createQusetion } from '../../../../function/funcFromTeacher'
+// import { listQuizby, createQusetion } from '../../../../function/funcFromTeacher'
 import { useParams } from 'react-router-dom'
 
 const Question = () => {
@@ -36,15 +36,15 @@ const Question = () => {
             choice: choice,
             ans: content.ans
         }
-        createQusetion(sessionStorage.getItem("token"),
-            params, value)
-            .then(res => {
-                console.log(res)
-                window.location.reload(false);
+        // createQusetion(sessionStorage.getItem("token"),
+        //     params, value)
+        //     .then(res => {
+        //         console.log(res)
+        //         window.location.reload(false);
 
-            }).catch(err => {
-                console.log(err)
-            })
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
 
     }
     const handdleFinish = (e) => {
@@ -71,14 +71,14 @@ const Question = () => {
     }, [])
 
     const loadData = () => {
-        listQuizby(sessionStorage.getItem("token"),
-            params
-        ).then(res => {
-            // console.log(res)
-            setDataQuiz(res.data)
-        }).catch(err => {
-            console.log(err)
-        })
+        // listQuizby(sessionStorage.getItem("token"),
+        //     params
+        // ).then(res => {
+        //     // console.log(res)
+        //     setDataQuiz(res.data)
+        // }).catch(err => {
+        //     console.log(err)
+        // })
     }
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { publicCourses } from '../../../../function/funcFromStudent'
+import { publicCourses } from '../../../../function/student/funcCourse'
 import { useState, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import '../student.css'
@@ -37,7 +37,7 @@ const PublicCourse = () => {
                          >
                           <div className="card-body body-card">
                             <h5 className="card-title">{item.name}</h5>
-                            {/* <p className="card-text">รหัสวิชา : {item.course_number}</p> */}
+               
                             <p className="card-text text-muted">รายละเอียด : {item.description}</p>
                             <p style={{fontSize:'12px'}} className="card-text text-muted"><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p>
                           </div>

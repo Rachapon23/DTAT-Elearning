@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 // import NavStudent from "../../../layout/NavStudent";
-import { getCourse } from "../../../../function/funcFromStudent";
+// import { getCourse } from "../../../../function/funcFromStudent";
 import Swal from "sweetalert2";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./course.css"
-import { CreateTopic, listQuiz, UpdateTopic } from "../../../../function/funcFromTeacher";
+// import { CreateTopic, listQuiz, UpdateTopic } from "../../../../function/funcFromTeacher";
 import EditToppic from "./EditToppic";
 import NavTeacher from "../../../layout/NavTeacher";
 import Topic from "./Topic";
@@ -43,13 +43,13 @@ const EditCoursePageTeacher = () => {
     }
 
     const loadData = () => {
-        listQuiz(sessionStorage.getItem("token"))
-            .then(res => {
-                setDataQuiz(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        // listQuiz(sessionStorage.getItem("token"))
+        //     .then(res => {
+        //         setDataQuiz(res.data)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
     }
 
 
@@ -75,41 +75,41 @@ const EditCoursePageTeacher = () => {
     };
 
     const fetchCourse = () => {
-        getCourse(course_id)
-            .then((response) => {
-                console.log(response)
-                setCourse(response.data)
-                setTopic(response.data.topic)
-            })
-            .catch((err) => {
-                console.log(err)
-                Swal.fire(
-                    "Alert!",
-                    "Cannot fetch course data",
-                    "error"
-                )
-            })
+        // getCourse(course_id)
+        //     .then((response) => {
+        //         console.log(response)
+        //         setCourse(response.data)
+        //         setTopic(response.data.topic)
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //         Swal.fire(
+        //             "Alert!",
+        //             "Cannot fetch course data",
+        //             "error"
+        //         )
+        //     })
     }
 
     const createCourseTopic = () => {
-        UpdateTopic(sessionStorage.getItem('token'), topic)
-            .then(res => {
-                console.log(res)
-                window.location.reload(false);
-            }).catch(err => {
-                console.log(err)
-            })
+        // UpdateTopic(sessionStorage.getItem('token'), topic)
+        //     .then(res => {
+        //         console.log(res)
+        //         window.location.reload(false);
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
 
-        if (courseTopics.length != 0) {
-            CreateTopic(sessionStorage.getItem('token'), courseTopics)
+        // if (courseTopics.length != 0) {
+        //     CreateTopic(sessionStorage.getItem('token'), courseTopics)
 
-                .then(res => {
-                    console.log(res)
-                    window.location.reload(false);
-                }).catch(err => {
-                    console.log(err)
-                })
-        }
+        //         .then(res => {
+        //             console.log(res)
+        //             window.location.reload(false);
+        //         }).catch(err => {
+        //             console.log(err)
+        //         })
+        // }
 
     }
 

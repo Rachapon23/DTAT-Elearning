@@ -4,7 +4,7 @@ import Mycourse from './ChildrenHome/Mycourse'
 import Search from './ChildrenHome/Search'
 import PublicCourse from './ChildrenHome/PublicCourse'
 
-import { getMycourse } from '../../../function/funcFromStudent'
+import { getMycourse } from '../../../function/student/funcCourse'
 import { useState, useEffect } from 'react'
 
 
@@ -18,10 +18,11 @@ const HomePageStudent = () => {
 
   const loadMycourse = () => {
     const user_id = sessionStorage.getItem("user_id")
-    getMycourse(user_id)
+    getMycourse(sessionStorage.getItem("token"),user_id)
       .then(res => {
-        // console.log(res)
-        setData(res.data.course)
+        // console.log(res.data)
+        setData(res.data.coursee)
+
       }).catch(err => {
         console.log(err)
       })
@@ -83,7 +84,7 @@ const HomePageStudent = () => {
                  alt="" style={{ width: "12rem" }}/> */}
               </div>
               <h4 className='mt-3 text-center'>
-              LINE: @sutelearning
+              LINE: @Dtat-elearning
               </h4>
             </div>
           </div>

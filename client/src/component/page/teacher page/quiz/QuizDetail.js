@@ -1,6 +1,6 @@
 import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
-import { listQuizby, } from '../../../../function/funcFromTeacher'
+// import { listQuizby, } from '../../../../function/funcFromTeacher'
 // import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 // import Swal from 'sweetalert2'
@@ -16,19 +16,19 @@ const QuizDetail = () => {
     }, [])
     const loadData = () => {
         setLoading(true)
-        listQuizby(sessionStorage.getItem("token"),
-            params
-        )
-            .then(res => {
-                console.log(res.data)
-                setDataQuiz(res.data)
-                setExaminer(res.data.examiner_data)
-                setLoading(false)
-            })
-            .catch(err => {
-                console.log(err)
-                setLoading(false)
-            })
+        // listQuizby(sessionStorage.getItem("token"),
+        //     params
+        // )
+        //     .then(res => {
+        //         console.log(res.data)
+        //         setDataQuiz(res.data)
+        //         setExaminer(res.data.examiner_data)
+        //         setLoading(false)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //         setLoading(false)
+        //     })
     }
     return (
         <div>

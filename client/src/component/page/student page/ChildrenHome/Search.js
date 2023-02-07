@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Searchcourse, Addchcourse } from '../../../../function/funcFromStudent'
+import { Searchcourse, Addchcourse } from '../../../../function/student/funcCourse'
 import Swal from 'sweetalert2'
 import '../student.css'
 
@@ -17,7 +17,8 @@ const Search = ({ loadMycourse }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(query)
-        Searchcourse(query).then(res => {
+        Searchcourse(sessionStorage.getItem("token"), query)
+        .then(res => {
             console.log(res)
             setData(res.data)
             setDataload(true)
@@ -46,7 +47,7 @@ const Search = ({ loadMycourse }) => {
                 }
                 return (
 
-                    Addchcourse(course_id)
+                    Addchcourse(sessionStorage.getItem("token"),course_id)
                         .then(res => {
                             console.log(res)
 

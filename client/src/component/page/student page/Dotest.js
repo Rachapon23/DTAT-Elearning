@@ -1,6 +1,8 @@
 import React from 'react'
 import NavStudent from "../../layout/NavStudent"
-import { listQuizby, createExaminer } from '../../../function/funcFromTeacher'
+import { listQuizby,
+//  createExaminer 
+} from '../../../function/student/funcCourse'
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Swal from 'sweetalert2'
@@ -24,26 +26,26 @@ const Dotest = () => {
     const loadData = () => {
         listQuizby(sessionStorage.getItem("token"), params)
             .then(res => {
-                // console.log(res)
+                console.log(res)
                 setDataQuiz(res.data)
-                setQusetion(res.data.question_data)
+                setQusetion(res.data.question)
             })
             .catch(err => {
                 console.log(err)
             })
     }
     const send = () => {  
-        // console.log(value)
-        createExaminer(sessionStorage.getItem("token"),
-            params, value)
-            .then(res => {
-                console.log(res)
-                navigate('/teacher/test')
+        console.log(value)
+        // createExaminer(sessionStorage.getItem("token"),
+        //     params, value)
+        //     .then(res => {
+        //         console.log(res)
+        //         navigate('/teacher/test')
 
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
      
     }
     const handleChange = (index, ch) => {
@@ -61,30 +63,40 @@ const Dotest = () => {
             <div className="container">
                 <div className='mt-5'>
                     {dataQuiz &&
-                        <h3>หัวข้อการทดสอบ : {dataQuiz.title}</h3>}
+                        <h3>หัวข้อการทดสอบ : {dataQuiz.name}</h3>}
                 </div>
                 {qusetion.map((item, index) =>
                     <div
                         key={index} className="border rounded-2 border-secondary mt-3 p-3">
                         <p>ข้อที่ {index + 1}</p>
-                        <>{Parser(item.qusetion)}</>
+                       
+                      <p>{item.title}</p>
 
-                        <div class="form-check">
-                            <input className="form-check-input" type="radio" name={index} onChange={(name) => handleChange(name, "0")} />
-                            <p>1. {item.choice.ch1}</p>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name={index} 
+                            // onChange={(name) => handleChange(name, "0")} 
+                            />
+                            <p>1. {item.q1}</p>
                         </div>
-                        <div class="form-check">
-                            <input className="form-check-input" type="radio" name={index} onChange={(name) => handleChange(name, "1")} />
-                            <p>2. {item.choice.ch2}</p>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name={index} 
+                            // onChange={(name) => handleChange(name, "0")} 
+                            />
+                            <p>2. {item.q2}</p>
                         </div>
-                        <div class="form-check">
-                            <input className="form-check-input" type="radio" name={index} onChange={(name) => handleChange(name, "2")} />
-                            <p>3. {item.choice.ch3}</p>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name={index} 
+                            // onChange={(name) => handleChange(name, "0")} 
+                            />
+                            <p>3. {item.q3}</p>
                         </div>
-                        <div class="form-check">
-                            <input className="form-check-input" type="radio" name={index} onChange={(name) => handleChange(name, "3")} />
-                            <p>4. {item.choice.ch4}</p>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name={index} 
+                            // onChange={(name) => handleChange(name, "0")} 
+                            />
+                            <p>4. {item.q4}</p>
                         </div>
+
                     </div>
                 )}
 

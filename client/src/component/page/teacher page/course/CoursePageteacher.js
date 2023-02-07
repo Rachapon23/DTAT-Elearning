@@ -2,22 +2,22 @@ import React from 'react'
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NavTeacher from "../../../layout/NavTeacher";
-import { getCourse } from "../../../../function/funcFromStudent";
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
-import Parser from 'html-react-parser';
-import { listQuiz, } from "../../../../function/funcFromTeacher";
 
+import Swal from "sweetalert2";
+// import { Link } from "react-router-dom";
+// import Parser from 'html-react-parser';
+import { useNavigate } from 'react-router-dom'
+import { getCourse } from "../../../../function/teacher/funcCourse";
 
 const CoursePageteacher = () => {
-    const course_id = useParams();
+    const { id } = useParams();
     const [course, setCourse] = useState("");
-    const [topic, setTopic] = useState([]);
+    const [topic, setTopic] = useState();
     const [dataQuiz, setDataQuiz] = useState([])
-    const fetchCourse = () => {
-        // console.log("p--")
+    const navigate = useNavigate()
 
-        getCourse(course_id)
+    const fetchCourse = () => {
+        getCourse(sessionStorage.getItem("token"), id)
             .then((response) => {
                 console.log(response)
                 setCourse(response.data)
@@ -33,92 +33,103 @@ const CoursePageteacher = () => {
             })
     }
 
-    const loadData = () => {
-        listQuiz(sessionStorage.getItem("token"))
-            .then(res => {
-                setDataQuiz(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
 
     useEffect(() => {
         fetchCourse()
-        loadData()
     }, []);
-
-    // console.log(topic)
+    
+    const nextToCourse = (params) => {
+        console.log(params)
+        navigate('/teacher/edit-course/' + params)
+    }
     return (
         <div>
             <NavTeacher />
 
-            <div className="container">
+            <div className="container ">
+                {/* {JSON.stringify(course_id)} */}
                 {course &&
-                    <div className="px-5 py-3 border bg-white  mt-3">
+
+
+                    <div className="px-5 py-3 border   mt-3 body-card">
                         <div className="row">
                             <div className="col-11">
                                 <h3>{course.name}</h3>
-                                <p className="text-muted mb-0 mt-3" >รายละเอียด : {course.description}</p>
+                                <p className="text-muted mb-0 mt-3">รายละเอียด : {course.description}</p>
                                 <p className="text-muted">ผู้สอน : {course.teacher.firstname}</p>
                             </div>
+
                         </div>
 
-
-                        <div className="d-flex justify-content-end">
-                            {
-                                sessionStorage.getItem("user_id") === course.teacher._id ? (
-                                    <div className="">
-                                        <Link to={`/teacher/edit-course/${course._id}`}><button type="button" className="btn btn-warning px-3 btn-sm">แก้ไข</button></Link>
-                                    </div>
-                                ) : (
-                                    <div />
-                                )
-                            }
-                        </div>
                     </div>
                 }
-                <div>
+                <div className="border bg-white my-3 ">
                     {topic && topic.map((item, index) => (
-                        <div key={index} className="px-5 py-3 border bg-white  mt-3">
-                            <h1 className="">{item.name}</h1>
-                            <p className="">{Parser(item.description)}</p>
-                            {item.materials.map((mtem, mdex) => (
-                                  <div className="row mt-1">
-                                  {
-                                      mtem.type == 'link'
-                                      ? <a href={mtem.url}>
-                                          <i class="bi bi-link"></i>&nbsp;{mtem.content}</a>
-                                      : <>
-                                      {mtem.type == 'quiz'
-                                      ?<>
-                                      {dataQuiz.map((qtem,qdex)=>(
-                                          <>
-                                          {mtem.content == qtem._id
-                                          
-                                          ? <a href={`/student/test/`+qtem._id} className="text-danger mb-2">
-                                             
-                                              <i className="bi bi-clipboard2-check"></i>&nbsp;
-                                              {qtem.title}</a>
-                                      
-                                      : <></>
-                                      
-                                      }
-                                          </>
-                                      ))}
-                                      </>
-                                  :<>
-                                <li>{mtem.content}</li>
-                                  </>}
-                                      </>
-                                  }
-                              </div>
-                            ))}
+                        <div key={index} className="px-5 mt-3">
+                            <h3 id="titleTopic">{item.title}</h3>
+                            <div className="px-3">
+                                <p className="">{item.description}</p>
+
+                                {item.text.length > 0 &&
+                                    <div className=""><ul>
+                                        {item.text.map((ttem, tdex) =>
+
+                                            <li key={tdex}>
+                                                {ttem.content}
+                                            </li>
+
+                                        )}
+                                    </ul>
+                                    </div>
+                                }
+                                {item.link.length > 0 &&
+                                    <div className=""><ul>
+                                        {item.link.map((ttem, tdex) =>
+
+                                            <li key={tdex}>
+                                                <a href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
+                                            </li>
+
+                                        )}
+                                    </ul>
+                                    </div>
+                                }
+                                {item.quiz.length > 0 &&
+                                    <div className=""><ul>
+                                        {item.quiz.map((ttem, tdex) =>
+
+                                            <li key={tdex}>
+                                                <a className="text-success" href={`/student/test/` + ttem.quiz}>
+                                                    <i className="bi bi-clipboard2-check"></i>&nbsp;{ttem.name}</a>
+                                            </li>
+
+                                        )}
+                                    </ul>
+                                    </div>
+                                }
+                            </div>
 
 
+                            <hr className="mt-4" />
                         </div>
+
+
                     ))}
                 </div>
+                {course && <>
+
+                    {sessionStorage.getItem("user_id") === course.teacher._id ? (
+                        <div className="d-grid mb-4">
+                            <button  onClick={()=>nextToCourse(course._id)} className="btn btn-warning">แก้ไข</button>
+                        </div>
+                    ) : (
+                        <div />
+                    )
+                    } </>
+
+                }
+
+
             </div>
         </div>
     );
