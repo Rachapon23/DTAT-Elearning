@@ -7,6 +7,13 @@ headers:{
     authtoken,
 }
 });
+export const updateCourse  = async(authtoken,value) => 
+await axios.put(process.env.REACT_APP_API+'/update-course',value,
+{
+headers:{
+    authtoken,
+}
+});
 
 export const listCourses  = async(authtoken) => 
 await axios.get(process.env.REACT_APP_API+'/list-courses',
