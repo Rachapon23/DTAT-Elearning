@@ -7,9 +7,11 @@ import { useParams } from "react-router-dom";
 import { listQuiz, } from "../../../../function/teacher/funcQuiz";
 import { getCourse } from "../../../../function/teacher/funcCourse";
 import Swal from "sweetalert2";
+import {  useNavigate } from 'react-router-dom'
 
 const EditCourse = () => {
 
+    const navigate = useNavigate()
     const [valuetopic, SetValueTopic] = useState([])
     const { id } = useParams();
     const [course, setCourse] = useState();
@@ -148,7 +150,8 @@ const EditCourse = () => {
             }
         ).then(res => {
             console.log(res.data)
-            window.location.reload(false);
+            // window.location.reload(false);
+            navigate('/student/get-course/'+id)
         }).catch(err => {
             console.log(err)
         })
