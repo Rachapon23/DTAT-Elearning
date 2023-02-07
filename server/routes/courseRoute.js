@@ -10,7 +10,8 @@ const {
     getCourse,
     publicCourses,
     deleteMyCourse,
-    getCourseByFilter
+    getCourseByFilter,
+    updateCourse
 } = require("../controllers/courseController");
 
 // student
@@ -30,6 +31,7 @@ const {
 
 // // teacher
 router.post("/create-course", createCourse);
+router.put("/update-course", updateCourse);
 router.get("/list-courses", listCourses);
 router.post("/get-course-filter", getCourseByFilter);
 
