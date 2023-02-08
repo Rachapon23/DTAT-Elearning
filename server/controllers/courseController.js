@@ -1,4 +1,4 @@
-const Courses = require("../models/courseModel");
+
 const User = require('../models/userModel')
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -230,29 +230,12 @@ exports.deleteMyCourse = async (req, res) => {
     }
 }
 
-exports.getCourseByFilter = async (req, res) => {
+exports.getMyCourseTeacher = async (req, res) => {
     try {
-        const { user_id } = req.body;
-        const { filter } = req.body;
-        console.log(req.body)
-
-        console.log(typeof (filter))
-        console.log(filter === "my_course")
-
-        if (filter === "my_course") {
-            console.log(filter)
-            const isValidUser = await User.findOne({ _id: user_id }).exec()
-            if (isValidUser) {
-                const courses = await Coursee.find({ teacher: ObjectId(user_id) }).populate("teacher", "-password").exec()
-                res.send(courses)
-            }
-        }
-        else {
-            await Coursee.find({}).populate("teacher", "-password")
-                .exec((err, courses) => {
-                    res.json(courses);
-                });
-        }
+const { id } = req.params
+        const courses = await Coursee.find({ teacher: id }).populate("teacher", "-password").exec()
+        res.send(courses)
+        // res.send("ok")
     }
     catch (err) {
         console.log(err);
@@ -266,14 +249,15 @@ exports.updateCourse = async (req, res) => {
 
         const course = await Coursee.findOneAndUpdate(
             { _id: head._id }
-            , { new: true, 
+            , {
+                new: true,
                 name: head.name,
                 description: head.description,
-                course_number:head.course_number,
-                password:head.password,
-                topic:body
-             },
-     
+                course_number: head.course_number,
+                password: head.password,
+                topic: body
+            },
+
 
         ).exec()
 
@@ -284,5 +268,15 @@ exports.updateCourse = async (req, res) => {
     catch (err) {
         console.log("fail to update the course topic: ", err);
         res.status(500).json({ error: "fail to update the course topic" })
+    }
+}
+
+exports.deleteCourse = async (req, res) => {
+    try {
+        const course = await Coursee.findOneAndRemove({ _id: req.params.id }).exec()
+        res.send(course)
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Server Error!!! on remove course')
     }
 }

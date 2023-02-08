@@ -29,7 +29,7 @@ const NavStudent = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
           {/* <Nav.Link className="text-white" href="/student/home">หน้าแรก</Nav.Link> */}
-            {/* <Nav.Link className="text-white" href="/student/list-courses">คอร์สทั้งหมด</Nav.Link> */}
+            <Nav.Link className="text-white" href="/student/list-courses">คอร์สของฉัน</Nav.Link>
             {/* <Nav.Link href="/student/get-course/:id">/student/get-course/:id</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>

@@ -1,23 +1,21 @@
 import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
 import { useState, useEffect } from 'react'
-import { createQuiz} from '../../../../function/teacher/funcQuiz'
-import { useNavigate } from "react-router-dom";
+import { createQuiz } from '../../../../function/teacher/funcQuiz'
+
 import './quiz.css'
-
+import { useNavigate } from 'react-router-dom'
 const Quiz = () => {
-    
 
+    const [nextState, setNextState] = useState([]);
     const [valueQuiz, setValueQuiz] = useState([])
-    
+    const navigate = useNavigate()
     const [nameQuiz, setNameQuiz] = useState
-    ({
-        name:"",
-        explanation:"",    
-        teacher:sessionStorage.getItem('user_id')
-    })
-
-
+        ({
+            name: "",
+            explanation: "",
+            teacher: sessionStorage.getItem('user_id')
+        })
     const handleAddQuiz = () => {
         setValueQuiz([...valueQuiz,
         {
@@ -30,28 +28,30 @@ const Quiz = () => {
         }
         ])
     }
-    const handAddName = (e) =>{
+    const handAddName = (e) => {
         setNameQuiz({ ...nameQuiz, [e.target.name]: e.target.value });
     }
-
-
-
     const handSubmit = (e) => {
         e.preventDefault();
 
-        createQuiz(sessionStorage.getItem("token"), 
-        {
-            head:nameQuiz,
-            body:valueQuiz
-        }
+        createQuiz(sessionStorage.getItem("token"),
+            {
+                head: nameQuiz,
+                body: valueQuiz
+            }
         )
-      .then(res => {
-        console.log(res)
-        window.location.reload(false);
-      })
-      .catch(err => {
-        console.log(err)
-      })
+            .then(res => {
+                console.log(res)
+                // window.location.reload(false);
+                navigate('/teacher/list-quiz')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+    const handleRemoveQuiz = (index) => {
+        valueQuiz.splice(index, 1)
+        setNextState([...nextState])
     }
 
     return (
@@ -64,14 +64,21 @@ const Quiz = () => {
                             <div className="bg-success head-form"></div>
                             <div className="card-body p-5">
                                 <label className="form-label">ชื่อการทดสอบ</label>
-                                <input type="text" className="form-control" name='name' onChange={handAddName}/>
+                                <input type="text" className="form-control" name='name' onChange={handAddName} />
                                 <label className="form-label  mt-3">คำชี้แจง</label>
-                                <textarea type="text" className="form-control" name='explanation' onChange={handAddName}/>
+                                <textarea type="text" className="form-control" name='explanation' onChange={handAddName} />
                             </div>
                         </div>
 
                         {valueQuiz.map((item, index) => (
                             <div key={index} className="card mt-2">
+                                 <div className="position-relative">
+                                    <button type="button" className="btn position-absolute top-0 end-0 "
+                                        onClick={() => handleRemoveQuiz(index)}
+                                    >
+                                        <span className="bi bi-x iconx" ></span>
+                                    </button>
+                                </div>
                                 <div className="card-body p-5">
                                     <p>ข้อที่ {index + 1}</p>
                                     <textarea type="text" placeholder='คำถาม' className="form-control"
