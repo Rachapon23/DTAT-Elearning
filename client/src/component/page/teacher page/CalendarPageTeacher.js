@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import NavTeacher from "../../layout/NavTeacher";
-// import { listCourses } from "../../../function/funcFromStudent";
+import { listCourses } from "../../../function/teacher/funcCourse"
 import Swal from "sweetalert2";
-import { createTeachTime, listCoursesInTeachTime, listTeachTimes } from "../../../function/funcFromTeacher";
+import { createTeachTime, listCoursesInTeachTime, listTeachTimes } from "../../../function/teacher/funcCalendar";
 import { Link } from "react-router-dom";
 import "./teacher.css";
 
@@ -38,19 +38,14 @@ const CalendarPageTeacher = () => {
             if(day_of_week_counter %8 == 0) day_of_week_counter = 1; 
             if(i <= date_start.getDay()) {
                 dayArrayTemp.push("");
-                // console.log(0);
             }
             else {
-                
                 day_counter++;
                 dayArrayTemp.push(day_counter);
-                // console.log(counter);
             }
             day_of_week_counter++;
-            // console.log(i)
 
         }
-        // console.log(day_of_week_counter)
         for(let i=0; i < 8-day_of_week_counter ; i++) {
             dayArrayTemp.push("");
         }
@@ -60,23 +55,22 @@ const CalendarPageTeacher = () => {
     const handleChange = (e) => {
         console.log(e.target.name, e.target.value)
         setValue({ ...value, [e.target.name]: e.target.value });
-        // console.log(value)
     };
 
     const fetchCourse = () => {
-        // listCourses()
-        // .then((response) => {
-        //     // console.log(response)
-        //     setCourses(response.data)
-        // })
-        // .catch((err) => {
-        //     console.log(err)
-        //     Swal.fire(
-        //         "Alert!",
-        //         "Cannot fetch blogs data",
-        //         "error"
-        //     )
-        // })
+        listCourses()
+        .then((response) => {
+            // console.log(response)
+            setCourses(response.data)
+        })
+        .catch((err) => {
+            console.log(err)
+            Swal.fire(
+                "Alert!",
+                "Cannot fetch blogs data",
+                "error"
+            )
+        })
     }
 
     const fetchTeachTime = () => {
@@ -92,17 +86,6 @@ const CalendarPageTeacher = () => {
                 "Cannot fetch blogs data",
                 "error"
             )
-        })
-    }
-
-    const submit = () => {
-        console.log(value)
-        createTeachTime(sessionStorage.getItem("token"), value)
-        .then((response) => {
-            // console.log(response)
-        })
-        .catch((err) => {
-            console.log(err)
         })
     }
 
@@ -125,7 +108,7 @@ const CalendarPageTeacher = () => {
                 "error"
             )
         })
-        // teachTime.forEach((time, i) => {
+        // teachTime.forEach((time, index) => {
         //     if(index >= new Date(time.start).getDate() && index <= new Date(time.end).getDate()) {
         //         console.log(index ,new Date(time.start).getDate() , index , new Date(time.end).getDate())
         //         console.log(time.course)
@@ -143,14 +126,13 @@ const CalendarPageTeacher = () => {
     }
 
     const dispalyCourseFirstLoad = () => {
-        // console.log(time)
         let data = {
             time: new Date(),
             user_id: sessionStorage.getItem("user_id"),
         }
         listCoursesInTeachTime(sessionStorage.getItem("token"), data)
         .then((response) => {
-            console.log(response)
+            // console.log(response)
             setDisplayData(response.data)
         })
         .catch((err) => {
@@ -205,7 +187,7 @@ const CalendarPageTeacher = () => {
 
     useEffect(() => {
         renderCalendar()
-    }, [])
+    }, [month])
 
     return (
         <div >
@@ -214,14 +196,14 @@ const CalendarPageTeacher = () => {
                 <div className="border border-primary p-3">
                 <div className="d-flex justify-content-between pb-3">
                     <Link><h2 className="bi bi-arrow-left-circle pt-3 ms-4" onClick={changeMonthDown}></h2></Link>
-                    <h1 >{date.toLocaleString('default',{month: 'long'})}</h1>
+                    <h1 >{date.toLocaleString('default',{month: 'long'})} {year}</h1>
                     <Link><h2 className="bi bi-arrow-right-circle pt-3 me-4" onClick={changeMonthUp}></h2></Link>
                 </div>
                 
                 {/* {new Date(2023, 1, 0).getDate()} */}
                 {/* {date_start.getDay()} {date_end.getDay()} */}
                 {/* {month}{year} */}
-                {/* {JSON.stringify(displayData)} */}
+                {/* {JSON.stringify(dayArray)} */}
                     <table className="table text-center table-bordered" >
                         <thead>
                             <tr >
@@ -400,9 +382,9 @@ const CalendarPageTeacher = () => {
                                                     scope="col" 
                                                     key={index} 
                                                     onClick={() => dispalyCourse(new Date(year, month, day))}
-                                                    onMouseEnter={() => changeBackgroundColor(index+5)}
+                                                    onMouseEnter={() => changeBackgroundColor(index+35)}
                                                     onMouseOut={() => changeBackgroundColorBack(index)}
-                                                    className={`${mouseHover && index+5 === mouseOn ? backgroundTableColor:""}`}
+                                                    className={`${mouseHover && index+35 === mouseOn ? backgroundTableColor:""}`}
                                                 > 
                                                     {day}
                                                 </th>
@@ -436,43 +418,8 @@ const CalendarPageTeacher = () => {
                                 No Courses Available on This Day
                             </h3>
                         )
-                        
-                    
                     }
                 </div>
-
-                {/* <form className="p-2">
-                    <div className="mb-2">
-                        <label className="form-label">Course Name</label>
-                        <select
-                            className="form-select" 
-                            onChange={handleChange}
-                            name="course"
-                        >
-                            <option disabled selected value="">เลือกวิชาที่ต้องการ</option>
-                            {courses.map((item, index) => (
-                                <option key={index} value={item._id}>{item.name}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="mb-2">
-                        <label className="form-label mb-2">Start</label>
-                        <input type="date" className="form-control" name="start" onChange={handleChange}/>
-                    </div>
-                    
-                    <div className="mb-2">
-                        <label className="form-label">End</label>
-                        <input type="date" className="form-control" name="end" onChange={handleChange}/>
-                    </div>
-                    
-                    <div className="mb-2">
-                        <label className="form-label">Teacher</label>
-                        <input type="text" className="form-control" name="teacher" disabled value={sessionStorage.getItem("firstname")} onChange={handleChange}/>
-                    </div>
-                
-                    <button type="button" className="btn btn-primary" onClick={submit}>Create</button>
-                </form> */}
-                {/* {JSON.stringify(displayData)} */}
             </div>
         </div>
     );

@@ -5,7 +5,7 @@ const TeachTimeSchema = new mongoose.Schema({
 
     course: {
         type: ObjectId,
-        ref:"course",
+        ref:"coursee",
         require: true,
     },
     start: {

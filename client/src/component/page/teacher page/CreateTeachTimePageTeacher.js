@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import NavTeacher from "../../layout/NavTeacher";
-// import { listCourses } from "../../../function/funcFromStudent";
+import { listCourses } from "../../../function/teacher/funcCourse";
 import Swal from "sweetalert2";
-import { createTeachTime, getTeacherByCourseId, listCoursesInTeachTime, listTeachTimes } from "../../../function/funcFromTeacher";
+import { createTeachTime, getTeacherByCourseId, listCoursesInTeachTime, listTeachTimes } from "../../../function/teacher/funcCalendar";
 import { Link } from "react-router-dom";
 import "./teacher.css";
 
@@ -12,12 +12,12 @@ const CalendarPageTeacher = () => {
         start: undefined,
         end: undefined,
         floor: 0,
-        teacher: sessionStorage.getItem("user_id"),
+        teacher: "",
     })
 
     const [courses, setCourses] = useState([]);
     const [teachTime, setTeachTime] = useState([]);
-    const [teacher, setTeacher] = useState("no teacher for this course");
+    const [teacher, setTeacher] = useState({_id: "", firstname: "no teacher for this course", lastname: ""});
 
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date().getMonth());
@@ -65,8 +65,8 @@ const CalendarPageTeacher = () => {
         getTeacherByCourseId({course_id: value.course})
         .then((response) => {
             // setCourses(response.data)
-            console.log(response.data)
-            setTeacher(response.data.teacher.firstname)
+            // console.log(response.data)
+            setTeacher(response.data)
         })
         .catch((err) => {
             console.log(err)
@@ -78,26 +78,25 @@ const CalendarPageTeacher = () => {
         })
     }
 
-    const fetchCourse = () => {
-        // listCourses()
-        // .then((response) => {
-        //     setCourses(response.data)
-            
-        // })
-        // .catch((err) => {
-        //     console.log(err)
-        //     Swal.fire(
-        //         "Alert!",
-        //         "Cannot fetch blogs data",
-        //         "error"
-        //     )
-        // })
+    const fetchCourseByTeacherId = () => {
+        listCourses()
+        .then((response) => {
+            setCourses(response.data)
+        })
+        .catch((err) => {
+            console.log(err)
+            Swal.fire(
+                "Alert!",
+                "Cannot fetch blogs data",
+                "error"
+            )
+        })
     }
 
     const fetchTeachTime = () => {
         listTeachTimes(sessionStorage.getItem("token"))
         .then((response) => {
-            // console.log(response)
+            console.log(response)
             setTeachTime(response.data)
         })
         .catch((err) => {
@@ -111,10 +110,23 @@ const CalendarPageTeacher = () => {
     }
 
     const submit = () => {
-        console.log(value)
-        createTeachTime(sessionStorage.getItem("token"), value)
+        const {
+            course,
+            start,
+            end,
+            floor,
+        } = value
+        let data = {
+            course: course,
+            start: start,
+            end: end,
+            floor: floor,
+            teacher: teacher._id
+        }
+        console.log(teacher)
+        createTeachTime(sessionStorage.getItem("token"), data)
         .then((response) => {
-            // console.log(response)
+            console.log(response)
         })
         .catch((err) => {
             console.log(err)
@@ -162,7 +174,7 @@ const CalendarPageTeacher = () => {
     }
 
     useEffect(() => {
-        fetchCourse();
+        fetchCourseByTeacherId();
         fetchTeachTime();
         renderCalendar()
     }, [])
@@ -397,7 +409,7 @@ const CalendarPageTeacher = () => {
                     
                     <div className="mb-2">
                         <label className="form-label">Teacher</label>
-                        <input type="text" className="form-control" name="teacher" disabled value={teacher} onChange={handleChange}/>
+                        <input type="text" className="form-control" name="teacher" disabled value={teacher.firstname+" "+teacher.lastname} onChange={handleChange}/>
                     </div>
                 
                     <button type="button" className="btn btn-primary" onClick={submit}>Create</button>

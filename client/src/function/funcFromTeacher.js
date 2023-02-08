@@ -59,13 +59,14 @@ import axios from 'axios';
 //-------------------------------------------------------------------------------------.
 
 
-
 export const createTeachTime  = async(authtoken, teachTime) => 
     await axios.post(process.env.REACT_APP_API+'/create_teach_time', teachTime,
+
     {
     headers:{
         authtoken,
     }
+
 });
 
 export const listTeachTimes  = async(authtoken) => 
@@ -84,8 +85,7 @@ export const listCoursesInTeachTime  = async(authtoken, data) =>
     }
 });
 
-
-
 export const getTeacherByCourseId  = async(data) => {
     return await axios.post(process.env.REACT_APP_API+'/get_teacher_by_course_id', data)
 }
+

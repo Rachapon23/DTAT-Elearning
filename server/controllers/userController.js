@@ -1,5 +1,6 @@
 
 const User = require('../models/userModel')
+const Course = require('../models/course')
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -104,13 +105,19 @@ exports.login = async (req, res) => {
 exports.getTeacherByCourseId = async (req, res) => {
     try {
       const {course_id} = req.body
-      const teacher = await Course.findOne({_id: course_id})
+      const course = await Course.findOne({_id: course_id})
       .populate("teacher")
       .select("-password")
       .exec();
-      console.log(teacher)
-      res.send(teacher);
-    } catch (err) {
+      // console.log(course)
+      let data = {
+        _id: course.teacher._id,
+        firstname: course.teacher.firstname,
+        lastname: course.teacher.lastname,
+      }
+      res.send(data);
+    } 
+    catch (err) {
       console.log(err);
       res.status(500).send("Server Error!!! on get teacher by ID");
     }
