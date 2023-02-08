@@ -8,13 +8,15 @@ const {
     // create,
     listquizby,
     // listquiz,
-    // remove,
+    remove,
+    getQuiz,
     // createQusetion,
     // createExaminer,
     // // listquizbyUser,
     // listquizUser
     createQuiz,
     listQuiz,
+    updateQuiz
 } = require('../controllers/quizController')
 
 
@@ -31,7 +33,10 @@ const {
 
 // teacher
 router.post('/quiz/create',createQuiz)
-router.get('/quiz/listquiz/:id',listQuiz)
+router.get('/quiz/list-teacher/:id',listQuiz)
+router.get('/quiz/get-quiz/:id',getQuiz)
+router.delete('/quiz/remove-quiz/:params',remove)
+router.put("/quiz/update-quiz", updateQuiz);
 
 //student
 router.get('/quiz/list-quiz-by/:params',listquizby)

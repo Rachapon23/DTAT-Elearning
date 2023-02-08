@@ -23,8 +23,8 @@ headers:{
 }
 });
 
-export const getCourseByFilter  = async(authtoken, data) =>
-await axios.post(process.env.REACT_APP_API+'/get-course-filter', data,
+export const getmyCourseTeacher  = async(authtoken, id) =>
+await axios.get(process.env.REACT_APP_API+'/get-mycourse-teacher/'+id,
 {
 headers:{
     authtoken,
@@ -37,4 +37,12 @@ await axios.post(process.env.REACT_APP_API+'/get-course/'+id,
 headers:{
     authtoken,
 }
+});
+
+export const removeCourse = async(authtoken,params) => 
+    await axios.delete(process.env.REACT_APP_API+'/delete-courses/'+params,
+    {
+    headers:{
+        authtoken,
+    }
 });
