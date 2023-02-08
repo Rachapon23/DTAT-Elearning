@@ -28,7 +28,7 @@ exports.createTeachTime = async (req, res) => {
 exports.listTeachTimes = async (req, res) => {
     try {
         await TeachDate.find({}).exec((err, teachTime) => {
-            console.log(teachTime)
+            // console.log(teachTime)
             res.json(teachTime);
         });
 
@@ -44,14 +44,16 @@ exports.listCoursesInTeachTime = async (req, res) => {
 
         const {time, user_id} = req.body
         // console.log(req.body)
-
-        const teachTimes = await TeachDate.find({teacher: user_id}).populate("course teacher").exec()
-        // console.log(teachTimes)
+        
+        const teachTimes = await TeachDate.find({}).populate("course teacher").exec()
+        
         const payload = []
         teachTimes.forEach((teachTime) => {
+            console.log("start--------------------")
             console.log(teachTime)
-            // console.log("start--------------------")
+            
             if(new Date(time).getFullYear() >= new Date(teachTime.start).getFullYear() && new Date(time).getFullYear() <= new Date(teachTime.start).getFullYear()) {
+                // console.log(teachTime.start)
                 if(new Date(time).getMonth()>= new Date(teachTime.start).getMonth() && new Date(time).getMonth() <= new Date(teachTime.end).getMonth()) {
                     if(new Date(time).getDate()>= new Date(teachTime.start).getDate() && new Date(time).getDate() <= new Date(teachTime.end).getDate()) {
                         // console.log(teachTime)
@@ -59,9 +61,11 @@ exports.listCoursesInTeachTime = async (req, res) => {
                     }
                 }
             }
+            console.log("end--------------------")
             
-            // console.log("end--------------------")
         })
+        
+        // console.log(payload)
         res.json(payload);
     }
     catch (err) {
