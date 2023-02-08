@@ -15,11 +15,6 @@ import TeacherFromAdmin from "./component/page/admin page/TeacherFromAdmin";
 
 //teacher
 import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
-import TeacherQuiz from './component/page/teacher page/quiz/TeacherQuiz'
-import Question from "./component/page/teacher page/quiz/Question";
-import QuizDetail from "./component/page/teacher page/quiz/QuizDetail";
-import Score from "./component/page/teacher page/score/Score";
-import ScoreDetail from "./component/page/teacher page/score/ScoreDetail";
 import CoursesPageteacher from "./component/page/teacher page/course/CoursesPageteacher";
 import CoursePageteacher from "./component/page/teacher page/course/CoursePageteacher";
 import CreateTeachTimePageTeacher from "./component/page/teacher page/CreateTeachTimePageTeacher";
@@ -27,17 +22,16 @@ import CreateTeachTimePageTeacher from "./component/page/teacher page/CreateTeac
 import Quiz from "./component/page/teacher page/quiz/Quiz";
 import Course from "./component/page/teacher page/course/Course";
 import EditCourse from "./component/page/teacher page/course/EditCourse";
+import Listquiz from "./component/page/teacher page/quiz/Listquiz";
+import Editquiz from "./component/page/teacher page/quiz/Editquiz";
 
 
 
 //student
 import HomePageStudent from "./component/page/student page/HomePageStudent";
 import Dotest from "./component/page/student page/Dotest";
-
 import CoursesPageStudent from "./component/page/student page/CoursesPageStudent";
-import CreateCoursePageTeacher from "./component/page/teacher page/course/CreateCoursePageTeacher";
 import CoursePageStudent from "./component/page/student page/CoursePageStudent";
-import EditCoursePageTeacher from "./component/page/teacher page/course/EditCoursePageTeacher";
 import CalendarPageTeacher from "./component/page/teacher page/CalendarPageTeacher";
 import UserRoute from "./route/UserRoute";
 //
@@ -63,28 +57,22 @@ function App() {
 
         {/* teacher */}
         <Route path="/teacher/home" element={<HomePageTeacher />} />
-        {/* <Route path="/teacher/create-quiz" element={<TeacherQuiz />} /> */}
-        {/* <Route path="/teacher/create-quiz/create-question/:params" element={<Question />} /> */}
-        {/* <Route path="/teacher/detail-quiz/:params" element={<QuizDetail />} /> */}
-
-        {/* new */}
+         {/* new */}
         <Route path="/teacher/quiz" element={<Quiz />} />
         <Route path="/teacher/course" element={<Course />} />
         <Route path="/teacher/edit-course/:id" element={<EditCourse />} />
+        <Route path="/teacher/edit-quiz/:id" element={<Editquiz />} />
 
-        {/* <Route path="/teacher/create-course" element={<CreateCoursePageTeacher />} /> */}
+        <Route path="/teacher/list-quiz" element={<Listquiz />} />
         <Route path="/teacher/list-courses" element={<CoursesPageteacher />} />
-
         <Route path="/teacher/get-course/:id" element={<CoursePageteacher />} />
 
-        <Route path="/teacher/list-score" element={<Score />} />
-        <Route path="/teacher/get-score/:params" element={<ScoreDetail />} />
         <Route path="/teacher/calendar" element={<CalendarPageTeacher />} />
         <Route path="/teacher/create-teach-time" element={<CreateTeachTimePageTeacher />} />
 
         {/* student */}
         <Route path="/student/home" element={<HomePageStudent />} />
-        {/* <Route path="/student/list-courses" element={<CoursesPageStudent />} /> */}
+        <Route path="/student/list-courses" element={<CoursesPageStudent />} />
         <Route path="/student/get-course/:id" element={<CoursePageStudent />} />
         <Route path="/student/test/:params" element={<Dotest />} />
 

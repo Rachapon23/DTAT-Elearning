@@ -10,8 +10,9 @@ const {
     getCourse,
     publicCourses,
     deleteMyCourse,
-    getCourseByFilter,
-    updateCourse
+    getMyCourseTeacher,
+    updateCourse,
+    deleteCourse
 } = require("../controllers/courseController");
 
 // student
@@ -33,7 +34,8 @@ const {
 router.post("/create-course", createCourse);
 router.put("/update-course", updateCourse);
 router.get("/list-courses", listCourses);
-router.post("/get-course-filter", getCourseByFilter);
+router.delete("/delete-courses/:id", deleteCourse);
+router.get("/get-mycourse-teacher/:id", getMyCourseTeacher);
 
 // student
 router.post("/searchcourse", searchCourse);

@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 // import { Link } from "react-router-dom";
 // import Parser from 'html-react-parser';
 import { useNavigate } from 'react-router-dom'
-import { getCourse } from "../../../../function/teacher/funcCourse";
+import { getCourse,removeCourse } from "../../../../function/teacher/funcCourse";
 
 const CoursePageteacher = () => {
     const { id } = useParams();
@@ -41,6 +41,41 @@ const CoursePageteacher = () => {
     const nextToCourse = (params) => {
         console.log(params)
         navigate('/teacher/edit-course/' + params)
+    }
+    
+    const remove = (params) => {
+
+         Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeCourse(sessionStorage.getItem("token"), params)
+        .then(res => {
+            console.log(res)
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+            navigate('/teacher/list-courses')
+          }).catch(err => {
+            console.log(err)
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: '<a href="">Why do I have this issue?</a>'
+            })
+          })
+        }
+      })
+      
     }
     return (
         <div>
@@ -116,18 +151,10 @@ const CoursePageteacher = () => {
 
                     ))}
                 </div>
-                {course && <>
-
-                    {sessionStorage.getItem("user_id") === course.teacher._id ? (
-                        <div className="d-grid mb-4">
-                            <button  onClick={()=>nextToCourse(course._id)} className="btn btn-warning">แก้ไข</button>
+                <div className="d-flex justify-content-between mb-4">
+                            <button  onClick={()=>nextToCourse(course._id)} className="btn btn-warning w-25">แก้ไข</button>
+                            <button  onClick={()=>remove(course._id)} className="btn btn-danger w-25">ลบ</button>
                         </div>
-                    ) : (
-                        <div />
-                    )
-                    } </>
-
-                }
 
 
             </div>

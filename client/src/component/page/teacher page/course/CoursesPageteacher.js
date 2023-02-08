@@ -1,10 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-// import { Link } from "react-router-dom";
-import { listCourses } from "../../../../function/teacher/funcCourse";
+
 import NavTeacher from "../../../layout/NavTeacher";
-import { getCourseByFilter } from '../../../../function/teacher/funcCourse';
+import { getmyCourseTeacher } from '../../../../function/teacher/funcCourse';
 import {  useNavigate } from 'react-router-dom'
 
 const CoursesPageteacher = () => {
@@ -12,30 +11,14 @@ const CoursesPageteacher = () => {
     const [filter, setFilter] = useState("all");
     const navigate = useNavigate()
 
-    const fetchData = () => {
-        listCourses(sessionStorage.getItem("token"))
-            .then((response) => {
-                // console.log(response)
-                setCourses(response.data)
-            })
-            .catch((err) => {
-                console.log(err)
-                Swal.fire(
-                    "Alert!",
-                    "Cannot fetch blogs data",
-                    "error"
-                )
-            })
-    }
-
     const handlechange = (e) => {
         console.log(e.target.value)
         setFilter(e.target.value)
     }
 
-    const fetchCourseByFilter = () => {
-        getCourseByFilter(sessionStorage.getItem("token"),
-            { filter: filter, user_id: sessionStorage.getItem("user_id") })
+    const fetchMyCourse = () => {
+        getmyCourseTeacher(sessionStorage.getItem("token"),
+            sessionStorage.getItem("user_id") )
             .then((response) => {
                 console.log(response)
                 setCourses(response.data)
@@ -51,12 +34,10 @@ const CoursesPageteacher = () => {
     }
 
     useEffect(() => {
-        fetchData()
+        fetchMyCourse()
     }, [])
 
-    useEffect(() => {
-        fetchCourseByFilter()
-    }, [filter])
+
 
     const nextToCourse = (params) => {
         console.log(params)
@@ -67,19 +48,6 @@ const CoursesPageteacher = () => {
         <div>
             <NavTeacher />
             {/* {JSON.stringify(filter)} */}
-
-            <div className="container p-3 bg-white border mt-3">
-                <div>
-                    <select
-                        onChange={handlechange}
-                        className="form-select"
-                    >
-                        <option selected value="all"> All</option>
-                        <option value="my_course">My course</option>
-
-                    </select>
-                </div>
-            </div>
 
             <div className="container ">
                 {

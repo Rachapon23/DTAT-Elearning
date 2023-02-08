@@ -1,6 +1,7 @@
 
 const User = require('../models/userModel')
 const Course = require('../models/course')
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const ObjectId = require('mongoose').Types.ObjectId; 
