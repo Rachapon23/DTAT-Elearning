@@ -4,6 +4,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 
 const Coursee = require('../models/course')
+const Layout = require('../models/layout')
 
 exports.createCourse = async (req, res) => {
     try {
@@ -22,6 +23,7 @@ exports.createCourse = async (req, res) => {
                     course_number: head.course_number,
                     password: head.password,
                     teacher: head.teacher,
+                    room:head.room,
                     status: status,
                     topic: body,
 
@@ -38,6 +40,7 @@ exports.createCourse = async (req, res) => {
                     description: head.description,
                     course_number: head.course_number,
                     password: head.password,
+                    room:head.room,
                     teacher: head.teacher,
                     topic: body,
 
@@ -127,7 +130,7 @@ exports.getCourse = async (req, res) => {
     try {
         const { id } = req.params
         const course = await Coursee.findOne({ _id: id })
-            .populate('teacher')
+            .populate('teacher room')
             .exec()
         res.send(course)
     }
@@ -255,6 +258,7 @@ exports.updateCourse = async (req, res) => {
                 description: head.description,
                 course_number: head.course_number,
                 password: head.password,
+                room:head.room,
                 topic: body
             },
 
@@ -278,5 +282,25 @@ exports.deleteCourse = async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(500).send('Server Error!!! on remove course')
+    }
+}
+
+exports.getRoom = async (req, res) => {
+    try {
+        const room = await Layout.find({}).exec()
+        res.send(room)
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Server Error!!! on list room')
+    }
+}
+exports.createRoom = async (req, res) => {
+    try {
+        const room = await  Layout.insertMany(req.body)
+        // console.log(req.body)
+        res.send(room)
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Server Error!!! on create Room')
     }
 }

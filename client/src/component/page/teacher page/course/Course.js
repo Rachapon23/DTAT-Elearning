@@ -1,14 +1,17 @@
 import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
 import { listQuiz, } from "../../../../function/teacher/funcQuiz";
-import { createCourse } from '../../../../function/teacher/funcCourse';
+import { createCourse,listRoom } from '../../../../function/teacher/funcCourse';
 import { useState, useEffect } from 'react'
+import './course.css'
 
 const Course = () => {
 
     const [valuetopic, SetValueTopic] = useState([])
     const [nextState, setNextState] = useState([]);
     const [dataquiz, setDataQuiz] = useState([]);
+    const [room, setRoom] = useState([]);
+    
 
     const [nameCourse, setNameCourse] = useState
         ({
@@ -16,6 +19,7 @@ const Course = () => {
             description: "",
             course_number: "",
             password: "",
+            room:"",
             teacher: sessionStorage.getItem('user_id')
         })
 
@@ -102,9 +106,20 @@ const Course = () => {
                 console.log(err)
             })
     }
+    const loadRoom = () => {
+        listRoom()
+            .then(res => {
+                // console.log(res.data)
+                setRoom(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     useEffect(() => {
         loadQuiz()
+        loadRoom()
     }, [])
 
     const handdleSubmit = (e) => {
@@ -154,6 +169,16 @@ const Course = () => {
                                 <textarea type="text" className="form-control" name='description'
                                     onChange={handAddName}
                                 />
+                                <label className="form-label  mt-3">ห้องเรียน</label>
+                                <div className="">
+                                <select name="room" id="" className='form-select '   onChange={handAddName}>
+                                    <option value="">เลือกห้อง</option>
+                                    {room.map((item,index)=>
+                                    <option key={index} value={item._id}>{item.room}</option>
+                                    )}
+                                </select>
+                               
+                                </div>
                             </div>
                         </div>
 

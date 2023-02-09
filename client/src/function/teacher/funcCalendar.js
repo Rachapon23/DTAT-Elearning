@@ -24,6 +24,42 @@ export const listCoursesInTeachTime  = async(authtoken, data) =>
     }
 });
 
+
 export const getTeacherByCourseId  = async(data) => {
     return await axios.post(process.env.REACT_APP_API+'/get_teacher_by_course_id', data)
 }
+
+// ------------------------- new ---------------------------------------
+
+
+export const createCalendar  = async(authtoken,values) => 
+    await axios.post(process.env.REACT_APP_API+'/create-calendar',values,
+    {
+    headers:{
+        authtoken,
+    }
+});
+
+export const listCalendar  = async(authtoken) => 
+    await axios.get(process.env.REACT_APP_API+'/list-calendar',
+    {
+    headers:{
+        authtoken,
+    }
+});
+
+export const updateEvent  = async(authtoken,values) => 
+    await axios.put(process.env.REACT_APP_API+'/update-calendar',values,
+    {
+    headers:{
+        authtoken,
+    }
+});
+
+export const removeEvent  = async(authtoken,id) => 
+    await axios.delete(process.env.REACT_APP_API+'/delete-calendar/'+id,
+    {
+    headers:{
+        authtoken,
+    }
+});

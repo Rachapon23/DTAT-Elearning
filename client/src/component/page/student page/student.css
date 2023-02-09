@@ -14,3 +14,13 @@
 .card-h{
     height: 350px;
 }
+
+.zoom-calendar{
+    color: black;
+    cursor: pointer;
+}
+
+.zoom-calendar:hover{
+    color: #2c7ecd;
+    font-size: 17px;
+}

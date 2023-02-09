@@ -24,6 +24,7 @@ import Course from "./component/page/teacher page/course/Course";
 import EditCourse from "./component/page/teacher page/course/EditCourse";
 import Listquiz from "./component/page/teacher page/quiz/Listquiz";
 import Editquiz from "./component/page/teacher page/quiz/Editquiz";
+import Calendar from "./component/page/teacher page/calendar/Calendar";
 
 
 
@@ -66,6 +67,7 @@ function App() {
         <Route path="/teacher/list-quiz" element={<Listquiz />} />
         <Route path="/teacher/list-courses" element={<CoursesPageteacher />} />
         <Route path="/teacher/get-course/:id" element={<CoursePageteacher />} />
+        <Route path="/teacher/calendar-teacher" element={<Calendar />} />
 
         <Route path="/teacher/calendar" element={<CalendarPageTeacher />} />
         <Route path="/teacher/create-teach-time" element={<CreateTeachTimePageTeacher />} />
