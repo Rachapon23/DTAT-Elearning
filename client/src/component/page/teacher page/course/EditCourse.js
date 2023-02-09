@@ -5,7 +5,7 @@ import { updateCourse } from '../../../../function/teacher/funcCourse';
 import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { listQuiz, } from "../../../../function/teacher/funcQuiz";
-import { getCourse } from "../../../../function/teacher/funcCourse";
+import { getCourse,listRoom  } from "../../../../function/teacher/funcCourse";
 import Swal from "sweetalert2";
 import {  useNavigate } from 'react-router-dom'
 
@@ -18,7 +18,7 @@ const EditCourse = () => {
     const [topic, setTopic] = useState();
     const [dataquiz, setDataQuiz] = useState([])
     const [nextState, setNextState] = useState([]);
-
+    const [room, setRoom] = useState([]);
     // const [nameCourse, setNameCourse] = useState
     // ({
     //     name: "",
@@ -62,6 +62,7 @@ const EditCourse = () => {
 
     useEffect(() => {
         loadQuiz()
+        loadRoom()
     }, [])
 
     const handleAddTopic = () => {
@@ -151,11 +152,21 @@ const EditCourse = () => {
         ).then(res => {
             console.log(res.data)
             // window.location.reload(false);
-            navigate('/student/get-course/'+id)
+            navigate('/teacher/get-course/'+id)
         }).catch(err => {
             console.log(err)
         })
 
+    }
+    const loadRoom = () => {
+        listRoom()
+            .then(res => {
+                // console.log(res.data)
+                setRoom(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     return (
@@ -215,6 +226,16 @@ const EditCourse = () => {
                                         onChange={handAddName}
                                         value={course.description}
                                     />
+                                     <label className="form-label  mt-3">ห้องเรียน</label>
+                                <div className="">
+                                <select name="room" id="" className='form-select ' onChange={handAddName}>
+                                    {course.room && <option value="">{course.room.room}</option>}
+                                    {room.map((item,index)=>
+                                    <option key={index} value={item._id}>{item.room}</option>
+                                    )}
+                                </select>
+                               
+                                </div>
                                 </div>
                             </div>
 

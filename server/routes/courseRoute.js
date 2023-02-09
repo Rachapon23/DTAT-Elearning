@@ -12,7 +12,9 @@ const {
     deleteMyCourse,
     getMyCourseTeacher,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    getRoom,
+    createRoom
 } = require("../controllers/courseController");
 
 // student
@@ -36,6 +38,8 @@ router.put("/update-course", updateCourse);
 router.get("/list-courses", listCourses);
 router.delete("/delete-courses/:id", deleteCourse);
 router.get("/get-mycourse-teacher/:id", getMyCourseTeacher);
+router.get("/list-room", getRoom);
+router.post("/create-room", createRoom);
 
 // student
 router.post("/searchcourse", searchCourse);
