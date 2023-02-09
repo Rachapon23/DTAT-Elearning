@@ -16,7 +16,8 @@ const {
     // listquizUser
     createQuiz,
     listQuiz,
-    updateQuiz
+    updateQuiz,
+    createExaminer
 } = require('../controllers/quizController')
 
 

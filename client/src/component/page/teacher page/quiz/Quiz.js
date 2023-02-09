@@ -14,6 +14,7 @@ const Quiz = () => {
         ({
             name: "",
             explanation: "",
+            attemp: 1,
             teacher: sessionStorage.getItem('user_id')
         })
     const handleAddQuiz = () => {
@@ -57,16 +58,29 @@ const Quiz = () => {
     return (
         <div>
             <NavTeacher />
+            {/* {JSON.stringify(nameQuiz)} */}
             <div className="container">
                 <div className="mt-5">
                     <form onSubmit={handSubmit}>
                         <div className="card">
                             <div className="bg-success head-form"></div>
                             <div className="card-body p-5">
-                                <label className="form-label">ชื่อการทดสอบ</label>
-                                <input type="text" className="form-control" name='name' onChange={handAddName} />
-                                <label className="form-label  mt-3">คำชี้แจง</label>
-                                <textarea type="text" className="form-control" name='explanation' onChange={handAddName} />
+                                <div className="row">
+                                    <div className="col-8">
+                                        <label className="form-label">ชื่อการทดสอบ</label>
+                                        <input type="text" className="form-control" name='name' onChange={handAddName} />
+                                    </div>
+                                    <div className="col-4">
+                                        <label className="form-label">จำนวนในการเข้าทำแบบทดสอบ</label>
+                                        <input type="number" defaultValue={1} min={1} className="form-control" name='attemp' onChange={handAddName} />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div>
+                                        <label className="form-label  mt-3">คำชี้แจง</label>
+                                        <textarea type="text" className="form-control" name='explanation' onChange={handAddName} />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

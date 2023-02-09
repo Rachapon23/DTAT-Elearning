@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, Link} from "react-router-dom";
 import NavTeacher from "../../../layout/NavTeacher";
 
 import Swal from "sweetalert2";
@@ -15,6 +15,7 @@ const CoursePageteacher = () => {
     const [topic, setTopic] = useState();
     const [dataQuiz, setDataQuiz] = useState([])
     const navigate = useNavigate()
+    const {pathname} = useLocation()
 
     const fetchCourse = () => {
         getCourse(sessionStorage.getItem("token"), id)
@@ -134,8 +135,9 @@ const CoursePageteacher = () => {
                                         {item.quiz.map((ttem, tdex) =>
 
                                             <li key={tdex}>
-                                                <a className="text-success" href={`/student/test/` + ttem.quiz}>
-                                                    <i className="bi bi-clipboard2-check"></i>&nbsp;{ttem.name}</a>
+                                                <Link className="text-success" to={`/student/test/` + ttem.quiz} state={{path: pathname}}>
+                                                    <i className="bi bi-clipboard2-check"></i>&nbsp;{ttem.name}
+                                                </Link>
                                             </li>
 
                                         )}

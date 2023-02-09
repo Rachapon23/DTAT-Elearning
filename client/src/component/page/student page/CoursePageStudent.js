@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import NavStudent from "../../layout/NavStudent";
 
 import { Link } from "react-router-dom";
@@ -24,6 +24,7 @@ const CoursePageStudent = () => {
 
     const navigate = useNavigate()
     const { id } = useParams()
+    const {pathname} = useLocation()
 
     const fetchCourse = () => {
         getCourse(sessionStorage.getItem("token"), id)
@@ -80,7 +81,7 @@ const CoursePageStudent = () => {
         <div>
             <NavStudent />
             <div className="container ">
-                {/* {JSON.stringify(course_id)} */}
+                {/* {JSON.stringify(location)} */}
                 {course &&
 
 
@@ -132,8 +133,9 @@ const CoursePageStudent = () => {
                                         {item.quiz.map((ttem, tdex) =>
 
                                             <li key={tdex}>
-                                                <a className="text-success" href={`/student/test/` + ttem.quiz}>
-                                                    <i className="bi bi-clipboard2-check"></i>&nbsp;{ttem.name}</a>
+                                                <Link className="text-success" to={`/student/test/` + ttem.quiz} state={{path: pathname}}>
+                                                    <i className="bi bi-clipboard2-check"></i>&nbsp;{ttem.name}
+                                                </Link>
                                             </li>
 
                                         )}

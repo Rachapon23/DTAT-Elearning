@@ -13,8 +13,10 @@ const {
     getMyCourseTeacher,
     updateCourse,
     deleteCourse,
-    getRoom,
-    createRoom
+    getCourseName,
+    // getRoom,
+    createRoom,
+
 } = require("../controllers/courseController");
 
 // student

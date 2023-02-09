@@ -93,8 +93,7 @@ const Editquiz = () => {
                             <div className="bg-warning head-form"></div>
                             <div className="card-body p-5">
                                 <label className="form-label">ชื่อการทดสอบ</label>
-                                <input type="text" className="form-control" name='name' value={nameQuiz.name} onChange={handAddName}
-                                />
+                                <input type="text" className="form-control" name='name' value={nameQuiz.name} onChange={handAddName}/>
                                 <label className="form-label  mt-3">คำชี้แจง</label>
                                 <textarea type="text" className="form-control" name='explanation' value={nameQuiz.explanation} onChange={handAddName} />
                             </div>
