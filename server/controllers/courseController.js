@@ -1,18 +1,13 @@
 
 const User = require('../models/userModel')
-const ObjectId = require('mongoose').Types.ObjectId;
+
 
 
 const Coursee = require('../models/course')
 
 exports.createCourse = async (req, res) => {
     try {
-
-
         const { head, body } = req.body
-
-
-
         if (!head.password) {
             const status = "public"
             const course = new Coursee(

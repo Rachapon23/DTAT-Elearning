@@ -2,7 +2,6 @@
 const Quize = require('../models/quize')
 
 
-
 // exports.listquizUser = async (req, res) => {
 //     try {
 //         const {params} = req.params
@@ -72,17 +71,15 @@ exports.updateQuiz = async (req, res) => {
 exports.createQuiz = async (req, res) => {
     try {
         const {head,body} = req.body
-        // console.log(head,body)
+        console.log(head,body)
 
-        const quiz = new Quize(
-            {
-               name:head.name,
-              explanation:head.explanation,
-              question:body,
-              teacher:head.teacher
-
-            }
-        )
+        const quiz = new Quize({
+            name:head.name,
+            explanation:head.explanation,
+            question:body,
+            access_number: head.attemp,
+            teacher:head.teacher
+        })
         await quiz.save()
         res.send('create success')
       
@@ -95,10 +92,21 @@ exports.listQuiz = async (req, res) => {
     try {
         const {id} = req.params
 
-        const quiz = await Quize.find({teacher:id}).exec()
+        const quizzs = await Quize.find({teacher:id}).exec()
       
-        // console.log(id)
-        res.send(quiz)
+        console.log(quizzs)
+        let payload = [];
+        quizzs.forEach((quiz, index) => {
+            payload.push({
+                index: index + 1,
+                key: quiz._id,
+                name: quiz.name,
+                explanation: quiz.explanation,
+                access_number: quiz.access_number,
+                noq: quiz.question.length,
+            })
+        })
+        res.send(payload)
       
     } catch (err) {
         console.log(err)

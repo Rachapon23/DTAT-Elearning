@@ -12,7 +12,8 @@ const {
     deleteMyCourse,
     getMyCourseTeacher,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    getCourseName
 } = require("../controllers/courseController");
 
 // student
