@@ -34,6 +34,7 @@ const NavTeacher = () => {
             {/* <Nav.Link href="/teacher/list-score">ดูคะแนน</Nav.Link> */}
             <Nav.Link href="/teacher/calendar">ตารางสอน</Nav.Link>
             <Nav.Link href="/teacher/list-quiz">แบบทดสอบของฉัน</Nav.Link>
+            <Nav.Link href="/teacher/calendar-teacher">--ตารางสอน--</Nav.Link>
             <Nav.Link href="/teacher/quiz">--QUIZ--</Nav.Link>
             <Nav.Link href="/teacher/course">--COURSE--</Nav.Link>
           </Nav>

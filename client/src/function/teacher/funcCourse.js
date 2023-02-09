@@ -31,6 +31,7 @@ headers:{
 }
 });
 
+
 export const getCourse  = async(authtoken,id) =>
 await axios.post(process.env.REACT_APP_API+'/get-course/'+id,
 {
@@ -45,4 +46,12 @@ export const removeCourse = async(authtoken,params) =>
     headers:{
         authtoken,
     }
+});
+
+export const listRoom  = async(authtoken) =>
+await axios.get(process.env.REACT_APP_API+'/list-room',
+{
+headers:{
+    authtoken,
+}
 });

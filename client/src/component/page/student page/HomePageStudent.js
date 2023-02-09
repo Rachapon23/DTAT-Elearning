@@ -3,22 +3,28 @@ import NavStudent from '../../layout/NavStudent'
 import Mycourse from './ChildrenHome/Mycourse'
 import Search from './ChildrenHome/Search'
 import PublicCourse from './ChildrenHome/PublicCourse'
+import Calendar from './ChildrenHome/Calendar'
+
 
 import { getMycourse } from '../../../function/student/funcCourse'
 import { useState, useEffect } from 'react'
 
 
+
 const HomePageStudent = () => {
 
   const [data, setData] = useState()
+  const [events, setEvents] = useState([])
+
 
   useEffect(() => {
     loadMycourse()
+
   }, [])
 
   const loadMycourse = () => {
     const user_id = sessionStorage.getItem("user_id")
-    getMycourse(sessionStorage.getItem("token"),user_id)
+    getMycourse(sessionStorage.getItem("token"), user_id)
       .then(res => {
         // console.log(res.data)
         setData(res.data.coursee)
@@ -28,6 +34,7 @@ const HomePageStudent = () => {
       })
 
   }
+
 
 
   return (
@@ -62,20 +69,17 @@ const HomePageStudent = () => {
             <div className="bg-white p-4 border mt-3">
               <label className="form-label mb-3">Add a new course for teacher</label>
               <div className="d-flex justify-content-center">
-                
+
                 <img src="https://cdn-icons-png.flaticon.com/512/2659/2659360.png"
-              alt="" style={{ width: "12rem" }}/>
+                  alt="" style={{ width: "12rem" }} />
               </div>
             </div>
-            <div className="bg-white p-4 border mt-3">
-              <label className="form-label mb-3">Reset course for teacher</label>
-              <div className="d-flex justify-content-center">
-                <img src="https://cdn-icons-png.flaticon.com/512/7875/7875442.png"
-                 alt="" style={{ width: "12rem" }}/>
+            <div className="bg-white border mt-3">
+              {/* <label className="form-label mb-3">Reset course for teacher</label> */}
+              <div className="p-2 mt-3">
+                <Calendar />
+
               </div>
-              <p className='mt-3'>
-              เป็นวิธีการลบข้อมูลของนักศึกษาที่เคยเข้าใช้งานในรายวิชา โดยไฟล์เนื้อหา การบ้าน แบบทดสอบ ที่ผู้สอนสร้างจะยังอยู่เหมือนเดิม
-              </p>
             </div>
             <div className="bg-white p-4 border mt-3">
               <label className="form-label mb-3">ติดต่อ Line@</label>
@@ -84,16 +88,14 @@ const HomePageStudent = () => {
                  alt="" style={{ width: "12rem" }}/> */}
               </div>
               <h4 className='mt-3 text-center'>
-              LINE: @Dtat-elearning
+                LINE: @Dtat-elearning
               </h4>
             </div>
           </div>
         </div>
-
-
-
-
       </div>
+
+
     </div>
   )
 }

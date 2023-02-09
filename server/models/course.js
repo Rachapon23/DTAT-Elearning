@@ -11,6 +11,10 @@ const CourseeSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "users",
     },
+    room: {
+        type: ObjectId,
+        ref: "layout",
+    },
     description: {
         type: String,
     }
