@@ -1,18 +1,18 @@
 
-const User = require('../models/userModel')
-const ObjectId = require('mongoose').Types.ObjectId;
 
+const ObjectId = require('mongoose').Types.ObjectId;
+const fs = require("fs");
 
 const Coursee = require('../models/course')
 const Layout = require('../models/layout')
+const Calendar = require('../models/calendar')
+const User = require('../models/userModel')
 
 exports.createCourse = async (req, res) => {
     try {
 
 
         const { head, body } = req.body
-
-
 
         if (!head.password) {
             const status = "public"
@@ -23,7 +23,7 @@ exports.createCourse = async (req, res) => {
                     course_number: head.course_number,
                     password: head.password,
                     teacher: head.teacher,
-                    room:head.room,
+                    room: head.room,
                     status: status,
                     topic: body,
 
@@ -31,7 +31,7 @@ exports.createCourse = async (req, res) => {
             )
             // console.log(course)
             await course.save()
-            res.send('OK Public')
+            res.send(course)
 
         } else {
             const course = new Coursee(
@@ -40,7 +40,7 @@ exports.createCourse = async (req, res) => {
                     description: head.description,
                     course_number: head.course_number,
                     password: head.password,
-                    room:head.room,
+                    room: head.room,
                     teacher: head.teacher,
                     topic: body,
 
@@ -48,15 +48,15 @@ exports.createCourse = async (req, res) => {
             )
             // console.log(course)
             await course.save()
-            res.send('OK corse Private')
+            res.send(course)
         }
 
-
+        // res.send('OK corse Private')
 
 
     }
     catch (err) {
-        console.log("fail to create the course");
+        console.log("fail to create the course : ", err);
         res.status(500).json({ error: "fail to create the course" })
     }
 }
@@ -157,17 +157,23 @@ exports.addCourse = async (req, res) => {
     try {
         const { id, id_user, password } = req.body
 
-        const courseSearch = await Coursee.findOne({ _id: id }).exec()
+
         let user = await User.findOne({ _id: id_user }).exec()
+
+        for (let i = 0; i < user.coursee.length; i++) {
+            if (user.coursee[i] == id) {
+                return res.status(400).send("course already exist");
+            }
+        }
+
         user.coursee.push(id)
         const user_push = user.coursee
-
-
-        // console.log(user_push)
+        const courseSearch = await Coursee.findOne({ _id: id }).exec()
         // console.log(courseSearch.password)
 
         if (password == courseSearch.password) {
-            console.log('math')
+            // console.log('math')
+
             const user_update = await User.findByIdAndUpdate(
                 { _id: id_user },
                 { coursee: user_push }
@@ -235,7 +241,7 @@ exports.deleteMyCourse = async (req, res) => {
 
 exports.getMyCourseTeacher = async (req, res) => {
     try {
-const { id } = req.params
+        const { id } = req.params
         const courses = await Coursee.find({ teacher: id }).populate("teacher", "-password").exec()
         res.send(courses)
         // res.send("ok")
@@ -248,25 +254,74 @@ const { id } = req.params
 exports.updateCourse = async (req, res) => {
     try {
         const { head, body } = req.body
-        // console.log(head,body)
+        // console.log(head)
 
-        const course = await Coursee.findOneAndUpdate(
-            { _id: head._id }
-            , {
-                new: true,
-                name: head.name,
-                description: head.description,
-                course_number: head.course_number,
-                password: head.password,
-                room:head.room,
-                topic: body
-            },
+        const deleteIMG = await Coursee.findOne({ _id: head._id }).exec()
+
+        if (!deleteIMG.image) {
+            //false have
+            console.log(head.image, "no have no delete")
+            const course = await Coursee.findOneAndUpdate(
+                { _id: head._id }
+                , {
+                    new: true,
+                    name: head.name,
+                    description: head.description,
+                    course_number: head.course_number,
+                    password: head.password,
+                    room: head.room,
+                    topic: body
+                },
+            ).exec()
+            res.send(course)
+
+        } else {
+            //true not have
+            if (!head.image) {
 
 
-        ).exec()
+                console.log(deleteIMG.image, "delete")
+                await fs.unlink("./public/uploads/" + deleteIMG.image, (err) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log("delete IMG from server success")
+                    }
+                });
+                const deleteIMGback = await Coursee.updateMany({ _id: head._id }, { $unset: { image: "" } })
+                const course = await Coursee.findOneAndUpdate(
+                    { _id: head._id }
+                    , {
+                        new: true,
+                        name: head.name,
+                        description: head.description,
+                        course_number: head.course_number,
+                        password: head.password,
+                        room: head.room,
+                        topic: body
+                    },
+                ).exec()
+                res.send(course)
 
+            } else {
+                console.log(head.image, "do not delete img")
+                const course = await Coursee.findOneAndUpdate(
+                    { _id: head._id }
+                    , {
+                        new: true,
+                        name: head.name,
+                        description: head.description,
+                        course_number: head.course_number,
+                        password: head.password,
+                        room: head.room,
+                        image: head.image,
+                        topic: body
+                    },
+                ).exec()
+                res.send(course)
+            }
 
-        res.send("update success")
+        }
 
     }
     catch (err) {
@@ -277,8 +332,29 @@ exports.updateCourse = async (req, res) => {
 
 exports.deleteCourse = async (req, res) => {
     try {
-        const course = await Coursee.findOneAndRemove({ _id: req.params.id }).exec()
-        res.send(course)
+        const course = await Coursee.findOne({ _id: req.params.id }).exec()
+        const calendar = await Calendar.find({ coursee: course._id })
+        await Calendar.deleteMany({coursee:course._id}).exec((err) => {
+            if (err) {
+                console.log(err)
+                res.status(400).send('err on delete carlendar')
+            }
+        })
+
+        if (!!course.image) {
+            // console.log(course.image)
+            await fs.unlink("./public/uploads/" + course.image, (err) => {
+                if (err) {
+                    console.log(err);
+                    res.status(400).send('err on delete img')
+                } else {
+                    console.log("remove Success");
+                }
+                
+            });
+        }
+        const course_delete = await Coursee.findOneAndDelete({ _id: req.params.id }).exec()
+        res.send(course_delete)
     } catch (err) {
         console.log(err)
         res.status(500).send('Server Error!!! on remove course')
@@ -296,11 +372,53 @@ exports.getRoom = async (req, res) => {
 }
 exports.createRoom = async (req, res) => {
     try {
-        const room = await  Layout.insertMany(req.body)
+        const room = await Layout.insertMany(req.body)
         // console.log(req.body)
         res.send(room)
     } catch (err) {
         console.log(err)
         res.status(500).send('Server Error!!! on create Room')
+    }
+}
+exports.uploadimg = async (req, res) => {
+    try {
+        const id = req.body.id;
+        const filename = req.file.filename;
+
+        console.log(filename, id)
+        const upload = await Coursee.findOneAndUpdate(
+            { _id: id },
+            { image: filename }
+        )
+        res.send(upload)
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Server Error!!! on upload img')
+    }
+}
+exports.updateimg = async (req, res) => {
+    try {
+        const id = req.body.id;
+        const filename = req.file.filename;
+
+        const img = await Coursee.findOne({ _id: id }).exec()
+        console.log(img.image)
+
+        await fs.unlink("./public/uploads/" + img.image, (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("remove Success");
+            }
+        });
+
+        const update = await Coursee.findOneAndUpdate(
+            { _id: id },
+            { image: filename }
+        )
+        res.send(update)
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Server Error!!! on upload img')
     }
 }

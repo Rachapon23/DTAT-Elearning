@@ -26,6 +26,9 @@ const CourseeSchema = new mongoose.Schema({
     password:{
         type:String
     },
+    image:{
+        type:String
+    },
     status:{
         type:String,
         default:"private"

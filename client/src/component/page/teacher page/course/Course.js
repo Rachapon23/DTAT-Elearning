@@ -1,9 +1,12 @@
 import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
 import { listQuiz, } from "../../../../function/teacher/funcQuiz";
-import { createCourse,listRoom } from '../../../../function/teacher/funcCourse';
+import { createCourse,  } from '../../../../function/teacher/funcCourse';
+import {listRoom,uploadImg} from '../../../../function/teacher/funcMiscellaneous'
 import { useState, useEffect } from 'react'
 import './course.css'
+import Swal from "sweetalert2";
+import Resizer from "react-image-file-resizer";
 
 const Course = () => {
 
@@ -11,7 +14,8 @@ const Course = () => {
     const [nextState, setNextState] = useState([]);
     const [dataquiz, setDataQuiz] = useState([]);
     const [room, setRoom] = useState([]);
-    
+    const [file, setFile] = useState('');
+
 
     const [nameCourse, setNameCourse] = useState
         ({
@@ -19,7 +23,7 @@ const Course = () => {
             description: "",
             course_number: "",
             password: "",
-            room:"",
+            room: "",
             teacher: sessionStorage.getItem('user_id')
         })
 
@@ -117,6 +121,18 @@ const Course = () => {
             })
     }
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
     useEffect(() => {
         loadQuiz()
         loadRoom()
@@ -124,18 +140,97 @@ const Course = () => {
 
     const handdleSubmit = (e) => {
         e.preventDefault();
-        createCourse(sessionStorage.getItem("token"), 
-            {
-            head: nameCourse,
-            body: valuetopic
+
+        if (!!!nameCourse.name) {
+            document.getElementById("nameCourse").focus({ focusVisible: true });
         }
-        ).then(res=>{
-            console.log(res.data)
-            window.location.reload(false);
-        }).catch(err=>{
-            console.log(err)
-        })
-       
+        else if (!!!nameCourse.course_number) {
+            document.getElementById("course_number").focus({ focusVisible: true });
+        }
+        else if (!!!nameCourse.description) {
+            document.getElementById("description").focus({ focusVisible: true });
+        }
+        else if (!!!nameCourse.room) {
+            document.getElementById("room").focus({ focusVisible: true });
+        }
+        else if (valuetopic.length > 0) {
+            // console.log("for")
+            for (let i = 0; i < valuetopic.length; i++) {
+                // console.log("for 2")
+                if (!!!valuetopic[i].title) {
+                    document.getElementById(`title${i}`).focus({ focusVisible: true });
+                }
+                else if (!!!valuetopic[i].description) {
+                    document.getElementById(`description${i}`).focus({ focusVisible: true });
+                }
+                else if (valuetopic[i].link.length > 0) {
+                    for (let j = 0; j < valuetopic[i].link.length; j++) {
+                        if (!!!valuetopic[i].link[j].name) {
+                            document.getElementById(`linkname${i}${j}`).focus({ focusVisible: true });
+                        } else if (!!!valuetopic[i].link[j].url) {
+                            document.getElementById(`linkurl${i}${j}`).focus({ focusVisible: true });
+                        }
+                    }
+                }
+                else if (valuetopic[i].text.length > 0) {
+                    for (let j = 0; j < valuetopic[i].text.length; j++) {
+                        if (!!!valuetopic[i].text[j].content) {
+                            document.getElementById(`text${i}${j}`).focus({ focusVisible: true });
+                        }
+                    }
+                }
+                else if (valuetopic[i].quiz.length > 0) {
+                    for (let j = 0; j < valuetopic[i].quiz.length; j++) {
+                        if (!!!valuetopic[i].quiz[j].quiz) {
+                            document.getElementById(`quiz${i}${j}`).focus({ focusVisible: true });
+                        }
+                    }
+                }
+
+            }
+        }
+        else {
+            
+            createCourse(sessionStorage.getItem("token")
+            ,
+                {
+                    head: nameCourse,
+                    body: valuetopic,
+                }
+            ).then(res => {
+                console.log(res.data)
+                const formData = new FormData();
+                formData.append('id',res.data._id)
+                formData.append('file', file)
+                if(file != ''){
+                    uploadImg(sessionStorage.getItem("token"),formData).then(res => {
+                        console.log(res)
+                        
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Your file has been deleted successfully'
+                        })
+                        window.location.reload(false);
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                }else{
+                     
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Your file has been deleted successfully'
+                    })
+                    window.location.reload(false);
+                }
+              
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    }
+
+    const handleImg = (e) => {
+        setFile(e.target.files[0])
     }
 
     return (
@@ -148,36 +243,41 @@ const Course = () => {
                             <div className="bg-primary head-form"></div>
                             <div className="card-body p-5">
                                 <label className="form-label">ชื่อบทเรียน</label>
-                                <input type="text" className="form-control" name='name'
+                                <input type="text" className="form-control" name='name' id='nameCourse'
                                     onChange={handAddName}
                                 />
 
                                 <div className="row mt-3">
                                     <div className="col-md-6">
                                         <label className="form-label">รหัสบทเรียน</label>
-                                        <input type="text" className="form-control" name='course_number'
-                                    onChange={handAddName}/>
+                                        <input type="text" className="form-control" name='course_number' id='course_number'
+                                            onChange={handAddName} />
                                     </div>
                                     <div className="col-md-6">
                                         <label className="form-label">รหัสผ่าน</label>
                                         <input type="text" className="form-control" name='password'
-                                    onChange={handAddName}/>
+                                            onChange={handAddName} />
                                     </div>
                                 </div>
 
                                 <label className="form-label  mt-3">รายละเอียด</label>
-                                <textarea type="text" className="form-control" name='description'
+                                <textarea type="text" className="form-control" name='description' id='description'
                                     onChange={handAddName}
                                 />
                                 <label className="form-label  mt-3">ห้องเรียน</label>
                                 <div className="">
-                                <select name="room" id="" className='form-select '   onChange={handAddName}>
-                                    <option value="">เลือกห้อง</option>
-                                    {room.map((item,index)=>
-                                    <option key={index} value={item._id}>{item.room}</option>
-                                    )}
-                                </select>
-                               
+                                    <select name="room" id="room" className='form-select ' onChange={handAddName}>
+                                        <option value="">เลือกห้อง</option>
+                                        {room.map((item, index) =>
+                                            <option key={index} value={item._id}>{item.room}</option>
+                                        )}
+                                    </select>
+
+                                </div>
+                                <label className="form-label  mt-3">รูปหน้าปก</label>
+                                <div className="">
+                                    <input type="file" className="form-control" onChange={handleImg} />
+                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 123px * 456px</p>
                                 </div>
                             </div>
                         </div>
@@ -193,14 +293,14 @@ const Course = () => {
                                 </div>
                                 <div className="card-body p-5">
                                     <p>หัวเรื่อง</p>
-                                    <input type="text" className="form-control" name='title'
+                                    <input type="text" className="form-control" name='title' id={`title${index}`}
                                         onChange={(e) => {
                                             item.title = e.target.value
                                             SetValueTopic([...valuetopic])
                                         }}
                                     />
                                     <label className="form-label  mt-3">รายละเอียด</label>
-                                    <textarea type="text" className="form-control"
+                                    <textarea type="text" className="form-control" id={`description${index}`}
                                         onChange={(e) => {
                                             item.description = e.target.value
                                             SetValueTopic([...valuetopic])
@@ -222,6 +322,7 @@ const Course = () => {
                                                 <li key={tdex} className="mt-3">
                                                     <div className="input-group">
                                                         <textarea type="text" className="form-control"
+                                                            id={`text${index}${tdex}`}
                                                             onChange={(e) => {
                                                                 ttem.content = e.target.value
                                                                 SetValueTopic([...valuetopic])
@@ -254,6 +355,7 @@ const Course = () => {
                                                     <div className="">
                                                         <div className="input-group mb-2">
                                                             <input type="text" className="form-control" placeholder="name"
+                                                                id={`linkname${index}${tdex}`}
                                                                 onChange={(e) => {
                                                                     ttem.name = e.target.value
                                                                     SetValueTopic([...valuetopic])
@@ -266,6 +368,7 @@ const Course = () => {
                                                             </button>
                                                         </div>
                                                         <input type="text" className="form-control" placeholder="url"
+                                                            id={`linkurl${index}${tdex}`}
                                                             onChange={(e) => {
                                                                 ttem.url = e.target.value
                                                                 SetValueTopic([...valuetopic])
@@ -299,6 +402,7 @@ const Course = () => {
                                                             <div className="input-group mb-2">
 
                                                                 <select
+                                                                    id={`quiz${index}${tdex}`}
                                                                     onChange={(e) => {
                                                                         ttem.quiz = JSON.parse(e.target.value)._id
                                                                         ttem.name = JSON.parse(e.target.value).name

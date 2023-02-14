@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const createCourse  = async(authtoken,value) => 
+export const createCourse  = async(authtoken,value) =>  
 await axios.post(process.env.REACT_APP_API+'/create-course',value,
 {
 headers:{
@@ -48,10 +48,3 @@ export const removeCourse = async(authtoken,params) =>
     }
 });
 
-export const listRoom  = async(authtoken) =>
-await axios.get(process.env.REACT_APP_API+'/list-room',
-{
-headers:{
-    authtoken,
-}
-});

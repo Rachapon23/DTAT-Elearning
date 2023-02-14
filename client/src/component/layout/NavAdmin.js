@@ -18,7 +18,7 @@ const NavAdmin = () => {
       };
 
   return (
-    <Navbar id="navBack" expand="lg">
+    <Navbar className="bg-nav" expand="lg">
       <Container>
         <Navbar.Brand href="/admin/home" className="text-white">
           Denso elearning Admin
@@ -35,7 +35,7 @@ const NavAdmin = () => {
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
 
-          <Navbar.Text className="text-white">
+          <Navbar.Text className="">
             Signed in {sessionStorage.getItem("role")} as: 
           </Navbar.Text>
 

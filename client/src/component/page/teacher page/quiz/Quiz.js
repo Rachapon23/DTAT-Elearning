@@ -33,21 +33,67 @@ const Quiz = () => {
     }
     const handSubmit = (e) => {
         e.preventDefault();
-
-        createQuiz(sessionStorage.getItem("token"),
-            {
-                head: nameQuiz,
-                body: valueQuiz
+        if (!!!nameQuiz.name) {
+            document.getElementById("name").focus({ focusVisible: true });
+        }
+        else if (!!!nameQuiz.explanation) {
+            document.getElementById("explanation").focus({ focusVisible: true });
+            // console.log("---")
+        }
+        else if (valueQuiz.length > 0) {
+            for (let i = 0; i < valueQuiz.length; i++) {
+                if (!!!valueQuiz[i].title) {
+                    document.getElementById(`title${i}`).focus({ focusVisible: true });
+                }
+                else if (!!!valueQuiz[i].q1) {
+                    document.getElementById(`q1${i}`).focus({ focusVisible: true });
+                }
+                else if (!!!valueQuiz[i].q2) {
+                    document.getElementById(`q2${i}`).focus({ focusVisible: true });
+                }
+                else if (!!!valueQuiz[i].q3) {
+                    document.getElementById(`q3${i}`).focus({ focusVisible: true });
+                }
+                else if (!!!valueQuiz[i].q4) {
+                    document.getElementById(`q4${i}`).focus({ focusVisible: true });
+                }
+                else if (!!!valueQuiz[i].ans) {
+                    setTimeout(function () {
+                        document.getElementById(`1${i}`).focus({ focusVisible: true });
+                    }, 200);
+                    setTimeout(function () {
+                        document.getElementById(`2${i}`).focus({ focusVisible: true });
+                    }, 400);
+                    setTimeout(function () {
+                        document.getElementById(`3${i}`).focus({ focusVisible: true });
+                    }, 600);
+                    setTimeout(function () {
+                        document.getElementById(`4${i}`).focus({ focusVisible: true });
+                    }, 800);
+                    setTimeout(function () {
+                        document.getElementById(`4${i}`).blur();
+                    }, 1000);
+                }
+                else {
+                    createQuiz(sessionStorage.getItem("token"),
+                        {
+                            head: nameQuiz,
+                            body: valueQuiz
+                        }
+                    )
+                        .then(res => {
+                            console.log(res)
+                            // window.location.reload(false);
+                            navigate('/teacher/list-quiz')
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
             }
-        )
-            .then(res => {
-                console.log(res)
-                // window.location.reload(false);
-                navigate('/teacher/list-quiz')
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        }
+
+
     }
     const handleRemoveQuiz = (index) => {
         valueQuiz.splice(index, 1)
@@ -64,15 +110,15 @@ const Quiz = () => {
                             <div className="bg-success head-form"></div>
                             <div className="card-body p-5">
                                 <label className="form-label">ชื่อการทดสอบ</label>
-                                <input type="text" className="form-control" name='name' onChange={handAddName} />
+                                <input type="text" className="form-control" name='name' id='name' onChange={handAddName} />
                                 <label className="form-label  mt-3">คำชี้แจง</label>
-                                <textarea type="text" className="form-control" name='explanation' onChange={handAddName} />
+                                <textarea type="text" className="form-control" name='explanation' id='explanation' onChange={handAddName} />
                             </div>
                         </div>
 
                         {valueQuiz.map((item, index) => (
                             <div key={index} className="card mt-2">
-                                 <div className="position-relative">
+                                <div className="position-relative">
                                     <button type="button" className="btn position-absolute top-0 end-0 "
                                         onClick={() => handleRemoveQuiz(index)}
                                     >
@@ -81,7 +127,7 @@ const Quiz = () => {
                                 </div>
                                 <div className="card-body p-5">
                                     <p>ข้อที่ {index + 1}</p>
-                                    <textarea type="text" placeholder='คำถาม' className="form-control"
+                                    <textarea type="text" placeholder='คำถาม' className="form-control" id={`title${index}`}
                                         onChange={(e) => {
                                             item.title = e.target.value
                                             setValueQuiz([...valueQuiz])
@@ -91,7 +137,7 @@ const Quiz = () => {
 
                                         <div className="d-flex mb-2">
                                             <div className="form-check d-flex align-items-center">
-                                                <input className="form-check-input" type="radio" name={index}
+                                                <input className="form-check-input" type="radio" name={index} id={`1${index}`}
                                                     onChange={(e) => {
                                                         item.ans = "1"
                                                         setValueQuiz([...valueQuiz])
@@ -99,6 +145,7 @@ const Quiz = () => {
                                                 />
                                             </div>
                                             <input type="text" className="form-control"
+                                                id={`q1${index}`}
                                                 onChange={(e) => {
                                                     item.q1 = e.target.value
                                                     setValueQuiz([...valueQuiz])
@@ -107,7 +154,7 @@ const Quiz = () => {
                                         </div>
                                         <div className="d-flex mb-2">
                                             <div className="form-check d-flex align-items-center">
-                                                <input className="form-check-input" type="radio" name={index}
+                                                <input className="form-check-input" type="radio" name={index} id={`2${index}`}
                                                     onChange={(e) => {
                                                         item.ans = "2"
                                                         setValueQuiz([...valueQuiz])
@@ -115,6 +162,7 @@ const Quiz = () => {
                                                 />
                                             </div>
                                             <input type="text" className="form-control"
+                                                id={`q2${index}`}
                                                 onChange={(e) => {
                                                     item.q2 = e.target.value
                                                     setValueQuiz([...valueQuiz])
@@ -123,7 +171,7 @@ const Quiz = () => {
                                         </div>
                                         <div className="d-flex mb-2">
                                             <div className="form-check d-flex align-items-center">
-                                                <input className="form-check-input" type="radio" name={index}
+                                                <input className="form-check-input" type="radio" name={index} id={`3${index}`}
                                                     onChange={(e) => {
                                                         item.ans = "3"
                                                         setValueQuiz([...valueQuiz])
@@ -131,6 +179,7 @@ const Quiz = () => {
                                                 />
                                             </div>
                                             <input type="text" className="form-control"
+                                                id={`q3${index}`}
                                                 onChange={(e) => {
                                                     item.q3 = e.target.value
                                                     setValueQuiz([...valueQuiz])
@@ -139,7 +188,7 @@ const Quiz = () => {
                                         </div>
                                         <div className="d-flex mb-2">
                                             <div className="form-check d-flex align-items-center">
-                                                <input className="form-check-input" type="radio" name={index}
+                                                <input className="form-check-input" type="radio" name={index} id={`4${index}`}
                                                     onChange={(e) => {
                                                         item.ans = "4"
                                                         setValueQuiz([...valueQuiz])
@@ -147,6 +196,7 @@ const Quiz = () => {
                                                 />
                                             </div>
                                             <input type="text" className="form-control"
+                                                id={`q4${index}`}
                                                 onChange={(e) => {
                                                     item.q4 = e.target.value
                                                     setValueQuiz([...valueQuiz])

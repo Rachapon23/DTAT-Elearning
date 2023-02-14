@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+/* Multer  */
+const multer = require('multer')
+
+
 const {
     listCourses,
     createCourse,
@@ -14,25 +18,34 @@ const {
     updateCourse,
     deleteCourse,
     getRoom,
-    createRoom
+    createRoom,
+
+    uploadimg,
+    updateimg
 } = require("../controllers/courseController");
 
-// student
-// router.get("/list_courses", listCourses);
 
-// router.post("/get_course", getCourse);
-// //my course
-// router.post("/get_my_course/:id", getMyCourse);
-// router.post("/delete_my_course/:id", deleteMyCourse);
+/* Multer  */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './public/uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, 'file-' + Date.now() + '.' +
+            file.originalname.split('.')[file.originalname.split('.').length - 1])
+    }
+})
+const upload = multer({ storage: storage }).single('file')
+/* Multer  */
 
-// router.post("/searchcourse", searchCourse);
-// router.post("/addchcourse", addCourse);
+
+
 
 // // teacher
-// router.post("/create_course", createCourse);
+router.post("/upload-img",upload,uploadimg);
+router.post("/update-img",upload,updateimg);
 
 
-// // teacher
 router.post("/create-course", createCourse);
 router.put("/update-course", updateCourse);
 router.get("/list-courses", listCourses);

@@ -1,54 +1,83 @@
 import React from 'react'
+import {
+  AppstoreOutlined,
+  ContainerOutlined,
+  MenuFoldOutlined,
+  PieChartOutlined,
+  DesktopOutlined,
+  MailOutlined,
+  MenuUnfoldOutlined 
+} from '@ant-design/icons';
+import { Button, Menu } from 'antd';
+import { useState } from 'react';
+import {  useNavigate } from 'react-router-dom'
+function getItem(label, key, icon, children, type) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
+const items = [
+  getItem('หน้าแรกแอดมิน', '/admin/home', <PieChartOutlined />),
+  getItem('สมาชิกทั้งหมด', '/admin/list-users', <DesktopOutlined />),
+  getItem('จัดการผู้สอน', '/admin/list-teachers', <ContainerOutlined />),
+  getItem('จัดการผู้เรียน', '/admin/list-students', <ContainerOutlined />),
+  
+  getItem('หน้าแรกครู', '/teacher/home', <ContainerOutlined />),
+  getItem('คอร์สทั้งหมดของครู', '/teacher/list-courses', <ContainerOutlined />),
+  getItem('สร้างบทเรียน', '/teacher/course', <ContainerOutlined />),
+  getItem('สร้างแบบทดสอบ', '/teacher/quiz', <ContainerOutlined />),
+  getItem('ตารางสอน', '/teacher/calendar-teacher', <ContainerOutlined />),
 
+  getItem('หน้าแรกนักเรียน', '/student/home', <ContainerOutlined />),
+
+
+];
 const Allpage = () => {
+  const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate()
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+
+  const onClick = (e) => {
+    console.log(e.key);
+    navigate(e.key)
+
+  };
+ 
   return (
     <>
-    <div className='allpage'>
-        <button className="btn btn-warning btn-lg shadow"
-        data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"
-        >ทางลัด</button>
-    </div>
-
-
+      {/* <div
+      style={{
+        width: 256,
+      }}
+      className="allpage"
+    >
+      <Button
+        type="primary"
+        onClick={toggleCollapsed}
+        style={{
+          marginBottom: 16,
+        }}
+      >
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </Button>
+      <Menu
+       onClick={onClick}
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        mode="inline"
+        theme="dark"
+        inlineCollapsed={collapsed}
+        items={items}
+      />
+    </div> */}
    
-<div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-  <div className="offcanvas-header">
-    <h5 className="offcanvas-title" id="offcanvasExampleLabel">ทางลัด</h5>
-    <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div className="offcanvas-body">
-<div>
-    <h3>admin</h3>
-    <ul>
-        <li ><a href="/admin/home">หน้าแรก</a></li>
-        <li><a href="/admin/list-users">สมาชิกทั้งหมด</a></li>
-        <li><a  href="/admin/list-teachers">จัดการผู้สอน </a></li>
-        <li><a href="/admin/list-students">จัดการผู้เรียน</a></li>
-
-    </ul>
-</div>
-<div>
-    <h3>teacher</h3>
-    <ul>
-        <li><a href="/teacher/home">หน้าแรก </a></li>
-        <li><a href="/teacher/list-courses">คอร์สทั้งหมด</a></li>
-        <li><a href="/teacher/create-course">สร้างบทเรียน</a></li>
-        <li><a href="/teacher/create-quiz">สร้างแบบทดสอบ</a></li>
-        <li><a href="/teacher/list-score">ดูคะแนน </a></li>
-        <li><a href="/teacher/calendar">ตารางสอน</a></li>
-    </ul>
-</div>
-<div>
-    <h3>student</h3>
-    <ul>
-        <li><a href="/student/home">หน้าแรก </a></li>
-        <li><a href="/student/list-courses">คอร์สทั้งหมด </a></li>
-
-    </ul>
-</div>
-  </div>
-</div>
-</>
+    </>
   )
 }
 
