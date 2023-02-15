@@ -25,7 +25,9 @@ const NavStudent = () => {
         <Navbar.Brand href="/student/home" className="text-white">
           Denso elearning Student
         </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {/* <Nav.Link className="text-white" href="/student/home">หน้าแรก</Nav.Link> */}
@@ -35,18 +37,17 @@ const NavStudent = () => {
         </Navbar.Collapse>
 
         <Navbar.Collapse className="justify-content-end">
+
           <Navbar.Text>
             Signed in {sessionStorage.getItem("role")} as:
           </Navbar.Text>
           <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
             <NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>
           </NavDropdown>
+
           {/* <Nav.Link onClick={logout}>logout</Nav.Link> */}
-
         </Navbar.Collapse>
-
       </Container>
-
     </Navbar>
   );
 };

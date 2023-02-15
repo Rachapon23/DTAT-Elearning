@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react'
 import { listQuiz,removeQuiz } from "../../../../function/teacher/funcQuiz";
 import { useNavigate } from 'react-router-dom'
 import Swal from "sweetalert2";
+import {Table} from "antd";
 
 const Listquiz = () => {
-
+  
   const [dataquiz, setDataQuiz] = useState([]);
   const navigate = useNavigate()
 
@@ -16,7 +17,7 @@ const Listquiz = () => {
       sessionStorage.getItem('user_id')
     )
       .then(res => {
-        // console.log(res.data)
+        console.log(res.data)
         setDataQuiz(res.data)
       })
       .catch(err => {
@@ -26,7 +27,7 @@ const Listquiz = () => {
 
   const createQuiz = () => {
     navigate('/teacher/quiz')
-}
+  }
 
   useEffect(() => {
     loadQuiz()
@@ -64,9 +65,51 @@ const Listquiz = () => {
         }
       })
   }
+
   const handleEditQuiz = (id) =>{
     navigate('/teacher/edit-quiz/'+id)
   }
+
+  const columns = [
+    {
+      title: 'ลำดับ',
+      align: 'center',
+      dataIndex: 'index',
+    },
+    {
+      title: "ชื่อแบบทดสอบ",
+      align: 'center',
+      dataIndex: 'name',
+    },
+    {
+      title: "จำนวนข้อ",
+      align: 'center',
+      dataIndex: 'noq',
+    },
+    {
+      title: "เข้าทดสอบได้",
+      align: 'center',
+      dataIndex: 'access_number',
+    },
+    {
+      title: "แก้ไข",
+      align: 'center',
+      dataIndex: 'edit',
+      render: (_, item) => (
+        <div>
+          <i className="bi bi-pencil-square text-warning" onClick={()=>handleEditQuiz(item.key)}></i>
+        </div>
+      ),
+    },
+    {
+      title: "ลบ",
+      align: 'center',
+      dataIndex: 'delete',
+      render: (_, item) => (
+        <i className="bi bi-trash text-danger" onClick={()=>handleRemoveQuiz(item.key)}></i>
+      ),
+    },
+  ];
 
   return (
     <div>
@@ -75,7 +118,8 @@ const Listquiz = () => {
         <div className="mt-5">
           <div className="card">
             <div className="card-body">
-              <table className="table table-hover">
+              <Table columns={columns} dataSource={dataquiz} ></Table>
+              {/* <table className="table table-hover">
                 <thead>
                   <tr>
                     <th scope="col">ลำดับ</th>
@@ -99,8 +143,8 @@ const Listquiz = () => {
                   )}
 
 
-                </tbody>
-              </table>
+                </tbody> 
+              </table>*/}
             </div>
           </div>
         </div>

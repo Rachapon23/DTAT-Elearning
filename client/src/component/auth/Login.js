@@ -2,10 +2,15 @@ import React from "react";
 import { login } from "../../function/auth";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useNavigate, location } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Modal } from "antd";
 import './auth.css'
+import { sendEmail } from "../../function/auth";
+
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState({});
+  const [isModalOpen, setIsMoalOpen] = useState(false);
 
   const [value, setValue] = useState({
     employee_ID: "",
@@ -15,6 +20,10 @@ const Login = () => {
   const handleChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
+
+  const handleEmail = (e) => {
+    setEmail({...email, [e.target.name]: e.target.value})
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,7 +66,35 @@ const Login = () => {
     }
   }, [])
 
-  
+  const handleSendEmail = (e) => {
+    e.preventDefault();
+    console.log(email); 
+    sendEmail(email)
+      .then((res) => {
+        console.log(res);
+        Swal.fire(
+          'Success',
+          'Send Email Success',
+          'success'
+        )
+      // navigate("/");
+      })
+      .catch((err) => {
+        Swal.fire(
+          'error',
+          err.response.data,
+          'error'
+        )
+      })
+  }
+
+  const showModal = () => {
+    setIsMoalOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsMoalOpen(false);
+  }
 
   return (
     <div className="">
@@ -102,11 +139,28 @@ const Login = () => {
                     </button>
                   </div>
                 </form>
+    
                 <div className="d-flex justify-content-between">
-                  <a className="text-muted">ลืมรหัสผ่าน</a>
+
+                  <a className="text-muted" onClick={showModal}>ลืมรหัสผ่าน</a>
+
+                  <Modal title="Reset Password" open={isModalOpen} onOk={handleSendEmail} onCancel={closeModal}>
+                    <div className="form-group mt-3">
+                      <label className="form-label"> Email </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="email"
+                        onChange={handleEmail}
+                      />
+                    </div>
+
+                  </Modal>
+
                   <a className="text-muted" href="register">
                     สมัครสมาชิก
                   </a>
+
                 </div>
               </div>
             </div>

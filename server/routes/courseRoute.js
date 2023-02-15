@@ -19,10 +19,10 @@ const {
     deleteCourse,
     getRoom,
     createRoom,
-
     uploadimg,
     updateimg,
     uploadfile
+
 } = require("../controllers/courseController");
 
 
@@ -54,7 +54,7 @@ router.get("/list-courses", listCourses);
 router.delete("/delete-courses/:id", deleteCourse);
 router.get("/get-mycourse-teacher/:id", getMyCourseTeacher);
 router.get("/list-room", getRoom);
-router.post("/create-room", createRoom);
+// router.post("/create-room", createRoom);
 
 // student
 router.post("/searchcourse", searchCourse);

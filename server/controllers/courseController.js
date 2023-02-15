@@ -1,8 +1,6 @@
 
-
 const ObjectId = require('mongoose').Types.ObjectId;
 const fs = require("fs");
-
 const Coursee = require('../models/course')
 const Layout = require('../models/layout')
 const Calendar = require('../models/calendar')
@@ -10,10 +8,7 @@ const User = require('../models/userModel')
 
 exports.createCourse = async (req, res) => {
     try {
-
-
         const { head, body } = req.body
-
         if (!head.password) {
             const status = "public"
             const course = new Coursee(
@@ -370,6 +365,7 @@ exports.getRoom = async (req, res) => {
         res.status(500).send('Server Error!!! on list room')
     }
 }
+
 exports.createRoom = async (req, res) => {
     try {
         const room = await Layout.insertMany(req.body)
