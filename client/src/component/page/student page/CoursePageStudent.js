@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, Link } from "react-router-dom";
 import NavStudent from "../../layout/NavStudent";
 import './student.css'
-
 import { useNavigate } from 'react-router-dom'
 
 import {

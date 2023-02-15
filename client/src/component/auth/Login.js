@@ -2,13 +2,15 @@ import React from "react";
 import { login } from "../../function/auth";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useNavigate, location } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Modal } from "antd";
 import './auth.css'
 import { sendEmail } from "../../function/auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState({});
+  const [isModalOpen, setIsMoalOpen] = useState(false);
 
   const [value, setValue] = useState({
     employee_ID: "",
@@ -86,6 +88,14 @@ const Login = () => {
       })
   }
 
+  const showModal = () => {
+    setIsMoalOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsMoalOpen(false);
+  }
+
   return (
     <div className="">
       <nav className="navbar navbar-light  bg-nav">
@@ -129,48 +139,28 @@ const Login = () => {
                     </button>
                   </div>
                 </form>
-
-                <div className="d-flex justify-content-between">
-                  <a className="text-muted">ลืมรหัสผ่าน</a>
-                  <a className="text-muted" href="register">
-                    สมัครสมาชิก
-                  </a>
-                </div>
-
     
                 <div className="d-flex justify-content-between">
-                  <a className="text-muted" data-bs-toggle="modal" data-bs-target="#forgetPassword">ลืมรหัสผ่าน</a>
 
-                  <div className="modal" id="forgetPassword" tabIndex="-1" aria-hidden="true">
-                      <div className="modal-dialog">
-                          <div className="modal-content">
-                          <div className="modal-header">
-                              <h5 className="modal-title" id="exampleModalLabel"> Reset Password </h5>
-                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div className="modal-body">
-                            <div className="form-group col-md">
-                              <label className="form-label"> Email Address </label>
-                              <input
-                                className="form-control"
-                                type="text"
-                                name="email"
-                                onChange={handleEmail}
-                              />
-                            </div>
-                          </div>
-                          <div className="modal-footer">
-                              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"> Cancle</button>
-                              <button type="button" className="btn btn-success" onClick={handleSendEmail} data-bs-dismiss="modal"> Send</button>
-                          </div>
-                          </div>
-                      </div>
-                  </div>
+                  <a className="text-muted" onClick={showModal}>ลืมรหัสผ่าน</a>
 
+                  <Modal title="Reset Password" open={isModalOpen} onOk={handleSendEmail} onCancel={closeModal}>
+                    <div className="form-group mt-3">
+                      <label className="form-label"> Email </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="email"
+                        onChange={handleEmail}
+                      />
+                    </div>
+
+                  </Modal>
 
                   <a className="text-muted" href="register">
                     สมัครสมาชิก
                   </a>
+
                 </div>
               </div>
             </div>
