@@ -1,10 +1,11 @@
 
 const User = require('../models/userModel')
 const Course = require('../models/course')
-
+const ResetPassword = require("../models/resetPassword")
+const nodeMailer = require("nodemailer")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const ObjectId = require('mongoose').Types.ObjectId; 
+const ObjectId = require('mongoose').Types.ObjectId;
 
 //สมัครสมาชิก
 exports.register = async(req,res)=>{
@@ -122,3 +123,101 @@ exports.getTeacherByCourseId = async (req, res) => {
       res.status(500).send("Server Error!!! on get teacher by ID");
     }
 };
+
+exports.sendEmail = async (req, res) => {
+    try {
+      const {email} = req.body
+      console.log(email)
+
+      const transporter = nodeMailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'densoeleaning@gmail.com',
+          pass: 'hqqabmpdjxmqsevf'
+        }
+      });
+
+      const token = jwt.sign({email: email}, "jwtSecret", { expiresIn: '5m' });
+      const reset_password_data = new ResetPassword({
+        email: email, 
+        token: token,
+        is_used: false
+      })
+      await reset_password_data.save()
+
+      var mailOptions = {
+        from: 'densoeleaning@gmail.com',
+        to: email,
+        subject: 'Sending Email using Node.js',
+        html: `
+              <html>
+              <h1> Click the button below to link to reset password page <h1>
+              <a href="http://localhost:3000/reset-password/${token}"> click </a>
+              </html>
+              `
+      };
+
+      await transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.send("send email success")
+        }
+      });
+
+      
+    }
+    catch(err) {
+      console.log(err);
+      res.status(500).send("Server Error!!! on send email");
+    }
+}
+
+exports.resetPassword = async (req, res) => {
+    try {
+      const userEmail = req.body.email;
+      const decoded = jwt.verify(req.headers.authtoken,"jwtSecret");
+      const tokenEmail = decoded.email;
+
+      const reset_password_data = await ResetPassword.findOne({token: req.headers.authtoken}).exec()
+      console.log(reset_password_data)
+      if(reset_password_data) {
+        if(reset_password_data.is_used){
+          res.status(500).send("cannot reset password because previous token is not expire")
+        }
+      }
+      else {
+        res.status(500).send("must send rest password request first")
+      }
+
+      if(userEmail === tokenEmail) {
+        await ResetPassword.findOneAndDelete({token: req.headers.authtoken}).exec()
+        res.send("OK")
+      }
+      else {
+        res.status(500).send("Entered email does not match with email that server send")
+      }
+
+      
+    }
+    catch(err) {
+      console.log(err);
+      res.status(500).send("Server Error!!! invalid token");
+    }
+}
+
+exports.checkToken = (req, res) => {
+  try {
+    console.log(req.headers)
+    jwt.verify(req.headers.authtoken,"jwtSecret", (err, _) => {
+      if (err) res.json({isValid: false});
+      res.json({isValid: true});
+    });
+
+  }
+  catch(err) {
+    console.log(err);
+    res.status(500).send("Server Error!!! invalid token");
+  }
+}

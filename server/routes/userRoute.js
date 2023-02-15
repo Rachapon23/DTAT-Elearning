@@ -8,15 +8,22 @@ const {checkUser,checkAdmin,checkTeacher} = require('../middleware/middleward')
 const {
     register,
     login,
+    sendEmail,
     currentUser,
     getTeacherByCourseId,
+    resetPassword,
+    checkToken,
 } = require('../controllers/userController')
 
-//สมัครสมาชิก
+// สมัครสมาชิก
 router.post('/register',register)
-//เข้าสู่ระบบ
+// เข้าสู่ระบบ
 router.post('/login',login)
-//ตรวจสอบผู้ใช้ปัจจุบัน
+// forgot password
+router.post('/send-email', sendEmail)
+router.post('/reset-password', resetPassword)
+router.post('/check-token', checkToken)
+// ตรวจสอบผู้ใช้ปัจจุบัน
 router.post('/current-user',checkUser,currentUser)
 router.post('/current-teacher',checkUser,checkTeacher,currentUser)
 router.post('/current-admin',checkUser,checkAdmin,currentUser)
