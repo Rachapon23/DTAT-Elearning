@@ -1,40 +1,39 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { register } from "../../function/auth";
+import { register, resetPassword, sendEmail } from "../../function/auth";
 import Swal from 'sweetalert2'
 
 const Register = () => {
   const navigate = useNavigate();
+  const {id} = useParams()
   const [value, setValue] = useState({
-    employee_ID: "",
-    department_ID: "",
-    password: "",
-    repassword: "",
-    firstname: "",
-    lastname: "",
+    email: "",
+    new_password: "",
+    confirm_new_password: "",
   });
 
   const handleChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(value); 
-    if(value.password != value.repassword ){
+    console.log(value);
+    if(value.new_password != value.confirm_new_password){
       Swal.fire(
         'รหัสผ่านไม่ตรงกัน',
         'รหัสผ่านไม่ตรงกัน',
         'error'
       )
-    }else{
-      register(value)
+    }
+    else {
+      resetPassword(id, value)
       .then((res) => {
         console.log(res);
         Swal.fire(
-          'สำเร้จ',
-          'สมัครสมาชิกสำเร็จ',
+          'สำเร็จ',
+          'Reset Password Success',
           'success'
         )
         navigate("/");
@@ -46,9 +45,10 @@ const Register = () => {
           'error'
         )
       });
-
     }
+
   };
+
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-center">
@@ -58,9 +58,19 @@ const Register = () => {
               <h3 className="text-center my-4"> Reset Password </h3>
 
               <form onSubmit={handleSubmit}>
+                 <div >
 
-                <div >
                   <div className="form-group col-md">
+                    <label className="form-label"> Email </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="email"
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group col-md pt-2">
                     <label className="form-label"> New Password </label>
                     <input
                       className="form-control"

@@ -4,8 +4,11 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, location } from "react-router-dom";
 import './auth.css'
+import { sendEmail } from "../../function/auth";
+
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState({});
 
   const [value, setValue] = useState({
     employee_ID: "",
@@ -15,6 +18,10 @@ const Login = () => {
   const handleChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
+
+  const handleEmail = (e) => {
+    setEmail({...email, [e.target.name]: e.target.value})
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,7 +64,27 @@ const Login = () => {
     }
   }, [])
 
-  
+  const handleSendEmail = (e) => {
+    e.preventDefault();
+    console.log(email); 
+    sendEmail(email)
+      .then((res) => {
+        console.log(res);
+        Swal.fire(
+          'Success',
+          'Send Email Success',
+          'success'
+        )
+      // navigate("/");
+      })
+      .catch((err) => {
+        Swal.fire(
+          'error',
+          err.response.data,
+          'error'
+        )
+      })
+  }
 
   return (
     <div className="">
@@ -102,8 +129,45 @@ const Login = () => {
                     </button>
                   </div>
                 </form>
+
                 <div className="d-flex justify-content-between">
                   <a className="text-muted">ลืมรหัสผ่าน</a>
+                  <a className="text-muted" href="register">
+                    สมัครสมาชิก
+                  </a>
+                </div>
+
+    
+                <div className="d-flex justify-content-between">
+                  <a className="text-muted" data-bs-toggle="modal" data-bs-target="#forgetPassword">ลืมรหัสผ่าน</a>
+
+                  <div className="modal" id="forgetPassword" tabIndex="-1" aria-hidden="true">
+                      <div className="modal-dialog">
+                          <div className="modal-content">
+                          <div className="modal-header">
+                              <h5 className="modal-title" id="exampleModalLabel"> Reset Password </h5>
+                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div className="modal-body">
+                            <div className="form-group col-md">
+                              <label className="form-label"> Email Address </label>
+                              <input
+                                className="form-control"
+                                type="text"
+                                name="email"
+                                onChange={handleEmail}
+                              />
+                            </div>
+                          </div>
+                          <div className="modal-footer">
+                              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"> Cancle</button>
+                              <button type="button" className="btn btn-success" onClick={handleSendEmail} data-bs-dismiss="modal"> Send</button>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+
+
                   <a className="text-muted" href="register">
                     สมัครสมาชิก
                   </a>

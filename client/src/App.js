@@ -7,6 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./component/auth/Login";
 import Register from "./component/auth/Register";
 import ResetPassword from "./component/auth/ResetPassword";
+import ResetPasswordRoute from "./route/ResetPasswordRoute";
 //admin
 import HomePageadmin from "./component/page/admin page/HomePageAdmin";
 import AlluserFromadmin from "./component/page/admin page/AlluserFromadmin";
@@ -48,7 +49,10 @@ function App() {
         {/* auth */}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/reset-password" element={<ResetPassword />}></Route>
+        <Route element={<ResetPasswordRoute/>}>
+          <Route path="/reset-password/:id" element={<ResetPassword />}></Route>
+        </Route>
+          
 
         {/* admin */}
         <Route path="/admin/home" element={<HomePageadmin />} />
@@ -74,7 +78,7 @@ function App() {
 
         {/* student */}
         <Route path="/student/home" element={<HomePageStudent />} />
-        <Route path="/student/list-courses" element={<CoursesPageStudent />} />
+        {/* <Route path="/student/list-courses" element={<CoursesPageStudent />} /> */}
         <Route path="/student/get-course/:id" element={<CoursePageStudent />} />
         <Route path="/student/test/:params" element={<Dotest />} />
 
