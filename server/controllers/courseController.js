@@ -24,7 +24,7 @@ exports.createCourse = async (req, res) => {
 
                 }
             )
-            // console.log(course)
+            // console.log(body[0].file)
             await course.save()
             res.send(course)
 
@@ -329,7 +329,7 @@ exports.deleteCourse = async (req, res) => {
     try {
         const course = await Coursee.findOne({ _id: req.params.id }).exec()
         const calendar = await Calendar.find({ coursee: course._id })
-        await Calendar.deleteMany({coursee:course._id}).exec((err) => {
+        await Calendar.deleteMany({ coursee: course._id }).exec((err) => {
             if (err) {
                 console.log(err)
                 res.status(400).send('err on delete carlendar')
@@ -345,7 +345,7 @@ exports.deleteCourse = async (req, res) => {
                 } else {
                     console.log("remove Success");
                 }
-                
+
             });
         }
         const course_delete = await Coursee.findOneAndDelete({ _id: req.params.id }).exec()
@@ -392,6 +392,7 @@ exports.uploadimg = async (req, res) => {
         res.status(500).send('Server Error!!! on upload img')
     }
 }
+
 exports.updateimg = async (req, res) => {
     try {
         const id = req.body.id;
@@ -419,3 +420,23 @@ exports.updateimg = async (req, res) => {
     }
 }
 
+exports.uploadfile = async (req, res) => {
+    try {
+        const { id, number } = req.body;
+        const topic_number = req.body.topic;
+        const filename = req.file.filename;
+
+       
+
+        // const update = await Coursee.findOneAndUpdate(
+        //     { _id: id },
+        //     { topic: Topic_s.topic }
+        // ).exec()
+
+        res.send("update")
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Server Error!!! on upload img')
+    }
+}

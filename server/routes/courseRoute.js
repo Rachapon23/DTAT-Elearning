@@ -21,6 +21,8 @@ const {
     createRoom,
     uploadimg,
     updateimg,
+    uploadfile
+
 } = require("../controllers/courseController");
 
 
@@ -43,6 +45,7 @@ const upload = multer({ storage: storage }).single('file')
 // // teacher
 router.post("/upload-img",upload,uploadimg);
 router.post("/update-img",upload,updateimg);
+router.post("/upload-file",upload,uploadfile);
 
 
 router.post("/create-course", createCourse);

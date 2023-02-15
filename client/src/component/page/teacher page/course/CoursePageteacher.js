@@ -98,7 +98,7 @@ const CoursePageteacher = () => {
                     <>
                         {course.image
                             ? <div className="card text-white mt-3">
-                                <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="card-img" />
+                                <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="card-img size-200" />
                                 <div className="card-img-overlay bg-body-course-t p-5">
                                     <h3 className="card-title">{course.name}</h3>
                                     <p className="card-text">รายละเอียด : {course.description}</p>

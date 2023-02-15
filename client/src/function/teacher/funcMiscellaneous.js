@@ -23,3 +23,11 @@ headers:{
     authtoken,
 }
 });
+
+export const uploadfile  = async(authtoken,file) =>
+await axios.post(process.env.REACT_APP_API+'/upload-file',file,
+{
+headers:{
+    authtoken,
+}
+});

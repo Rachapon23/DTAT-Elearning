@@ -1,8 +1,8 @@
 import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
 import { listQuiz, } from "../../../../function/teacher/funcQuiz";
-import { createCourse,  } from '../../../../function/teacher/funcCourse';
-import {listRoom,uploadImg} from '../../../../function/teacher/funcMiscellaneous'
+import { createCourse, } from '../../../../function/teacher/funcCourse';
+import { listRoom, uploadImg , uploadfile } from '../../../../function/teacher/funcMiscellaneous'
 import { useState, useEffect } from 'react'
 import './course.css'
 import Swal from "sweetalert2";
@@ -35,6 +35,7 @@ const Course = () => {
             text: [],
             link: [],
             quiz: [],
+            file: [],
         }
         ])
     }
@@ -68,6 +69,7 @@ const Course = () => {
         )
         setNextState([...nextState])
     }
+
     const handdleAddquiz = (e, index) => {
         e.preventDefault();
         valuetopic[index].quiz.push(
@@ -96,6 +98,7 @@ const Course = () => {
         valuetopic[index].quiz.splice(tdex, 1)
         setNextState([...nextState])
     }
+ 
 
     const loadQuiz = () => {
         listQuiz(
@@ -140,7 +143,7 @@ const Course = () => {
 
     const handdleSubmit = (e) => {
         e.preventDefault();
-
+        console.log(valuetopic[0].file)
         if (!!!nameCourse.name) {
             document.getElementById("nameCourse").focus({ focusVisible: true });
         }
@@ -190,9 +193,9 @@ const Course = () => {
             }
         }
         else {
-            
+
             createCourse(sessionStorage.getItem("token")
-            ,
+                ,
                 {
                     head: nameCourse,
                     body: valuetopic,
@@ -200,29 +203,20 @@ const Course = () => {
             ).then(res => {
                 console.log(res.data)
                 const formData = new FormData();
-                formData.append('id',res.data._id)
+                formData.append('id', res.data._id)
                 formData.append('file', file)
                 if(file != ''){
                     uploadImg(sessionStorage.getItem("token"),formData).then(res => {
                         console.log(res)
-                        
                         Toast.fire({
                             icon: 'success',
                             title: 'Your file has been deleted successfully'
                         })
-                        window.location.reload(false);
+                        // window.location.reload(false);
                     }).catch(err => {
                         console.log(err)
                     })
-                }else{
-                     
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Your file has been deleted successfully'
-                    })
-                    window.location.reload(false);
                 }
-              
             }).catch(err => {
                 console.log(err)
             })
@@ -379,7 +373,7 @@ const Course = () => {
                                             )}
                                         </ul>
                                     </div>
-
+            
                                     <div className="d-flex justify-content-between mb-0 mt-3" >
                                         <p className="">แบบทดสอบ</p>
                                         <button className="btn h4 text-primary mb-0"
