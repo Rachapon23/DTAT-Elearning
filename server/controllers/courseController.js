@@ -1,8 +1,6 @@
 
-const User = require('../models/userModel')
 const ObjectId = require('mongoose').Types.ObjectId;
 const fs = require("fs");
-
 const Coursee = require('../models/course')
 const Layout = require('../models/layout')
 const Calendar = require('../models/calendar')
