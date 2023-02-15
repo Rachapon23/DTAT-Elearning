@@ -14,9 +14,11 @@ const QuizeSchema = new mongoose.Schema({
     teacher: {
         type: ObjectId,
         ref:"users"
-    
     },
-   
+    access_number: {
+        type: Number,
+        default: 1,
+    }
 }, { timestamps: true });
 
 module.exports = Quize = mongoose.model("quize", QuizeSchema);

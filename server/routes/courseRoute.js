@@ -19,7 +19,6 @@ const {
     deleteCourse,
     getRoom,
     createRoom,
-
     uploadimg,
     updateimg
 } = require("../controllers/courseController");
