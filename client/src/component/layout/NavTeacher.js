@@ -19,7 +19,7 @@ const NavTeacher = () => {
   };
   // console.log(user.firstname)
   return (
-    <Navbar id="navBack" expand="lg">
+    <Navbar className="bg-nav" expand="lg">
       <Container>
         <Navbar.Brand href="/teacher/home" className="text-white">
           Denso elearning Teacher
@@ -42,7 +42,7 @@ const NavTeacher = () => {
         <Navbar.Collapse className="justify-content-end">
 
           <Navbar.Text
-           className="text-white"
+           className=""
           >
             Signed in {sessionStorage.getItem("role")} as: 
           </Navbar.Text>

@@ -5,9 +5,11 @@ import { updateCourse } from '../../../../function/teacher/funcCourse';
 import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import { listQuiz, } from "../../../../function/teacher/funcQuiz";
-import { getCourse,listRoom  } from "../../../../function/teacher/funcCourse";
+import { getCourse } from "../../../../function/teacher/funcCourse";
+import { listRoom } from '../../../../function/teacher/funcMiscellaneous'
 import Swal from "sweetalert2";
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { uploadImg, upDateImg } from '../../../../function/teacher/funcMiscellaneous'
 
 const EditCourse = () => {
 
@@ -19,6 +21,8 @@ const EditCourse = () => {
     const [dataquiz, setDataQuiz] = useState([])
     const [nextState, setNextState] = useState([]);
     const [room, setRoom] = useState([]);
+    const [file, setFile] = useState('');
+
     // const [nameCourse, setNameCourse] = useState
     // ({
     //     name: "",
@@ -142,17 +146,44 @@ const EditCourse = () => {
 
     const handdleSubmit = (e) => {
         e.preventDefault();
-        // console.log(valuetopic)
-        // console.log(course)
+
+        // console.log(file)
+
         updateCourse(sessionStorage.getItem("token"),
             {
                 head: course,
                 body: valuetopic
             }
         ).then(res => {
-            console.log(res.data)
-            // window.location.reload(false);
-            navigate('/teacher/get-course/'+id)
+            console.log(res)
+            const formData = new FormData();
+            formData.append('id', res.data._id)
+            formData.append('file', file)
+            if (!file) {
+                // not have not do
+                console.log("navigate")
+                navigate('/teacher/get-course/' + id)
+            } else {
+                if (!course.image) {
+                    uploadImg(sessionStorage.getItem("token"), formData)
+                        .then(res => {
+                            console.log(res)
+                            navigate('/teacher/get-course/' + id)
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                } else {
+                    upDateImg(sessionStorage.getItem("token"), formData)
+                        .then(res => {
+                            console.log(res)
+                            navigate('/teacher/get-course/' + id)
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                }
+
+            }
+
         }).catch(err => {
             console.log(err)
         })
@@ -167,6 +198,14 @@ const EditCourse = () => {
             .catch(err => {
                 console.log(err)
             })
+    }
+
+    const deleteFornt = () => {
+        delete course.image
+        setNextState([...nextState])
+    }
+    const handleImg = (e) => {
+        setFile(e.target.files[0])
     }
 
     return (
@@ -226,16 +265,57 @@ const EditCourse = () => {
                                         onChange={handAddName}
                                         value={course.description}
                                     />
-                                     <label className="form-label  mt-3">ห้องเรียน</label>
-                                <div className="">
-                                <select name="room" id="" className='form-select ' onChange={handAddName}>
-                                    {course.room && <option value="">{course.room.room}</option>}
-                                    {room.map((item,index)=>
-                                    <option key={index} value={item._id}>{item.room}</option>
-                                    )}
-                                </select>
-                               
-                                </div>
+                                    <label className="form-label  mt-3">ห้องเรียน</label>
+                                    <div className="">
+                                        <select name="room" id="" className='form-select ' onChange={handAddName}>
+                                            {course.room && <option value="">{course.room.room}</option>}
+                                            {room.map((item, index) =>
+                                                <option key={index} value={item._id}>{item.room}</option>
+                                            )}
+                                        </select>
+
+                                    </div>
+                                    <div className="">
+                                        <label className="form-label  mt-3">ภาพหน้าปก</label>
+                                        {course.image
+                                            ?
+                                            <div>
+                                                {file == '' &&
+                                                    <div className="card">
+                                                        <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="card-img-top" />
+                                                    </div>
+                                                }
+                                                <div className="d-flex justify-content-between py-2">
+                                                    <button className="btn text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        <i className="bi bi-pencil-square text-warning"></i> อัปเดต
+                                                    </button>
+                                                    {file == '' &&
+                                                        <button className="btn text-danger" type="button" onClick={deleteFornt}>
+                                                            <i className="bi bi-trash text-danger"></i> ลบ
+                                                        </button>
+                                                    }
+                                                </div>
+
+                                                <div className="collapse" id="collapseExample">
+                                                    <div className="mt-2">
+                                                        <input type="file" className="form-control"
+                                                            onChange={handleImg}
+                                                        />
+                                                        <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 123px * 456px</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            :
+                                            <div>
+                                                <div className="">
+                                                    <input type="file" className="form-control"
+                                                        onChange={handleImg}
+                                                    />
+                                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 123px * 456px</p>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
                             </div>
 

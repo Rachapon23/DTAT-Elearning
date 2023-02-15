@@ -2,7 +2,7 @@ import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
 import { useState, useEffect } from 'react'
 import './calendar.css'
-import { createCalendar, listCalendar,removeEvent,updateEvent } from '../../../../function/teacher/funcCalendar'
+import { createCalendar, listCalendar, removeEvent, updateEvent } from '../../../../function/teacher/funcCalendar'
 import { getmyCourseTeacher } from '../../../../function/teacher/funcCourse';
 import moment from 'moment'
 import Swal from "sweetalert2";
@@ -13,12 +13,16 @@ import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { Modal } from 'antd';
 
+import { ColorPicker, useColor } from "react-color-palette";
+import "react-color-palette/lib/css/styles.css";
+
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 
 const Calendar = () => {
     const [courses, setCourses] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [events, setEvents] = useState([])
+    const [color, setColor] = useColor("hex", "#0288D1");
     const [values, setValues] = useState({
         title: '',
         start: '',
@@ -32,23 +36,29 @@ const Calendar = () => {
     };
 
     const handleOk = () => {
-        console.log({ values })
-        createCalendar(sessionStorage.getItem("token"), { values })
-            .then(res => {
-                console.log(res)
-                setValues({
-                    title: '',
-                    start: '',
-                    end: '',
-                    color: '#0288D1',
-                    coursee: ""
-                })
-                loadData()
+        // console.log({ values })
+        if (!!!values.title) {
+            document.getElementById("selector").focus({ focusVisible: true });
+        }
+        else {
+            createCalendar(sessionStorage.getItem("token"), { values })
+                .then(res => {
+                    console.log(res)
+                    setValues({
+                        title: '',
+                        start: '',
+                        end: '',
+                        color: '#0288D1',
+                        coursee: ""
+                    })
+                    loadData()
 
-            }).catch(err => {
-                console.log(err)
-            })
-        setIsModalOpen(false);
+                }).catch(err => {
+                    console.log(err)
+                })
+            setIsModalOpen(false);
+        }
+
     };
 
     const handleCancel = () => {
@@ -56,8 +66,13 @@ const Calendar = () => {
     };
 
     const onChangeValues = (e) => {
-        // console.log(e.target.value)
+        // console.log(e)
         setValues({ ...values, [e.target.name]: e.target.value })
+    }
+    const onChangeColor = (e) => {
+        // console.log(e.hex)
+        setValues({ ...values, color: e.hex })
+        setColor(e)
     }
 
     const handleSelect = (info) => {
@@ -84,7 +99,17 @@ const Calendar = () => {
                 console.log(err)
             })
     }
-
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
     const handleClick = (info) => {
         const id = info.event._def.extendedProps._id
         Swal.fire({
@@ -92,31 +117,30 @@ const Calendar = () => {
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#d33',
+            // cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 removeEvent(sessionStorage.getItem("token"), id)
-              .then(res => {
-                  console.log(res)
-                  Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                  )
-                  loadData()
-                }).catch(err => {
-                  console.log(err)
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                    footer: '<a href="">Why do I have this issue?</a>'
-                  })
-                })
-              }
-            })
+                    .then(res => {
+                        console.log(res)
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Your file has been deleted successfully'
+                        })
+                        loadData()
+                    }).catch(err => {
+                        console.log(err)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                        })
+                    })
+            }
+        })
     }
 
     useEffect(() => {
@@ -156,37 +180,37 @@ const Calendar = () => {
             <div className="container">
                 <div className="mt-4">
                     <div className="">
-              
-  
-                            <div  className="card">
-                            <div className="bg-primary head-form"></div>
-                                <div className="card-body p-5 ">
-                                    <FullCalendar  
-                                        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,bootstrap5Plugin ]}
-                                        headerToolbar={{
-                                            left: 'prev today',
-                                            center: 'title',
-                                            right: "next"
-                                        }}
-                                        height={700}
-                                        // // contentHeight={600}
-                                        // // aspectRatio={2}
-                                        themeSystem= 'bootstrap5'
 
-                                        events={events}
-                                        selectable={true}
-                                        select={handleSelect}
-                                        // drop={handleRecieve}
+
+                        <div className="card">
+                            <div className="bg-primary head-form"></div>
+                            <div className="card-body p-5 ">
+                                <FullCalendar
+                                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, bootstrap5Plugin]}
+                                    headerToolbar={{
+                                        left: 'prev today',
+                                        center: 'title',
+                                        right: "next"
+                                    }}
+                                    height={700}
+                                    // // contentHeight={600}
+                                    // // aspectRatio={2}
+                                    themeSystem='bootstrap5'
+
+                                    events={events}
+                                    selectable={true}
+                                    select={handleSelect}
+                                    // drop={handleRecieve}
 
                                     // datesSet={currentMonth}
                                     eventClick={handleClick}
                                     editable={true}
                                     eventChange={handleChange}
 
-                                    />
-                                </div>
+                                />
                             </div>
-                   
+                        </div>
+
                     </div>
 
                 </div>
@@ -195,39 +219,37 @@ const Calendar = () => {
             <Modal title="สร้างตารางเรียน" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
 
                 <div className="mb-5 mt-4">
-                   <div className="form-group mb-3">
-                            <label className='form-label'>เลือกคอร์ส</label>
-                            <select className="form-select" value={'DEFAULT'}
+                    <div className="form-group mb-3">
+                        <label className='form-label'>เลือกคอร์ส</label>
+                        <select className="form-select" 
+                            id="selector"
+                            onChange={(e) => {
+                                values.coursee = JSON.parse(e.target.value)._id
+                                values.title = JSON.parse(e.target.value).name
+                            }}
 
-                                onChange={(e) => {
-                                    values.coursee = JSON.parse(e.target.value)._id
-                                    values.title = JSON.parse(e.target.value).name
-                                }}
-                                
-                            >
-                                <option >เลือกคอร์ส...</option>
-                                {courses.map((item, index) =>
-                                    <option key={index} value={JSON.stringify(item)} >{item.name}</option>
-                                )}
-                            </select>
+                        >
+                            <option >เลือกคอร์ส...</option>
+                            {courses.map((item, index) =>
+                                <option key={index} value={JSON.stringify(item)} >{item.name}</option>
+                            )}
+                        </select>
 
-                        </div>
-                        
+                    </div>
+
 
 
 
                     <div className="form-group">
                         <label className='form-label'>ธีม</label>
-                        <select className="form-select" name='color' onChange={onChangeValues} value={values.color}>
-                            <option value="#0288D1" className='blue'>blue</option>
-                            <option value="#D32F2F" className='red'>red</option>
-                            <option value="#512DA8" className='purple'>purple</option>
-                            <option value="#388E3C" className='green'>green</option>
-                            <option value="#FBC02D" className='yellow'>yellow</option>
-                            <option value="#E64A19" className='orange'>orange</option>
-                            <option value="#455A64" className='gray'>gray</option>
-                        </select>
+                        <div className="d-flex justify-content-center">
+                            <ColorPicker width={456} height={228} color={color} onChange={onChangeColor} hideHSV dark />
+                        </div>
+
+
                     </div>
+
+
                 </div>
             </Modal>
 
@@ -236,3 +258,13 @@ const Calendar = () => {
 }
 
 export default Calendar
+
+{/* <select className="form-select" name='color' onChange={onChangeValues} value={values.color}>
+                            <option value="#0288D1" className='blue'>blue</option>
+                            <option value="#D32F2F" className='red'>red</option>
+                            <option value="#512DA8" className='purple'>purple</option>
+                            <option value="#388E3C" className='green'>green</option>
+                            <option value="#FBC02D" className='yellow'>yellow</option>
+                            <option value="#E64A19" className='orange'>orange</option>
+                            <option value="#455A64" className='gray'>gray</option>
+                        </select> */}

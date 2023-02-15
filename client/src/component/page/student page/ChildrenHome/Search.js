@@ -15,18 +15,44 @@ const Search = ({ loadMycourse }) => {
         SetQuery({ ...query, [e.target.name]: e.target.value });
     };
     const handleSubmit = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         // console.log(query)
-        Searchcourse(sessionStorage.getItem("token"), query)
-        .then(res => {
-            console.log(res)
-            setData(res.data)
-            setDataload(true)
-        }).catch(err => {
-            console.log(err)
-            setDataload(true)
-        })
+        if (!!!query.query) {
+            Swal.fire(
+                {
+                    title: 'ต้องการหาคอร์สเรียนหรือไม่?',
+                    text: "กรุณากรอกรหัสประจำวิชา",
+                    icon: 'question',
+                    confirmButtonColor: '#0d6efd',
+                    confirmButtonText: 'try again'
+                }
+            )
+        } else {
+            Searchcourse(sessionStorage.getItem("token"), query)
+                .then(res => {
+                    console.log(res)
+                    setData(res.data)
+                    setDataload(true)
+                }).catch(err => {
+                    console.log(err)
+                    setDataload(true)
+                })
+        }
+
     };
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
     const handleAddcourse = (id) => {
         // e.preventDefault();
 
@@ -38,6 +64,7 @@ const Search = ({ loadMycourse }) => {
             },
             showCancelButton: true,
             confirmButtonText: 'enroll',
+            confirmButtonColor: '#28a745',
             showLoaderOnConfirm: true,
             preConfirm: (password) => {
                 const course_id = {
@@ -47,16 +74,15 @@ const Search = ({ loadMycourse }) => {
                 }
                 return (
 
-                    Addchcourse(sessionStorage.getItem("token"),course_id)
+                    Addchcourse(sessionStorage.getItem("token"), course_id)
                         .then(res => {
                             console.log(res)
 
                             loadMycourse()
-                            Swal.fire(
-                                'Add course Success!',
-                                'Your work has been saved',
-                                'success'
-                            )
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Signed in successfully'
+                              })
                         }).catch(err => {
                             if (err.response.data == "Password Invalid!!!"
                             ) {
@@ -64,8 +90,19 @@ const Search = ({ loadMycourse }) => {
                                     icon: 'error',
                                     title: 'Oops...',
                                     text: 'รหัสผ่านไม่ถูกต้อง',
-                                    // footer: '<a href="">Why do I have this issue?</a>'
+                                    confirmButtonColor: '#0d6efd',
+                                    confirmButtonText: 'try again'
                                 })
+                            }else if(err.response.data == "course already exist"){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'มีวิชานี้อยู่แล้ว',
+                                    confirmButtonColor: '#0d6efd',
+                                    confirmButtonText: 'try again'
+                                })
+                            }else{
+                                console.log(err)
                             }
 
                         }))
@@ -75,16 +112,23 @@ const Search = ({ loadMycourse }) => {
     };
     // console.log(data)
 
+    const entertext = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit()
+        }
+    }
+
     return (
         <div>
-            
+
             <div className="row">
                 <div className="col-md-8">
-                 
+
                     <div className="input-group">
-                        <input type="text" name='query' className="form-control" onChange={handleChange} />
+                        <input type="text" name='query' onKeyDown={entertext}
+                            className="form-control" onChange={handleChange} />
                         <button onClick={handleSubmit}
-                            className="btn" id='search' type="button"><i className="bi bi-search"></i></button>
+                            className="btn btn-danger" type="button"><i className="bi bi-search"></i></button>
                     </div>
                 </div>
             </div>
@@ -100,10 +144,10 @@ const Search = ({ loadMycourse }) => {
                         {data && data.map((course, index) => (
                             <div key={index} className="search mt-2 p-3">
                                 <h5 className='mb-2'>วิชา : {course.name}</h5>
-                                        <div className="" >
-                                            <p className=" text-muted mb-0">รหัสวิชา :  {course.course_number} </p>
-                                            <p className=" text-muted">ผู้สอน : {course.teacher.firstname}</p>
-                                        </div>
+                                <div className="" >
+                                    <p className=" text-muted mb-0">รหัสวิชา :  {course.course_number} </p>
+                                    <p className=" text-muted">ผู้สอน : {course.teacher.firstname}</p>
+                                </div>
                                 <div className="mt-3">
                                     <button className="btn btn-primary btn-sm"
                                         onClick={() => handleAddcourse(course._id)}
@@ -116,6 +160,7 @@ const Search = ({ loadMycourse }) => {
                     </>
                 }
             </div>
+
         </div>
     )
 }

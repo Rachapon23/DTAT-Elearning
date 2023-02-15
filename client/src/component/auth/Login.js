@@ -88,78 +88,90 @@ const Login = () => {
 
   return (
     <div className="">
-      <nav class="navbar navbar-expand-md navbar-light nav-bg">
+      <nav className="navbar navbar-light  bg-nav">
+      {/* <nav className="navbar navbar-expand-md navbar-light bg-danger"> */}
         <div className="container">
-          <a class="navbar-brand text-white brand" href="/">E-learning</a>
+          <a className="navbar-brand text-white brand" href="/">E-learning</a>
         </div>
 
       </nav>
-      <div className="container mt-5">
-        <div className="d-flex justify-content-center">
-          <div className="card w-75">
-            <div className="card-body">
-              <h3 className="text-center my-4">เข้าสู่ระบบ</h3>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label className="form-label">รหัสพนักงาน</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="employee_ID"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group mt-3">
-                  <label className="form-label">รหัสผ่าน</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="password"
-                    onChange={handleChange}
-                  />
-                </div>
+      <div className="black-g">
+        <div className="container">
+          <div className="d-flex justify-content-center">
+            <div className="card w-75  mt-5">
+              <div className="card-body">
+                <h3 className="text-center my-4">เข้าสู่ระบบ</h3>
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label className="form-label">รหัสพนักงาน</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="employee_ID"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group mt-3">
+                    <label className="form-label">รหัสผ่าน</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="password"
+                      onChange={handleChange}
+                    />
+                  </div>
 
 
-                <br />
-                <div className="d-flex justify-content-center">
-                  <button type="submit" className="btn btn-outline-primary">
-                    เข้าสู่ระบบ
-                  </button>
-                </div>
-              </form>
-              <div className="d-flex justify-content-between">
-                <a className="text-muted" data-bs-toggle="modal" data-bs-target="#forgetPassword">ลืมรหัสผ่าน</a>
+                  <br />
+                  <div className="d-flex justify-content-center">
+                    <button type="submit" className="btn btn-outline-primary">
+                      เข้าสู่ระบบ
+                    </button>
+                  </div>
+                </form>
 
-                <div className="modal" id="forgetPassword" tabIndex="-1" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel"> Reset Password </h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                          <div className="form-group col-md">
-                            <label className="form-label"> Email Address </label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              name="email"
-                              onChange={handleEmail}
-                            />
+                <div className="d-flex justify-content-between">
+                  <a className="text-muted">ลืมรหัสผ่าน</a>
+                  <a className="text-muted" href="register">
+                    สมัครสมาชิก
+                  </a>
+                </div>
+
+    
+                <div className="d-flex justify-content-between">
+                  <a className="text-muted" data-bs-toggle="modal" data-bs-target="#forgetPassword">ลืมรหัสผ่าน</a>
+
+                  <div className="modal" id="forgetPassword" tabIndex="-1" aria-hidden="true">
+                      <div className="modal-dialog">
+                          <div className="modal-content">
+                          <div className="modal-header">
+                              <h5 className="modal-title" id="exampleModalLabel"> Reset Password </h5>
+                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"> Cancle</button>
-                            <button type="button" className="btn btn-success" onClick={handleSendEmail} data-bs-dismiss="modal"> Send</button>
-                        </div>
-                        </div>
-                    </div>
+                          <div className="modal-body">
+                            <div className="form-group col-md">
+                              <label className="form-label"> Email Address </label>
+                              <input
+                                className="form-control"
+                                type="text"
+                                name="email"
+                                onChange={handleEmail}
+                              />
+                            </div>
+                          </div>
+                          <div className="modal-footer">
+                              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"> Cancle</button>
+                              <button type="button" className="btn btn-success" onClick={handleSendEmail} data-bs-dismiss="modal"> Send</button>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <a className="text-muted" href="register">
+                    สมัครสมาชิก
+                  </a>
                 </div>
-
-
-                <a className="text-muted" href="register">
-                  สมัครสมาชิก
-                </a>
               </div>
             </div>
           </div>
