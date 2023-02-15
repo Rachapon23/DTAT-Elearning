@@ -19,3 +19,10 @@
 .bg-body-course-t{
     background-color: rgba(0, 0, 0, 0.2);  
   }
+
+  .size-150{
+    max-height: 150px;
+  }
+  .size-200{
+    max-height: 200px;
+  }

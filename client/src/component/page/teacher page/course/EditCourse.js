@@ -121,6 +121,18 @@ const EditCourse = () => {
         )
         setNextState([...nextState])
     }
+    const handdleAddfile = (e, index) => {
+        e.preventDefault();
+        valuetopic[index].file.push(
+            {
+                type: "file",
+                name: "",
+                file: '',
+                fileType: ""
+            }
+        )
+        setNextState([...nextState])
+    }
 
 
     const handleRemoveText = (e, index, tdex) => {
@@ -136,6 +148,11 @@ const EditCourse = () => {
     const handleRemoveQuiz = (e, index, tdex) => {
         e.preventDefault();
         valuetopic[index].quiz.splice(tdex, 1)
+        setNextState([...nextState])
+    }
+    const handleRemovefile = (e, index, tdex) => {
+        e.preventDefault();
+        valuetopic[index].file.splice(tdex, 1)
         setNextState([...nextState])
     }
 
@@ -413,6 +430,60 @@ const EditCourse = () => {
                                                                 }}
                                                                 value={ttem.url}
                                                             />
+                                                        </div>
+                                                    </li>
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="d-flex justify-content-between mb-0 mt-3" >
+                                            <p className="">file</p>
+                                            <button className="btn h4 text-primary mb-0"
+                                                type='Button' onClick={(e) => handdleAddfile(e, index)}
+                                            >+</button>
+                                        </div>
+                                        <hr className="mt-0" />
+
+                                        <div className="mt-2">
+                                            <ul>
+
+                                                {item.file.map((ttem, tdex) =>
+                                                    <li key={tdex} className="mt-3">
+                                                        <div className="">
+
+                                                            {ttem.file == '' ?
+                                                                <div className="input-group mb-2">
+                                                                    <input type="file" className="form-control"
+                                                                    // id={`linkname${index}${tdex}`}
+                                                                    // onChange={(e) => {
+                                                                    //     ttem.file = e.target.files[0]
+                                                                    //     ttem.name = e.target.files[0].name
+                                                                    //     ttem.fileType = e.target.files[0].type
+                                                                    //     SetValueTopic([...valuetopic])
+                                                                    // }}
+                                                                    />
+                                                                    <button className="btn btn-outline-secondary"
+                                                                        onClick={(e) => handleRemovefile(e, index, tdex)} type='Button'
+                                                                    >
+                                                                        <i className="bi bi-trash"></i>
+                                                                    </button>
+                                                                </div>
+
+                                                                :
+
+                                                                <div className="d-flex justify-content-between">
+                                                                    <p>{ttem.name}</p>
+                                                                    <p>{ttem.file}</p>
+                                                                    <button className="btn btn-outline-secondary"
+                                                                        onClick={(e) => handleRemovefile(e, index, tdex)} type='Button'
+                                                                    >
+                                                                        <i className="bi bi-trash"></i>
+                                                                    </button>
+                                                                </div>
+
+
+                                                            }
+
+
                                                         </div>
                                                     </li>
                                                 )}

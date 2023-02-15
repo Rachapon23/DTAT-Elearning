@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-
+import './course.css'
 import NavTeacher from "../../../layout/NavTeacher";
 import { getmyCourseTeacher } from '../../../../function/teacher/funcCourse';
 import { useNavigate } from 'react-router-dom'
@@ -65,7 +65,7 @@ const CoursesPageteacher = () => {
                             <div className="col-md-6 p-2" key={index}>
                                 {course.image
                                      ? <div className="card back-public-2 shadow-sm back-public-black-2" onClick={() => nextToCourse(course._id)}>
-                                     <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="card-img-top" />
+                                     <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="card-img-top size-150" />
                                      <div className="card-body ">
                                          <p id='' className="card-title mb-0">{course.name}</p>
                                          {/* <p id='text-p-5' className="card-text my-0">รายละเอียด : {course.description}</p> */}
