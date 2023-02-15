@@ -28,24 +28,49 @@ const PublicCourse = () => {
 
     return (
         <div className='row'>
-            <div className="row">
-                <div className="">
-                    {data.map((item, index) => (
-                        <div className="col-md-12 mb-2" key={index}>
-                        <div className="card"
-                          onClick={()=>nextToCourse(item._id)}
-                         >
-                          <div className="card-body body-card">
-                            <h5 className="card-title">{item.name}</h5>
-               
-                            <p className="card-text text-muted">รายละเอียด : {item.description}</p>
-                            <p style={{fontSize:'12px'}} className="card-text text-muted"><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p>
-                          </div>
+            {/* {data.map((item, index) => (
+                <div className="col-md-6 mb-2" key={index}>
+                    <div className="card back-public"
+                        onClick={() => nextToCourse(item._id)}
+                    >
+                        <div className="h-100 w-100">  </div>
+                        <div className="card-body  back-public-black ">
+                            <h5 id='text-p-1' className="card-title">{item.name}</h5>
+
+                            <p id='text-p-2' className="card-text ">รายละเอียด : {item.description}</p>
+                            <img src={`${process.env.REACT_APP_IMG}/${item.image}`} width="100%" />
+                            <p id='text-p-3' className="card-text mt-2 "><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p>
                         </div>
-                      </div>
-                    ))}
+                    </div>
+
                 </div>
-            </div>
+            ))} */}
+
+            {data.map((item, index) => (
+                <div className="col-md-6 mb-2 " key={index}>
+                    {item.image
+                        ? <div className="card back-public-2 shadow-sm back-public-black-2" onClick={() => nextToCourse(item._id)}>
+                            <img src={`${process.env.REACT_APP_IMG}/${item.image}`} width="100%" className="card-img-top size-150" />
+                            <div className="card-body ">
+                                <p id='text-p-4' className="card-title mb-0">{item.name}</p>
+                                <p id='text-p-5' className="card-text my-0">รายละเอียด : {item.description}</p>
+                                <p id='text-p-6' className="card-text mt-1 "><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p>
+                            </div>
+                        </div>
+                        : <div className="card back-public-2 shadow-sm back-public-black-2" onClick={() => nextToCourse(item._id)}>
+                            <div className="img-fact"></div>
+                            <div className="card-body ">
+                                <p id='text-p-4' className="card-title mb-0">{item.name}</p>
+                                <p id='text-p-5' className="card-text my-0">รายละเอียด : {item.description}</p>
+                                <p id='text-p-6' className="card-text mt-1 "><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+            ))}
+
         </div>
     )
 }

@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import NavStudent from "../../layout/NavStudent";
-
-import { Link } from "react-router-dom";
-import Parser from 'html-react-parser';
 import './student.css'
 
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
     getCourse
@@ -42,7 +39,17 @@ const CoursePageStudent = () => {
                 )
             })
     }
-
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
     const handleRemove = (id) => {
         // console.log(id)
         Swal.fire({
@@ -50,8 +57,8 @@ const CoursePageStudent = () => {
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#d33',
+            // cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -59,11 +66,11 @@ const CoursePageStudent = () => {
                     sessionStorage.getItem("user_id"), id).then(res => {
                         console.log(res)
                         //   loadMycourse()
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Your file has been deleted successfully'
+                        })
+
                         navigate('/student/home')
                     }).catch(err => {
                         console.log(err)
@@ -81,29 +88,35 @@ const CoursePageStudent = () => {
         <div>
             <NavStudent />
             <div className="container ">
-                {/* {JSON.stringify(location)} */}
                 {course &&
-
-
-                    <div className="px-5 py-3 border   mt-3 body-card">
-                        <div className="row">
-                            <div className="col-11">
-                                <h3>{course.name}</h3>
-                                <p className="text-muted mb-0 mt-3">รายละเอียด : {course.description}</p>
-                                <p className="text-muted">ผู้สอน : {course.teacher.firstname}</p>
-                            </div>
-
-                        </div>
-
-                    </div>
+                <>
+                {course.image
+                ? <div class="card text-white mt-3">
+                <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%"  class="card-img size-200" />
+                <div class="card-img-overlay bg-body-course p-5">
+                    <h3 class="card-title">{course.name}</h3>
+                    <p class="card-text">รายละเอียด : {course.description}</p>
+                    <p class="card-text">ผู้สอน : {course.teacher.firstname}</p>
+                </div>
+            </div>
+                :  
+                <div class="card mt-3 p-5 alert-primary text-dark">
+                    <h3 class="card-title">{course.name}</h3>
+                    <p class="card-text">รายละเอียด : {course.description}</p>
+                    <p class="card-text">ผู้สอน : {course.teacher.firstname}</p>
+            </div>
+                }
+                </>
+                  
+                  
                 }
                 <div className="border bg-white my-3 ">
                     {topic && topic.map((item, index) => (
                         <div key={index} className="px-5 mt-3">
                             <h3 id="titleTopic">{item.title}</h3>
+
                             <div className="px-3">
                                 <p className="">{item.description}</p>
-
                                 {item.text.length > 0 &&
                                     <div className=""><ul>
                                         {item.text.map((ttem, tdex) =>
@@ -121,7 +134,7 @@ const CoursePageStudent = () => {
                                         {item.link.map((ttem, tdex) =>
 
                                             <li key={tdex}>
-                                                <a href={ttem.url}><i class="bi bi-link"></i>&nbsp;{ttem.name}</a>
+                                                <a href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
                                             </li>
 
                                         )}
@@ -152,7 +165,7 @@ const CoursePageStudent = () => {
                 {course.password == ""
                     ? <></>
                     : <div className="mb-5">
-                        <button className="btn btn-danger"
+                        <button className="btn btn-danger" type="button"
                             onClick={() => handleRemove(id)}
                         >อกกจากบทเรียน</button>
                     </div>

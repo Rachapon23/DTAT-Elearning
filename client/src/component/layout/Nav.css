@@ -5,9 +5,12 @@
 .allpage{
     position: fixed;
     bottom: 8px;
-    right: 16px;
+    left:  16px;
 
 }
 #navbarScrollingDropdown{
     color: #0f52ba
+}
+.bg-nav{
+    background-image: url("../../../public/back-g-nav-2.png");
 }

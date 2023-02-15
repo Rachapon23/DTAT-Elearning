@@ -57,52 +57,57 @@ const Login = () => {
     }
   }, [])
 
+  
+
   return (
     <div className="">
-      <nav class="navbar navbar-expand-md navbar-light nav-bg">
+      <nav className="navbar navbar-light  bg-nav">
+      {/* <nav className="navbar navbar-expand-md navbar-light bg-danger"> */}
         <div className="container">
-          <a class="navbar-brand text-white brand" href="/">E-learning</a>
+          <a className="navbar-brand text-white brand" href="/">E-learning</a>
         </div>
 
       </nav>
-      <div className="container mt-5">
-        <div className="d-flex justify-content-center">
-          <div className="card w-75">
-            <div className="card-body">
-              <h3 className="text-center my-4">เข้าสู่ระบบ</h3>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label className="form-label">รหัสพนักงาน</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="employee_ID"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="form-group mt-3">
-                  <label className="form-label">รหัสผ่าน</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="password"
-                    onChange={handleChange}
-                  />
-                </div>
+      <div className="black-g">
+        <div className="container">
+          <div className="d-flex justify-content-center">
+            <div className="card w-75  mt-5">
+              <div className="card-body">
+                <h3 className="text-center my-4">เข้าสู่ระบบ</h3>
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label className="form-label">รหัสพนักงาน</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="employee_ID"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group mt-3">
+                    <label className="form-label">รหัสผ่าน</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="password"
+                      onChange={handleChange}
+                    />
+                  </div>
 
 
-                <br />
-                <div className="d-flex justify-content-center">
-                  <button type="submit" className="btn btn-outline-primary">
-                    เข้าสู่ระบบ
-                  </button>
+                  <br />
+                  <div className="d-flex justify-content-center">
+                    <button type="submit" className="btn btn-outline-primary">
+                      เข้าสู่ระบบ
+                    </button>
+                  </div>
+                </form>
+                <div className="d-flex justify-content-between">
+                  <a className="text-muted">ลืมรหัสผ่าน</a>
+                  <a className="text-muted" href="register">
+                    สมัครสมาชิก
+                  </a>
                 </div>
-              </form>
-              <div className="d-flex justify-content-between">
-                <a className="text-muted">ลืมรหัสผ่าน</a>
-                <a className="text-muted" href="register">
-                  สมัครสมาชิก
-                </a>
               </div>
             </div>
           </div>
