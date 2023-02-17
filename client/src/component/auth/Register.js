@@ -14,15 +14,24 @@ const Register = () => {
     firstname: "",
     lastname: "",
   });
+  const [error, setError] = useState({
+    employee_ID: "",
+    department_ID: "",
+    password: "",
+    repassword: "",
+    firstname: "",
+    lastname: "",
+  });
 
   const handleChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
+    setError({ ...error, [e.target.name]: "" });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(value); 
-    if(value.password != value.repassword ){
+    if(value.password !== value.repassword ){
       Swal.fire(
         'รหัสผ่านไม่ตรงกัน',
         'รหัสผ่านไม่ตรงกัน',
@@ -40,11 +49,29 @@ const Register = () => {
         navigate("/");
       })
       .catch((err) => {
-        Swal.fire(
-          'erroe',
-          err.response.data,
-          'error'
-        )
+        const err_obj = err.response.data
+        console.log(err)
+        try {
+          
+          if(err_obj.field === "employee_ID") setError({employee_ID: err_obj.data});
+          else if(err_obj.field === "department_ID") setError({department_ID: err_obj.data});
+          else if(err_obj.field === "password") setError({password: err_obj.data});
+          else if(err_obj.field === "repassword") setError({repassword: err_obj.data});
+          else if(err_obj.field === "firstname") setError({firstname: err_obj.data});
+          else if(err_obj.field === "lastname") setError({lastname: err_obj.data});
+          else Swal.fire(
+            'error',
+            err_obj,
+            'error'
+          )
+        }
+        catch(err) {
+          Swal.fire(
+            'error',
+            "Unexpected error please contact admin",
+            'error'
+          )
+        }
       });
 
     }
@@ -61,61 +88,92 @@ const Register = () => {
                   <div className="form-group col-md-6">
                     <label className="form-label">รหัสพนักงาน</label>
                     <input
-                      className="form-control"
+                      className={
+                        error.employee_ID && error.employee_ID.length !== 0 ? "form-control is-invalid" : "form-control"
+                      }
                       type="text"
                       name="employee_ID"
                       onChange={handleChange}
                     />
+                    <div class="invalid-feedback">
+                      {error.employee_ID}
+                    </div>
                   </div>
                   <div className="form-group col-md-6">
                     <label className="form-label">รหัสแผนก</label>
                     <input
-                      className="form-control"
+                      className={
+                        error.department_ID && error.department_ID.length !== 0 ? "form-control is-invalid" : "form-control"
+                      }
                       type="text"
                       name="department_ID"
                       onChange={handleChange}
                     />
+                    <div class="invalid-feedback">
+                      {error.department_ID}
+                    </div>
                   </div>
                 </div>
                 <div className="row">
                   <div className="form-group col-md-6">
                     <label className="form-label">รหัสผ่าน</label>
                     <input
-                      className="form-control"
+                      className={
+                        error.password && error.password.length !== 0 ? "form-control is-invalid" : "form-control"
+                      }
                       type="text"
                       name="password"
                       onChange={handleChange}
                     />
+                    <div class="invalid-feedback">
+                      {error.password}
+                    </div>
                   </div>
                   <div className="form-group col-md-6">
                     <label className="form-label">ยืนยันรหัสผ่าน</label>
                     <input
-                      className="form-control"
+                      className={
+                        error.repassword && error.repassword.length !== 0 ? "form-control is-invalid" : "form-control"
+                      }
                       type="text"
                       name="repassword"
                       onChange={handleChange}
                     />
+                    <div class="invalid-feedback">
+                      {error.repassword}
+                    </div>
                   </div>
                 </div>
                 <div className="row">
                   <div className="form-group col-md-6">
                     <label className="form-label">ชื่อ</label>
                     <input
-                      className="form-control"
+                      className={
+                        error.firstname && error.firstname.length !== 0 ? "form-control is-invalid" : "form-control"
+                      }
                       type="text"
                       name="firstname"
                       onChange={handleChange}
                     />
+                    <div class="invalid-feedback">
+                      {error.firstname}
+                    </div>
                   </div>
                   <div className="form-group col-md-6">
                     <label className="form-label">นามสกุล</label>
                     <input
-                      className="form-control"
+                      className={
+                        error.lastname && error.lastname.length !== 0 ? "form-control is-invalid" : "form-control"
+                      }
                       type="text"
                       name="lastname"
                       onChange={handleChange}
                     />
+                    <div class="invalid-feedback">
+                      {error.lastname}
+                    </div>
                   </div>
+                  
                 </div>
                 <br />
                 <div className="d-flex justify-content-center">

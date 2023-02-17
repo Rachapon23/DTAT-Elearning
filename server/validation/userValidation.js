@@ -1,4 +1,4 @@
-const User = require("../models/userModel")
+// const User = require("../models/userModel")
 
 exports.loginValidate = async (payload) => {
     try {
@@ -7,6 +7,7 @@ exports.loginValidate = async (payload) => {
             password: "string",
         }
         // console.log(Object.keys(User.schema.paths))
+
         if(Object.keys(payload).length === 0) {
             console.log(`[-] invalid login request length ${Object.keys(payload).length}`)
             return {valid: false, data: `Payload must contain data`}
@@ -34,6 +35,21 @@ exports.loginValidate = async (payload) => {
                     console.log(`[-] ${payload.body[key]}`)
                     return {valid: false, data: `${key} is not ${typeof payload.body[key]}`, field: key}
                 }
+
+                if(key === "employee_ID") {
+                    if(!isNaN(payload.body[key]))  console.log(`[+] ${payload.body[key]} is number`)
+                    else {
+                        console.log(`[-] ${payload.body[key]} is not a number`)
+                        return {valid: false, data: `${key} is must be number`, field: key}
+                    }
+
+                    if(payload.body[key].length === 7)  console.log(`[+] ${key} length is correct`)
+                    else {
+                        console.log(`[-] ${payload.body[key]} length is not correct`)
+                        return {valid: false, data: `${key} length is not correct`, field: key}
+                    }
+                }
+
                 counter++;
             }
             return {valid: true, data: payload}
@@ -56,7 +72,7 @@ exports.registerValidate = async (payload) => {
             firstname: "string",
             lastname: "string"
         }
-        // console.log(Object.keys(User.schema.paths))
+        
 
         if(Object.keys(payload).length === 0) {
             console.log(`[-] invalid register request ${Object.keys(payload).length}`)
@@ -86,8 +102,39 @@ exports.registerValidate = async (payload) => {
                     console.log(`[-] ${payload.body[key]}`)
                     return {valid: false, data: `${key} is not ${typeof payload.body[key]}`, field: key}
                 }
+
+                if(key === "employee_ID") {
+                    if(!isNaN(payload.body[key]))  console.log(`[+] ${payload.body[key]} is number`)
+                    else {
+                        console.log(`[-] ${payload.body[key]} is not a number`)
+                        return {valid: false, data: `${key} is must be number`, field: key}
+                    }
+
+                    if(payload.body[key].length === 7)  console.log(`[+] ${key} length is correct`)
+                    else {
+                        console.log(`[-] ${payload.body[key]} length is not correct`)
+                        return {valid: false, data: `${key} length is not correct`, field: key}
+                    }
+                }
+                else if(key === "department_ID") {
+                    if(!isNaN(payload.body[key]))  console.log(`[+] ${payload.body[key]} is number`)
+                    else {
+                        console.log(`[-] ${payload.body[key]} is not a number`)
+                        return {valid: false, data: `${key} is must be number`, field: key}
+                    }
+
+                    if(payload.body[key].length === 6)  console.log(`[+] ${key} length is correct`)
+                    else {
+                        console.log(`[-] ${payload.body[key]} length is not correct`)
+                        return {valid: false, data: `${key} length is not correct`, field: key}
+                    }
+                }
+
                 counter++;
             }
+
+            
+
             return {valid: true, data: payload}
         }
         return {valid: false, data: "Payload is not an object"}
@@ -114,7 +161,7 @@ exports.sendEmailValidate = async (payload) => {
         if(typeof payload.body === "object") {
             const payloadKeys = Object.keys(payload.body)
 
-            if(payloadKeys.length !== 1) {
+            if(payloadKeys.length > 1) {
                 console.log(`[-] invalid send email body length ${payloadKeys.length}`)
                 return {valid: false, data: `Length of body in payload does not match`}
             }

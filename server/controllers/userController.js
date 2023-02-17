@@ -11,8 +11,8 @@ const UserValiation = require("../validation/userValidation")
 //สมัครสมาชิก
 exports.register = async(req,res)=>{
     try{
-        const validated_req = await UserValiation.registerValidate(req)
-        if(validated_req === null) return res.status(400).send("invalid register request");
+        const validated_result = await UserValiation.registerValidate(req)
+        if(!validated_result.valid) return res.status(400).send(validated_result);
 
         const {
             employee_ID,
@@ -20,7 +20,7 @@ exports.register = async(req,res)=>{
             department_ID,
             firstname,
             lastname,
-        } = validated_req.body
+        } = validated_result.data.body
 
         //ตรวจสอบว่าเป็นสมาชิกหรือยัง
         let user = await User.findOne({employee_ID})
@@ -53,10 +53,10 @@ exports.register = async(req,res)=>{
 //เข้าสู่ระบบ
 exports.login = async (req, res) => {
     try {
-      const validated_req = await UserValiation.loginValidate(req)
-      if(validated_req === null) return res.status(400).send("invalid login request");
+      const validated_result = await UserValiation.loginValidate(req)
+      if(!validated_result.valid) return res.status(400).send(validated_result);
 
-      const { employee_ID, password } = validated_req.body;
+      const { employee_ID, password } = validated_result.data.body;
       var user = await User.findOneAndUpdate({ employee_ID }, { new: true });
       if (user && user.enabled) {
 
@@ -82,7 +82,7 @@ exports.login = async (req, res) => {
           res.json({ token, Payload });
         });
       } 
-      else if(user.enabled === false) {
+      else if(user && user.enabled === false) {
         return res.status(400).send("User not active!!! Please contact admin");
       }
       else {
@@ -132,10 +132,11 @@ exports.getTeacherByCourseId = async (req, res) => {
 
 exports.sendEmail = async (req, res) => {
     try {
-      const validated_req = await UserValiation.sendEmailValidate(req)
-      if(validated_req === null) return res.status(400).send("invalid send email request");
+      console.log(req)
+      const validated_result = await UserValiation.sendEmailValidate(req)
+      if(!validated_result.valid) return res.status(400).send(validated_result);
 
-      const {email} = req.body
+      const {email} = validated_result.data.body
       const transporter = nodeMailer.createTransport({
         service: 'gmail',
         auth: {

@@ -17,12 +17,20 @@ const Login = () => {
     password: "",
   });
 
+  const [error, setError] = useState({
+    employee_ID: "",
+    password: "",
+    email: "",
+  });
+
   const handleChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
+    setError({ ...error, [e.target.name]: "" });
   };
 
   const handleEmail = (e) => {
     setEmail({...email, [e.target.name]: e.target.value})
+    setError({ ...error, [e.target.name]: "" });
   }
 
   const handleSubmit = (e) => {
@@ -38,7 +46,26 @@ const Login = () => {
         roleBaseRedirect(res.data.Payload.user.role);
       })
       .catch((err) => {
-        Swal.fire("error", err.response.data, "error");
+        const err_obj = err.response.data
+        
+        // console.log(err)
+        try {
+          console.log(err_obj.field)
+          if(err_obj.field === "employee_ID") setError({employee_ID: err_obj.data});
+          else if(err_obj.field === "password") setError({password: err_obj.data});
+          else Swal.fire(
+            'error',
+            err_obj,
+            'error'
+          )
+        }
+        catch(err) {
+          Swal.fire(
+            'error',
+            "Unexpected error please contact admin",
+            'error'
+          )
+        }
       });
   };
 
@@ -55,7 +82,7 @@ const Login = () => {
 
   useEffect(() => {
 
-    if (sessionStorage.length != 0) {
+    if (sessionStorage.length !== 0) {
       if (sessionStorage.getItem("role") === "admin") {
         navigate("/admin/home");
       } else if (sessionStorage.getItem("role") === "teacher") {
@@ -80,11 +107,24 @@ const Login = () => {
       // navigate("/");
       })
       .catch((err) => {
-        Swal.fire(
-          'error',
-          err.response.data,
-          'error'
-        )
+        const err_obj = err.response.data
+        console.log(err)
+        try {
+          console.log(err_obj.field)
+          if(err_obj.field === "email") setError({email: err_obj.data});
+          else Swal.fire(
+            'error',
+            err_obj,
+            'error'
+          )
+        }
+        catch(err) {
+          Swal.fire(
+            'error',
+            "Unexpected error please contact admin",
+            'error'
+          )
+        }
       })
   }
 
@@ -112,25 +152,38 @@ const Login = () => {
               <div className="card-body">
                 <h3 className="text-center my-4">เข้าสู่ระบบ</h3>
                 <form onSubmit={handleSubmit}>
+
                   <div className="form-group">
                     <label className="form-label">รหัสพนักงาน</label>
                     <input
-                      className="form-control"
+                      className={
+                        error.employee_ID && error.employee_ID.length !== 0 ? "form-control is-invalid" : "form-control"
+                      }
                       type="text"
                       name="employee_ID"
                       onChange={handleChange}
                     />
+                    <div class="invalid-feedback">
+                      {error.employee_ID}
+                    </div>
                   </div>
+
                   <div className="form-group mt-3">
                     <label className="form-label">รหัสผ่าน</label>
                     <input
-                      className="form-control"
+                      className={
+                        error.password && error.password.length !== 0 ? "form-control is-invalid" : "form-control"
+                      }
                       type="text"
                       name="password"
                       onChange={handleChange}
                     />
-                  </div>
+                    
+                    <div class="invalid-feedback">
+                      {error.password}
+                    </div>
 
+                  </div>
 
                   <br />
                   <div className="d-flex justify-content-center">
@@ -142,17 +195,22 @@ const Login = () => {
     
                 <div className="d-flex justify-content-between">
 
-                  <a className="text-muted" onClick={showModal}>ลืมรหัสผ่าน</a>
+                  <a className="text-muted" href="/#" onClick={showModal}>ลืมรหัสผ่าน</a>
 
                   <Modal title="Reset Password" open={isModalOpen} onOk={handleSendEmail} onCancel={closeModal}>
                     <div className="form-group mt-3">
                       <label className="form-label"> Email </label>
                       <input
-                        className="form-control"
+                        className={
+                          error.email && error.email.length !== 0 ? "form-control is-invalid" : "form-control"
+                        }
                         type="text"
                         name="email"
                         onChange={handleEmail}
                       />
+                      <div class="invalid-feedback">
+                      {error.email}
+                    </div>
                     </div>
 
                   </Modal>
