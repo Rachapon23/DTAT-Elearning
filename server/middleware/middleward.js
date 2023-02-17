@@ -1,15 +1,17 @@
 const jwt = require('jsonwebtoken')
+const User = require('../models/userModel')
 
 exports.checkUser = (req,res,next) =>{
     try{
         const token = req.headers["authtoken"]
+        // console.log(req)
         if(!token){
             return res.status(401).send("no token, authorization denied")
         }
         const decoded = jwt.verify(token,"jwtSecret")
         
 
-        console.log("Middleware: ",decoded)
+        // console.log("Middleware: ",decoded)
         req.user = decoded.user
         next()
     }catch(err){
@@ -22,14 +24,14 @@ exports.checkTeacher = async(req,res,next) =>{
     try{
         const {user_id} = req.user
         const teacherUser = await User.findOne({_id:user_id}).exec()
-        
+        // console.log(teacherUser)
        if(teacherUser.role == 'teacher' ||
        teacherUser.role == 'admin'
         ){
             next()
             
         }else{
-           res.status(403).send(err,"teacher Access denied")
+           res.status(403).send(err,"teacher Access denied",teacherUser.role)
         }
         
     }catch(err){

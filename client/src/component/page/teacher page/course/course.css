@@ -1,0 +1,21 @@
+.iconx{
+    font-size: 25px;
+    -webkit-text-stroke-width: 0.3px;
+    color: grey;
+}.iconPlus{
+    font-size: 20px;
+    -webkit-text-stroke-width: 0.3px;
+    color: grey;
+}
+#select{
+    max-width: 100px;
+
+}
+#titleTopic{
+    color:#2c7ecd;
+}
+
+
+.bg-body-course-t{
+    background-color: rgba(0, 0, 0, 0.2);  
+  }

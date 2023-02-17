@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import './Nav.css'
 
 import { useNavigate } from "react-router-dom";
 const NavStudent = () => {
@@ -18,31 +19,33 @@ const NavStudent = () => {
   };
   // console.log(user)
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="bg-nav" expand="lg">
       <Container>
-        <Navbar.Brand href="/homeadmin" className="text-danger">
+
+        <Navbar.Brand href="/student/home" className="text-white">
           Denso elearning Student
         </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/homeadmin">page1</Nav.Link>
-            <Nav.Link href="/homeadmin">page2</Nav.Link>
-            <Nav.Link href="/homeadmin">page3</Nav.Link>
-            <Nav.Link href="/homeadmin">page4</Nav.Link>
+            {/* <Nav.Link className="text-white" href="/student/home">หน้าแรก</Nav.Link> */}
+            <Nav.Link className="text-white" href="/student/list-courses">คอร์สของฉัน</Nav.Link>
+            {/* <Nav.Link href="/student/get-course/:id">/student/get-course/:id</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
+
         <Navbar.Collapse className="justify-content-end">
 
-          <Navbar.Text
-          className="text-danger">
-            Signed in Teacher as: 
-</Navbar.Text>
-            <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
-              <NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>
-            </NavDropdown>
-          {/* <Nav.Link onClick={logout}>logout</Nav.Link> */}
+          <Navbar.Text>
+            Signed in {sessionStorage.getItem("role")} as:
+          </Navbar.Text>
+          <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
+            <NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>
+          </NavDropdown>
 
+          {/* <Nav.Link onClick={logout}>logout</Nav.Link> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>

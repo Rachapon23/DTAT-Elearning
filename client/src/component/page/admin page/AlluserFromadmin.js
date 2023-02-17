@@ -18,7 +18,6 @@ const AlluserFromadmin = () => {
 
     listAlluser(sessionStorage.getItem("token"))
       .then(res => {
-  
         setData(res.data)
       })
       .catch(err => {
@@ -27,7 +26,7 @@ const AlluserFromadmin = () => {
 
 
   }
-      console.log(data)
+      // console.log(data)
 
   return (
     <div>
@@ -42,6 +41,7 @@ const AlluserFromadmin = () => {
             <th scope="col">รหัส</th>
             <th scope="col">ชื่อ</th>
             <th scope="col">นามกสุล</th>
+            <th scope="col">สิทธิ์</th>
           </tr>
         </thead>
         <tbody>
@@ -52,6 +52,10 @@ const AlluserFromadmin = () => {
       <td>{item.department_ID}</td>
       <td>{item.firstname}</td>
       <td>{item.lastname}</td>
+      {item.role == "admin" && (<td className='text-danger'>{item.role}</td>)}
+      {item.role == "teacher" && (<td className='text-primary'>{item.role}</td>)}
+      {item.role == "student" && (<td className='text-success'>{item.role}</td>)}
+      
    
     </tr>
 

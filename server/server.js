@@ -7,8 +7,12 @@ require('dotenv').config()
 
 const app = express()
 
+// Static file
+app.use(express.static('public'))
+
+
 //connect cloud Database
-mongoose.connect(process.env.DATABASE,{
+mongoose.connect(process.env.DATABASE2,{
     useNewUrlParser:true,
     useUnifiedTopology:false
 })

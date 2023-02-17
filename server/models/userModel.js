@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const {ObjectId} = mongoose.Schema
 
 const UserSchema = new mongoose.Schema({
 
@@ -27,9 +28,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: "student",
     },
-    course: {
-        type:{}
-    },
+    coursee: [{
+        type: ObjectId,
+        ref:"coursee"
+    }],
     enabled:{
         type:Boolean,
         default: true,

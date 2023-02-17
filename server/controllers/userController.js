@@ -1,18 +1,26 @@
 
 const User = require('../models/userModel')
+const Course = require('../models/course')
+const ResetPassword = require("../models/resetPassword")
+const nodeMailer = require("nodemailer")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const ObjectId = require('mongoose').Types.ObjectId;
+const UserValiation = require("../validation/userValidation")
 
 //สมัครสมาชิก
 exports.register = async(req,res)=>{
     try{
+        const validated_req = await UserValiation.registerValidate(req)
+        if(validated_req === null) return res.status(400).send("invalid register request");
+
         const {
             employee_ID,
             password,
             department_ID,
             firstname,
             lastname,
-        } = req.body
+        } = validated_req.body
 
         //ตรวจสอบว่าเป็นสมาชิกหรือยัง
         let user = await User.findOne({employee_ID})
@@ -45,8 +53,10 @@ exports.register = async(req,res)=>{
 //เข้าสู่ระบบ
 exports.login = async (req, res) => {
     try {
-      const { employee_ID, password } = req.body;
+      const validated_req = await UserValiation.loginValidate(req)
+      if(validated_req === null) return res.status(400).send("invalid login request");
 
+      const { employee_ID, password } = validated_req.body;
       var user = await User.findOneAndUpdate({ employee_ID }, { new: true });
       if (user && user.enabled) {
 
@@ -57,12 +67,12 @@ exports.login = async (req, res) => {
           return res.status(400).send("Password Invalid!!!");
         }
 
-        user_id = user._id.toString();
+        // user_id = user._id.toString();
         const Payload = {
           user: {
             fisrtname: user.firstname,
             role: user.role,
-            user_id: user_id,
+            user_id: user._id,
           },
         };
 
@@ -71,7 +81,11 @@ exports.login = async (req, res) => {
           if (err) throw err;
           res.json({ token, Payload });
         });
-      } else {
+      } 
+      else if(user.enabled === false) {
+        return res.status(400).send("User not active!!! Please contact admin");
+      }
+      else {
         return res.status(400).send("User not found!!!");
       }
     } catch (err) {
@@ -94,13 +108,149 @@ exports.login = async (req, res) => {
       res.status(500).send("Server Error!!! on current user");
     }
   };
-
-  exports.ch = async (req, res) => {
+  
+exports.getTeacherByCourseId = async (req, res) => {
     try {
-     
-      res.send("OK");
-    } catch (err) {
+      const {course_id} = req.body
+      const course = await Course.findOne({_id: course_id})
+      .populate("teacher")
+      .select("-password")
+      .exec();
+      // console.log(course)
+      let data = {
+        _id: course.teacher._id,
+        firstname: course.teacher.firstname,
+        lastname: course.teacher.lastname,
+      }
+      res.send(data);
+    } 
+    catch (err) {
       console.log(err);
-      res.status(500).send("Server Error!!! on CH");
+      res.status(500).send("Server Error!!! on get teacher by ID");
     }
-  };
+};
+
+exports.sendEmail = async (req, res) => {
+    try {
+      const validated_req = await UserValiation.sendEmailValidate(req)
+      if(validated_req === null) return res.status(400).send("invalid send email request");
+
+      const {email} = req.body
+      const transporter = nodeMailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'densoeleaning@gmail.com',
+          pass: 'hqqabmpdjxmqsevf'
+        }
+      });
+
+      const token = jwt.sign({email: email}, "jwtSecret", { expiresIn: '5m' });
+      const reset_password_data = await ResetPassword.findOne({email: email}).exec()
+
+      let isTokenExpire = true;
+      if(reset_password_data) {
+        jwt.verify(reset_password_data.token,"jwtSecret", (err, _) => {
+          if (!err) {
+            isTokenExpire = false;
+            return res.status(500).send("cannot reset password because previous token is not expire");
+          }
+        });
+        // return res.status(500).send("cannot reset password because previous token is not expire");
+      }
+
+      if(isTokenExpire && reset_password_data) {
+        await ResetPassword.findOneAndDelete({email: email}).exec()
+      }
+
+      if(isTokenExpire) {
+        const reset_password_request = new ResetPassword({
+          email: email, 
+          token: token,
+          is_used: false
+        })
+        await reset_password_request.save()
+  
+        var mailOptions = {
+          from: 'densoeleaning@gmail.com',
+          to: email,
+          subject: 'Reseting your elearning password',
+          html: `
+                <html>
+                <h1>Do not delete this email utill you reseted your password</h1>
+                <h1> Click the button below to link to reset password page <h1>
+                <a href="http://localhost:3000/reset-password/${token}"> click </a>
+                </html>
+                `
+        };
+  
+        await transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+            res.send("send email success")
+          }
+        });
+      }
+    }
+    catch(err) {
+      console.log(err);
+    }
+}
+
+exports.resetPassword = async (req, res) => {
+    try {
+      const validated_req = await UserValiation.resetPasswordValidate(req)
+      if(validated_req === null) return res.status(400).send("invalid reset password request");
+      
+      const userEmail = req.body.email;
+      const decoded = jwt.verify(req.headers.authtoken,"jwtSecret");
+      const tokenEmail = decoded.email;
+
+      const reset_password_data = await ResetPassword.findOne({token: req.headers.authtoken}).exec()
+      // console.log(reset_password_data)
+      if(reset_password_data) {
+        if(reset_password_data.is_used){
+          return res.status(500).send("Cannot reset password because previous token is not expire")
+        }
+      }
+      else {
+        return res.status(500).send("Must send rest password request first")
+      }
+
+      if(userEmail === tokenEmail) {
+        await ResetPassword.findOneAndDelete({token: req.headers.authtoken}).exec()
+        return res.send("OK")
+      }
+      else {
+        return res.status(500).send("Entered email does not match with email that server send to")
+      }
+
+      
+    }
+    catch(err) {
+      console.log(err);
+    }
+}
+
+exports.checkToken = async (req, res) => {
+  try {
+    console.log(req.headers)
+    const validated_req = await UserValiation.checkTokenValidate(req)
+    if(validated_req === null) return res.status(400).send("invalid token request");
+
+    const reset_password_data = await ResetPassword.findOne({token: req.headers.authtoken}).exec()
+    if(!reset_password_data) {
+      return res.json({isValid: false})
+    } 
+
+    jwt.verify(req.headers.authtoken,"jwtSecret", (err, _) => {
+      if (err) res.json({isValid: false});
+      return res.json({isValid: true});
+    });
+
+  }
+  catch(err) {
+    console.log(err);
+  }
+}

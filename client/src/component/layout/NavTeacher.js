@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-
+import  './Nav.css'
 import { useNavigate } from "react-router-dom";
 
 const NavTeacher = () => {
@@ -19,26 +19,33 @@ const NavTeacher = () => {
   };
   // console.log(user.firstname)
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="bg-nav" expand="lg">
       <Container>
-        <Navbar.Brand href="/homeadmin" className="text-danger">
+        <Navbar.Brand href="/teacher/home" className="text-white">
           Denso elearning Teacher
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/homeadmin">page1</Nav.Link>
-            <Nav.Link href="/homeadmin">page2</Nav.Link>
-            <Nav.Link href="/homeadmin">page3</Nav.Link>
-            <Nav.Link href="/homeadmin">page4</Nav.Link>
+          {/* <Nav.Link href="/teacher/home">หน้าแรก</Nav.Link> */}
+            <Nav.Link href="/teacher/list-courses">คอร์สของฉัน</Nav.Link>
+            {/* <Nav.Link href="/teacher/create-course">สร้างบทเรียน</Nav.Link> */}
+            {/* <Nav.Link href="/teacher/create-quiz">สร้างแบบทดสอบ</Nav.Link> */}
+            {/* <Nav.Link href="/teacher/list-score">ดูคะแนน</Nav.Link> */}
+            <Nav.Link href="/teacher/calendar">ตารางสอน</Nav.Link>
+            <Nav.Link href="/teacher/list-quiz">แบบทดสอบของฉัน</Nav.Link>
+            <Nav.Link href="/teacher/calendar-teacher">--ตารางสอน--</Nav.Link>
+            <Nav.Link href="/teacher/quiz">--QUIZ--</Nav.Link>
+            <Nav.Link href="/teacher/course">--COURSE--</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">
 
           <Navbar.Text
-          className="text-danger">
-            Signed in Teacher as: 
-</Navbar.Text>
+           className=""
+          >
+            Signed in {sessionStorage.getItem("role")} as: 
+          </Navbar.Text>
             <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
               <NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>
             </NavDropdown>

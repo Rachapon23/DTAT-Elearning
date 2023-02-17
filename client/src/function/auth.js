@@ -8,6 +8,25 @@ await axios.post(process.env.REACT_APP_API+'/register',value);
 export const login = async(value) => 
 await axios.post(process.env.REACT_APP_API+'/login',value);
 
+// send email to client
+export const sendEmail = async(data) =>
+await axios.post(process.env.REACT_APP_API+'/send-email', data);
+
+// send new password to change password
+export const resetPassword = async(authtoken, data) =>
+await axios.post(process.env.REACT_APP_API+'/reset-password', data, {
+    headers:{
+        authtoken,
+    }
+});
+
+export const checkToken = async(authtoken) =>
+await axios.post(process.env.REACT_APP_API+'/check-token', {}, {
+    headers:{
+        authtoken,
+    }
+});
+
 //ตรวจสอบผู้ใช้ปัจจุบัน
 export const currentUser = async(authtoken) =>
 await axios.post(process.env.REACT_APP_API+'/current-user',{},
@@ -16,40 +35,18 @@ await axios.post(process.env.REACT_APP_API+'/current-user',{},
         authtoken,
     }
 });
-export const currentTeacher = async(authtoken) =>
-await axios.post(process.env.REACT_APP_API+'/current-teacher',{},
-    {
-    headers:{
-        authtoken,
-    }
-});
-export const currentAdmin = async(authtoken) =>
-await axios.post(process.env.REACT_APP_API+'/current-admin',{},
-    {
-    headers:{
-        authtoken,
-    }
-});
+// export const currentTeacher = async(authtoken) =>
+// await axios.post(process.env.REACT_APP_API+'/current-teacher',{},
+//     {
+//     headers:{
+//         authtoken,
+//     }
+// });
+// export const currentAdmin = async(authtoken) =>
+// await axios.post(process.env.REACT_APP_API+'/current-admin',{},
+//     {
+//     headers:{
+//         authtoken,
+//     }
+// });
 //--------------------------
-
-export const adminCH  = async(authtoken) =>
-    await axios.get(process.env.REACT_APP_API+'/adminch',
-    {
-    headers:{
-        authtoken,
-    }
-});
-export const teacherCH  = async(authtoken) =>
-    await axios.get(process.env.REACT_APP_API+'/teacherch',
-    {
-    headers:{
-        authtoken,
-    }
-});
-export const studentCH  = async(authtoken) =>
-    await axios.get(process.env.REACT_APP_API+'/studench',
-    {
-    headers:{
-        authtoken,
-    }
-});
