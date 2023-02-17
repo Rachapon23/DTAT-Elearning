@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from "react";
-import { useParams, useLocation, Link} from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import NavTeacher from "../../../layout/NavTeacher";
 import './course.css'
 import Swal from "sweetalert2";
@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 // import Parser from 'html-react-parser';
 import { useNavigate } from 'react-router-dom'
 import { getCourse, removeCourse } from "../../../../function/teacher/funcCourse";
+import { PDFReader } from 'react-read-pdf';
 
 const CoursePageteacher = () => {
     const { id } = useParams();
@@ -15,7 +16,7 @@ const CoursePageteacher = () => {
     const [topic, setTopic] = useState();
     const [dataQuiz, setDataQuiz] = useState([])
     const navigate = useNavigate()
-    const {pathname} = useLocation()
+    const { pathname } = useLocation()
 
     const fetchCourse = () => {
         getCourse(sessionStorage.getItem("token"), id)
@@ -138,7 +139,48 @@ const CoursePageteacher = () => {
                                         {item.link.map((ttem, tdex) =>
 
                                             <li key={tdex}>
-                                                <a href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
+                                                <a className='text-info' href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
+                                            </li>
+
+                                        )}
+                                    </ul>
+                                    </div>
+                                }
+                                {item.file.length > 0 &&
+                                    <div className=""><ul>
+                                        {item.file.map((ttem, tdex) =>
+
+                                            <li key={tdex} className="mb-2">
+                                                {ttem.filetype == 'image/jpeg'
+                                                    ? <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} style={{ maxWidth: "400px" }} />
+                                                    :
+                                                    <>
+                                                        {ttem.filetype == 'application/pdf'
+                                                            ? <div>
+                                                                <a href={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="text-danger">
+                                                                    <i className="bi bi-file-earmark-pdf"></i> {ttem.name}</a>
+                                                            </div>
+                                                            :
+                                                            <>
+                                                                {ttem.filetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                                    ? <div>
+                                                                        <a href={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="text-primary">
+                                                                            <i className="bi bi-file-earmark-word"></i> {ttem.name}</a>
+                                                                    </div>
+                                                                    :
+                                                                    <>
+                                                                {ttem.filetype == "image/png"
+                                                                    ? <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} style={{ maxWidth: "400px" }} />
+                                                                    :
+                                                                    <></>
+                                                                }
+                                                            </>
+                                                                }
+                                                            </>
+                                                        }
+                                                    </>
+                                                }
+
                                             </li>
 
                                         )}
@@ -150,7 +192,7 @@ const CoursePageteacher = () => {
                                         {item.quiz.map((ttem, tdex) =>
 
                                             <li key={tdex}>
-                                                <Link className="text-success" to={`/student/test/` + ttem.quiz} state={{path: pathname}}>
+                                                <Link className="text-success" to={`/student/test/` + ttem.quiz} state={{ path: pathname }}>
                                                     <i className="bi bi-clipboard2-check"></i>&nbsp;{ttem.name}
                                                 </Link>
                                             </li>
