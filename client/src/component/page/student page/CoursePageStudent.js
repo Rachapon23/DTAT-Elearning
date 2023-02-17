@@ -133,7 +133,48 @@ const CoursePageStudent = () => {
                                         {item.link.map((ttem, tdex) =>
 
                                             <li key={tdex}>
-                                                <a href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
+                                                <a className='text-info' href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
+                                            </li>
+
+                                        )}
+                                    </ul>
+                                    </div>
+                                }
+                                                               {item.file.length > 0 &&
+                                    <div className=""><ul>
+                                        {item.file.map((ttem, tdex) =>
+
+                                            <li key={tdex} className="mb-2">
+                                                {ttem.filetype == 'image/jpeg'
+                                                    ? <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} style={{ maxWidth: "400px" }} />
+                                                    :
+                                                    <>
+                                                        {ttem.filetype == 'application/pdf'
+                                                            ? <div>
+                                                                <a href={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="text-danger">
+                                                                    <i className="bi bi-file-earmark-pdf"></i> {ttem.name}</a>
+                                                            </div>
+                                                            :
+                                                            <>
+                                                                {ttem.filetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                                    ? <div>
+                                                                        <a href={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="text-primary">
+                                                                            <i className="bi bi-file-earmark-word"></i> {ttem.name}</a>
+                                                                    </div>
+                                                                    :
+                                                                    <>
+                                                                {ttem.filetype == "image/png"
+                                                                    ? <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} style={{ maxWidth: "400px" }} />
+                                                                    :
+                                                                    <></>
+                                                                }
+                                                            </>
+                                                                }
+                                                            </>
+                                                        }
+                                                    </>
+                                                }
+
                                             </li>
 
                                         )}
