@@ -137,7 +137,7 @@ exports.getCourse = async (req, res) => {
 exports.searchCourse = async (req, res) => {
     try {
         const { query } = req.body
-        console.log(query)
+        // console.log(query)
         let courseSearch = await Coursee.find({ course_number: { $regex: query }, status: "private" }).populate("teacher", "firstname").exec()
         //$text:{$search:"110011"}
         res.send(courseSearch)
@@ -249,7 +249,63 @@ exports.getMyCourseTeacher = async (req, res) => {
 exports.updateCourse = async (req, res) => {
     try {
         const { head, body } = req.body
-        // console.log(head)
+        const course = await Coursee.findOne({ _id: head._id }).exec()
+        const topic_after = course.topic 
+        const upload = []
+        let respond = {
+            data:[],
+            upload:[]
+        }
+
+        for(let i = 0 ; i < topic_after.length ; i++){
+            for(let j = 0 ; j < topic_after[i].file.length ; j++){
+                for(let k = 0 ; k < body.length ; k++ ){
+                    for(let l = 0 ; l <body[k].file.length ; l++){
+                        if(
+                            topic_after[i].file[j].filename ==
+                            body[k].file[l].filename
+                        ){
+                            // console.log(topic_after[i].file[j].filename)
+                            topic_after[i].file[j].filename = ""
+                            // body[k].file[l].filename = ""
+                        }
+                    }
+                }
+            }
+        }
+
+        for(let i = 0 ; i < topic_after.length ; i++){
+            for(let j = 0 ; j < topic_after[i].file.length ; j++){
+                // console.log("the last", topic_after[i].file[j]) 
+                if(topic_after[i].file[j].filename !== ''){
+                    // console.log("delete : ",topic_after[i].file[j].filename)
+                    await fs.unlink("./public/uploads/" + topic_after[i].file[j].filename, (err) => {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            console.log("delete IMG from server success")
+                        }
+                    });
+                }
+            }
+        }
+
+        for(let i = 0 ; i < body.length ; i++){
+            for(let j = 0 ; j < body[i].file.length ; j++){
+                // console.log(!!(body[i].file[j]).file)
+                if(!!(body[i].file[j]).file){
+                    upload.push(
+                        {
+                            topic_number:i,
+                            file_number:j
+                        }
+                    )
+                }
+            //     if(body[i].file[j].filename !== ''){
+            //    console.log("new ---- ",body[i].file[j])
+            //     }
+            }
+        }
 
         const deleteIMG = await Coursee.findOne({ _id: head._id }).exec()
 
@@ -268,7 +324,11 @@ exports.updateCourse = async (req, res) => {
                     topic: body
                 },
             ).exec()
-            res.send(course)
+            // res.send(course)
+            respond = {
+                data:course,
+                upload:upload
+            }
 
         } else {
             //true not have
@@ -296,7 +356,11 @@ exports.updateCourse = async (req, res) => {
                         topic: body
                     },
                 ).exec()
-                res.send(course)
+                // res.send(course)
+                respond = {
+                    data:course,
+                    upload:upload
+                }
 
             } else {
                 console.log(head.image, "do not delete img")
@@ -313,10 +377,15 @@ exports.updateCourse = async (req, res) => {
                         topic: body
                     },
                 ).exec()
-                res.send(course)
+                // res.send(course)
+                respond = {
+                    data:course,
+                    upload:upload
+                }
             }
-
         }
+
+        res.send(respond)
 
     }
     catch (err) {
@@ -381,7 +450,7 @@ exports.uploadimg = async (req, res) => {
         const id = req.body.id;
         const filename = req.file.filename;
 
-        console.log(filename, id)
+        // console.log(filename, id)
         const upload = await Coursee.findOneAndUpdate(
             { _id: id },
             { image: filename }
@@ -422,16 +491,34 @@ exports.updateimg = async (req, res) => {
 
 exports.uploadfile = async (req, res) => {
     try {
-        const { id, number } = req.body;
-        const topic_number = req.body.topic;
+        const { id, file_number,topic_number  } = req.body;
         const filename = req.file.filename;
 
-       
+        // console.log(id, file_number,topic_number  )
+   
 
-        // const update = await Coursee.findOneAndUpdate(
-        //     { _id: id },
-        //     { topic: Topic_s.topic }
-        // ).exec()
+       const course = await Coursee.findOne({_id:id}).exec()
+
+        const type = course.topic[topic_number].file[file_number].type
+        const name = course.topic[topic_number].file[file_number].name
+        const filetype = course.topic[topic_number].file[file_number].filetype
+       
+        const file_new = {
+            type:type,
+            name:name,
+            filetype:filetype,
+            filename:filename,
+        }
+
+        course.topic[topic_number].file[file_number] = file_new
+
+        console.log("course : === ", course.topic[topic_number].file[file_number])
+
+
+        const update = await Coursee.findOneAndUpdate(
+            { _id: id },
+            { topic: course.topic }
+        ).exec()
 
         res.send("update")
 

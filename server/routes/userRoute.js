@@ -25,7 +25,10 @@ router.post('/reset-password', resetPassword)
 router.post('/check-token', checkToken)
 // ตรวจสอบผู้ใช้ปัจจุบัน
 router.post('/current-user',checkUser,currentUser)
+
 router.post('/current-teacher',checkUser,checkTeacher,currentUser)
+
+
 router.post('/current-admin',checkUser,checkAdmin,currentUser)
 router.post('/get_teacher_by_course_id', getTeacherByCourseId)
 

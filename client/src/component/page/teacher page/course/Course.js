@@ -2,7 +2,7 @@ import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
 import { listQuiz, } from "../../../../function/teacher/funcQuiz";
 import { createCourse, } from '../../../../function/teacher/funcCourse';
-import { listRoom, uploadImg , uploadfile } from '../../../../function/teacher/funcMiscellaneous'
+import { listRoom, uploadImg, uploadfile } from '../../../../function/teacher/funcMiscellaneous'
 import { useState, useEffect } from 'react'
 import './course.css'
 import Swal from "sweetalert2";
@@ -82,6 +82,19 @@ const Course = () => {
         setNextState([...nextState])
     }
 
+    const handdleAddfile = (e, index) => {
+        e.preventDefault();
+        valuetopic[index].file.push(
+            {
+                type: "file",
+                name: "",
+                file: '',
+                filetype: ""
+            }
+        )
+        setNextState([...nextState])
+    }
+
 
     const handleRemoveText = (e, index, tdex) => {
         e.preventDefault();
@@ -98,7 +111,12 @@ const Course = () => {
         valuetopic[index].quiz.splice(tdex, 1)
         setNextState([...nextState])
     }
- 
+    const handleRemoveFile = (e, index, tdex) => {
+        e.preventDefault();
+        valuetopic[index].file.splice(tdex, 1)
+        setNextState([...nextState])
+    }
+
 
     const loadQuiz = () => {
         listQuiz(
@@ -141,90 +159,113 @@ const Course = () => {
         loadRoom()
     }, [])
 
-    const handdleSubmit = (e) => {
+    const handdleSubmit = async (e) => {
         e.preventDefault();
         console.log(valuetopic[0].file)
-        if (!!!nameCourse.name) {
-            document.getElementById("nameCourse").focus({ focusVisible: true });
-        }
-        else if (!!!nameCourse.course_number) {
-            document.getElementById("course_number").focus({ focusVisible: true });
-        }
-        else if (!!!nameCourse.description) {
-            document.getElementById("description").focus({ focusVisible: true });
-        }
-        else if (!!!nameCourse.room) {
-            document.getElementById("room").focus({ focusVisible: true });
-        }
-        else if (valuetopic.length > 0) {
-            // console.log("for")
-            for (let i = 0; i < valuetopic.length; i++) {
-                // console.log("for 2")
-                if (!!!valuetopic[i].title) {
-                    document.getElementById(`title${i}`).focus({ focusVisible: true });
-                }
-                else if (!!!valuetopic[i].description) {
-                    document.getElementById(`description${i}`).focus({ focusVisible: true });
-                }
-                else if (valuetopic[i].link.length > 0) {
-                    for (let j = 0; j < valuetopic[i].link.length; j++) {
-                        if (!!!valuetopic[i].link[j].name) {
-                            document.getElementById(`linkname${i}${j}`).focus({ focusVisible: true });
-                        } else if (!!!valuetopic[i].link[j].url) {
-                            document.getElementById(`linkurl${i}${j}`).focus({ focusVisible: true });
-                        }
-                    }
-                }
-                else if (valuetopic[i].text.length > 0) {
-                    for (let j = 0; j < valuetopic[i].text.length; j++) {
-                        if (!!!valuetopic[i].text[j].content) {
-                            document.getElementById(`text${i}${j}`).focus({ focusVisible: true });
-                        }
-                    }
-                }
-                else if (valuetopic[i].quiz.length > 0) {
-                    for (let j = 0; j < valuetopic[i].quiz.length; j++) {
-                        if (!!!valuetopic[i].quiz[j].quiz) {
-                            document.getElementById(`quiz${i}${j}`).focus({ focusVisible: true });
-                        }
-                    }
-                }
+        // if (!!!nameCourse.name) {
+        //     document.getElementById("nameCourse").focus({ focusVisible: true });
+        // }
+        // else if (!!!nameCourse.course_number) {
+        //     document.getElementById("course_number").focus({ focusVisible: true });
+        // }
+        // else if (!!!nameCourse.description) {
+        //     document.getElementById("description").focus({ focusVisible: true });
+        // }
+        // else if (!!!nameCourse.room) {
+        //     document.getElementById("room").focus({ focusVisible: true });
+        // }
+        // else if (valuetopic.length > 0) {
+        //     // console.log("for")
+        //     for (let i = 0; i < valuetopic.length; i++) {
+        //         // console.log("for 2")
+        //         if (!!!valuetopic[i].title) {
+        //             document.getElementById(`title${i}`).focus({ focusVisible: true });
+        //         }
+        //         else if (!!!valuetopic[i].description) {
+        //             document.getElementById(`description${i}`).focus({ focusVisible: true });
+        //         }
+        //         else if (valuetopic[i].link.length > 0) {
+        //             for (let j = 0; j < valuetopic[i].link.length; j++) {
+        //                 if (!!!valuetopic[i].link[j].name) {
+        //                     document.getElementById(`linkname${i}${j}`).focus({ focusVisible: true });
+        //                 } else if (!!!valuetopic[i].link[j].url) {
+        //                     document.getElementById(`linkurl${i}${j}`).focus({ focusVisible: true });
+        //                 }
+        //             }
+        //         }
+        //         else if (valuetopic[i].text.length > 0) {
+        //             for (let j = 0; j < valuetopic[i].text.length; j++) {
+        //                 if (!!!valuetopic[i].text[j].content) {
+        //                     document.getElementById(`text${i}${j}`).focus({ focusVisible: true });
+        //                 }
+        //             }
+        //         }
+        //         else if (valuetopic[i].quiz.length > 0) {
+        //             for (let j = 0; j < valuetopic[i].quiz.length; j++) {
+        //                 if (!!!valuetopic[i].quiz[j].quiz) {
+        //                     document.getElementById(`quiz${i}${j}`).focus({ focusVisible: true });
+        //                 }
+        //             }
+        //         }
 
+        //     }
+        // }
+        // else {
+        await createCourse(sessionStorage.getItem("token")
+            ,
+            {
+                head: nameCourse,
+                body: valuetopic,
             }
-        }
-        else {
+        ).then(async res => {
+            console.log(res.data)
+            const formData = new FormData();
+            formData.append('id', res.data._id)
+            formData.append('file', file)
+            if (file != '') {
+                await uploadImg(sessionStorage.getItem("token"), formData).then(res => {
+                    console.log(res)
+                    // Toast.fire({
+                    //     icon: 'success',
+                    //     title: 'Your file has been deleted successfully'
+                    // })
+                    // window.location.reload(false);
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
 
-            createCourse(sessionStorage.getItem("token")
-                ,
-                {
-                    head: nameCourse,
-                    body: valuetopic,
-                }
-            ).then(res => {
-                console.log(res.data)
-                const formData = new FormData();
-                formData.append('id', res.data._id)
-                formData.append('file', file)
-                if(file != ''){
-                    uploadImg(sessionStorage.getItem("token"),formData).then(res => {
+            for (let i = 0; i < valuetopic.length; i++) {
+                for (let j = 0; j < valuetopic[i].file.length; j++) {
+                    // console.log(valuetopic[i].file[j].name)
+                    const formDatafile = new FormData();
+                    formDatafile.append('id', res.data._id)
+                    formDatafile.append('topic_number', i)
+                    formDatafile.append('file_number', j)
+                    formDatafile.append('file',valuetopic[i].file[j].file )
+                    await uploadfile(sessionStorage.getItem("token"), formDatafile).then(res => {
                         console.log(res)
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Your file has been deleted successfully'
-                        })
-                        // window.location.reload(false);
+                        
                     }).catch(err => {
                         console.log(err)
                     })
                 }
-            }).catch(err => {
-                console.log(err)
+            }
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Your file has been deleted successfully'
             })
-        }
+            window.location.reload(false);
+        }).catch(err => {
+            console.log(err)
+        })
+        // }
     }
 
     const handleImg = (e) => {
         setFile(e.target.files[0])
+        console.log(e.target.files[0])
     }
 
     return (
@@ -373,7 +414,44 @@ const Course = () => {
                                             )}
                                         </ul>
                                     </div>
-            
+                                    <div className="d-flex justify-content-between mb-0 mt-3" >
+                                        <p className="">File</p>
+                                        <button className="btn h4 text-primary mb-0"
+                                            type='Button' onClick={(e) => handdleAddfile(e, index)}
+                                        >+</button>
+                                    </div>
+                                    <hr className="mt-0" />
+
+                                    <div className="mt-2">
+                                        <ul>
+
+                                            {item.file.map((ttem, tdex) =>
+                                                <li key={tdex} className="mt-3">
+                                                    <div className="">
+                                                        <div className="input-group mb-2">
+                                                            <input type="file" className="form-control" placeholder="name"
+                                                                // id={`linkname${index}${tdex}`}
+                                                                onChange={(e) => {
+                                                                    ttem.name = e.target.files[0].name
+                                                                    ttem.filetype = e.target.files[0].type
+                                                                    ttem.file = e.target.files[0]
+                                                                    // ttem.name = e.target.value
+                                                                    SetValueTopic([...valuetopic])
+                                                                }}
+                                                            />
+                                                            <button className="btn btn-outline-secondary"
+                                                                onClick={(e) => handleRemoveFile(e, index, tdex)} type='Button'
+                                                            >
+                                                                <i className="bi bi-trash"></i>
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </div>
+
                                     <div className="d-flex justify-content-between mb-0 mt-3" >
                                         <p className="">แบบทดสอบ</p>
                                         <button className="btn h4 text-primary mb-0"

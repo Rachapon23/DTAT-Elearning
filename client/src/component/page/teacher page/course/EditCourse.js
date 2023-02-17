@@ -9,7 +9,7 @@ import { getCourse } from "../../../../function/teacher/funcCourse";
 import { listRoom } from '../../../../function/teacher/funcMiscellaneous'
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom'
-import { uploadImg, upDateImg } from '../../../../function/teacher/funcMiscellaneous'
+import { uploadImg, upDateImg, uploadfile } from '../../../../function/teacher/funcMiscellaneous'
 
 const EditCourse = () => {
 
@@ -128,7 +128,7 @@ const EditCourse = () => {
                 type: "file",
                 name: "",
                 file: '',
-                fileType: ""
+                filetype: ""
             }
         )
         setNextState([...nextState])
@@ -161,45 +161,63 @@ const EditCourse = () => {
     }, []);
 
 
-    const handdleSubmit = (e) => {
+    const handdleSubmit = async (e) => {
         e.preventDefault();
-
-        // console.log(file)
-
-        updateCourse(sessionStorage.getItem("token"),
+        console.log(valuetopic[0].file)
+        await updateCourse(sessionStorage.getItem("token"),
             {
                 head: course,
                 body: valuetopic
             }
-        ).then(res => {
+        ).then(async res => {
             console.log(res)
             const formData = new FormData();
-            formData.append('id', res.data._id)
+            formData.append('id', res.data.data._id)
             formData.append('file', file)
             if (!file) {
                 // not have not do
                 console.log("navigate")
-                navigate('/teacher/get-course/' + id)
+                // navigate('/teacher/get-course/' + id)
             } else {
                 if (!course.image) {
-                    uploadImg(sessionStorage.getItem("token"), formData)
+                    await uploadImg(sessionStorage.getItem("token"), formData)
                         .then(res => {
                             console.log(res)
-                            navigate('/teacher/get-course/' + id)
+                            // navigate('/teacher/get-course/' + id)
                         }).catch(err => {
                             console.log(err)
                         })
                 } else {
-                    upDateImg(sessionStorage.getItem("token"), formData)
+                    await upDateImg(sessionStorage.getItem("token"), formData)
                         .then(res => {
                             console.log(res)
-                            navigate('/teacher/get-course/' + id)
+                            // navigate('/teacher/get-course/' + id)
                         }).catch(err => {
                             console.log(err)
                         })
                 }
 
             }
+            if (res.data.upload.length > 0) {
+                const array = res.data.upload
+                for (let i = 0; i < array.length; i++) {
+                    // console.log(array[i].topic_number, array[i].file_number,valuetopic[array[i].topic_number].file[array[i].file_number].file )
+                    const formDatafile = new FormData();
+                    formDatafile.append('id', res.data.data._id)
+                    formDatafile.append('topic_number', array[i].topic_number)
+                    formDatafile.append('file_number', array[i].file_number)
+                    formDatafile.append('file', valuetopic[array[i].topic_number].file[array[i].file_number].file)
+                    await uploadfile(sessionStorage.getItem("token"), formDatafile).then(res => {
+                        console.log(res)
+                        navigate('/teacher/get-course/' + id)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                }
+            } else {
+                navigate('/teacher/get-course/' + id)
+            }
+
 
         }).catch(err => {
             console.log(err)
@@ -224,6 +242,7 @@ const EditCourse = () => {
     const handleImg = (e) => {
         setFile(e.target.files[0])
     }
+
 
     return (
 
@@ -453,13 +472,14 @@ const EditCourse = () => {
                                                             {ttem.file == '' ?
                                                                 <div className="input-group mb-2">
                                                                     <input type="file" className="form-control"
-                                                                    // id={`linkname${index}${tdex}`}
-                                                                    // onChange={(e) => {
-                                                                    //     ttem.file = e.target.files[0]
-                                                                    //     ttem.name = e.target.files[0].name
-                                                                    //     ttem.fileType = e.target.files[0].type
-                                                                    //     SetValueTopic([...valuetopic])
-                                                                    // }}
+                                                                        // id={`linkname${index}${tdex}`}
+                                                                        onChange={(e) => {
+                                                                            ttem.file = e.target.files[0]
+                                                                            ttem.name = e.target.files[0].name
+                                                                            ttem.filetype = e.target.files[0].type
+                                                                            SetValueTopic([...valuetopic])
+                                                                        }}
+
                                                                     />
                                                                     <button className="btn btn-outline-secondary"
                                                                         onClick={(e) => handleRemovefile(e, index, tdex)} type='Button'
@@ -472,7 +492,7 @@ const EditCourse = () => {
 
                                                                 <div className="d-flex justify-content-between">
                                                                     <p>{ttem.name}</p>
-                                                                    <p>{ttem.file}</p>
+                                                                    <p>{ttem.filename}</p>
                                                                     <button className="btn btn-outline-secondary"
                                                                         onClick={(e) => handleRemovefile(e, index, tdex)} type='Button'
                                                                     >
