@@ -33,6 +33,10 @@ const CourseeSchema = new mongoose.Schema({
         type:String,
         default:"private"
     },
+    enabled:{
+        type:Boolean,
+        default: false,
+    },
     topic: [],
 }, {timestamps: true});
 

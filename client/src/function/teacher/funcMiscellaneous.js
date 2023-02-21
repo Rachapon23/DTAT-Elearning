@@ -31,3 +31,36 @@ headers:{
     authtoken,
 }
 });
+
+//---------
+export const checkRole  = async(authtoken) =>
+await axios.get(process.env.REACT_APP_API+'/check-role',
+{
+    headers:{
+        authtoken,
+    }
+});
+
+//---------
+
+export const getMyaccount  = async(authtoken) =>
+await axios.get(process.env.REACT_APP_API+'/get-myaccount',
+{
+    headers:{
+        authtoken,
+    }
+});
+export const uploadProfile  = async(authtoken,file) =>
+await axios.post(process.env.REACT_APP_API+'/upload-profile',file,
+{
+    headers:{
+        authtoken,
+    }
+});
+export const updateProfile  = async(authtoken,value) =>
+await axios.post(process.env.REACT_APP_API+'/update-profile',value,
+{
+    headers:{
+        authtoken,
+    }
+});

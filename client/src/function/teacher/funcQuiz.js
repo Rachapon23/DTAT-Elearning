@@ -8,8 +8,8 @@ export const createQuiz  = async(authtoken,nameQuiz,value) =>
     }
 });
 
-export const listQuiz  = async(authtoken,id) =>  
-    await axios.get(process.env.REACT_APP_API+'/quiz/list-teacher/'+id, 
+export const listQuiz  = async(authtoken) =>  
+    await axios.get(process.env.REACT_APP_API+'/quiz/list-teacher', 
     {
     headers:{
         authtoken,

@@ -28,6 +28,15 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: "student",
     },
+    profile: {
+        type: String,
+    },
+    email: {
+        type: String,
+    },
+    tel: {
+        type: String,
+    },
     coursee: [{
         type: ObjectId,
         ref:"coursee"

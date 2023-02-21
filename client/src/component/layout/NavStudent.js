@@ -31,7 +31,7 @@ const NavStudent = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {/* <Nav.Link className="text-white" href="/student/home">หน้าแรก</Nav.Link> */}
-            <Nav.Link className="text-white" href="/student/list-courses">คอร์สของฉัน</Nav.Link>
+            {/* <Nav.Link className="text-white" href="/student/list-courses">คอร์สของฉัน</Nav.Link> */}
             {/* <Nav.Link href="/student/get-course/:id">/student/get-course/:id</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
@@ -39,7 +39,7 @@ const NavStudent = () => {
         <Navbar.Collapse className="justify-content-end">
 
           <Navbar.Text>
-            Signed in {sessionStorage.getItem("role")} as:
+            Signed in as:
           </Navbar.Text>
           <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">
             <NavDropdown.Item onClick={logout}>logout</NavDropdown.Item>

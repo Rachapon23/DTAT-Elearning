@@ -4,11 +4,12 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import NavTeacher from "../../../layout/NavTeacher";
 import './course.css'
 import Swal from "sweetalert2";
+import { Switch } from 'antd';
 // import { Link } from "react-router-dom";
 // import Parser from 'html-react-parser';
 import { useNavigate } from 'react-router-dom'
-import { getCourse, removeCourse } from "../../../../function/teacher/funcCourse";
-import { PDFReader } from 'react-read-pdf';
+import { getCourse, removeCourse,enablecourse } from "../../../../function/teacher/funcCourse";
+
 
 const CoursePageteacher = () => {
     const { id } = useParams();
@@ -88,6 +89,22 @@ const CoursePageteacher = () => {
         })
 
     }
+
+    const onChangeEnable = (checked) => {
+        console.log(`switch to ${checked}`);
+        enablecourse(sessionStorage.getItem("token"),
+        {   id:id,
+            enable:checked
+        })
+        .then((response) => {
+            console.log(response)
+            fetchCourse()
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    };
+
     return (
         <div>
             <NavTeacher />
@@ -95,22 +112,37 @@ const CoursePageteacher = () => {
             <div className="container ">
                 {/* {JSON.stringify(course_id)} */}
                 {course &&
-
                     <>
+                        <div className="d-flex justify-content-end mt-4">
+                            <label className='form-label me-3'>สถานะเปิดใช้งาน</label>
+                            <Switch defaultChecked={course.enabled} onChange={onChangeEnable} />
+                        </div>
                         {course.image
-                            ? <div className="card text-white mt-3">
-                                <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="card-img size-200" />
-                                <div className="card-img-overlay bg-body-course-t p-5">
-                                    <h3 className="card-title">{course.name}</h3>
-                                    <p className="card-text">รายละเอียด : {course.description}</p>
-                                    <p className="card-text">ผู้สอน : {course.teacher.firstname}</p>
+                            ? <div className="card mt-3">
+                                <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="img-size-student card-img-top" />
+                                <div className="card-body">
+                                    <div className="mt-3 px-2">
+                                        <h3 className="card-title mb-3 fw-bold">{course.name}</h3>
+                                        <p className="card-text fs-6">รายละเอียด : {course.description}</p>
+                                        {course.status !== "public" ?
+                                            <p className="text-muted ">ผู้สอน : {course.teacher.firstname}</p>
+                                            : <div></div>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                             :
-                            <div className="card mt-3 p-5 alert-primary text-dark">
-                                <h3 className="card-title">{course.name}</h3>
-                                <p className="card-text">รายละเอียด : {course.description}</p>
-                                <p className="card-text">ผู้สอน : {course.teacher.firstname}</p>
+                            <div className="card mt-3">
+                                <div className="card-body alert-primary">
+                                    <div className="mt-3 px-2 text-dark">
+                                        <h3 className="card-title mb-3 fw-bold">{course.name}</h3>
+                                        <p className="card-text fs-6">รายละเอียด : {course.description}</p>
+                                        {course.status !== "public" ?
+                                            <p className="text-muted ">ผู้สอน : {course.teacher.firstname}</p>
+                                            : <div></div>
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         }
                     </>
@@ -118,15 +150,15 @@ const CoursePageteacher = () => {
                 <div className="border bg-white my-3 ">
                     {topic && topic.map((item, index) => (
                         <div key={index} className="px-5 mt-3">
-                            <h3 id="titleTopic">{item.title}</h3>
-                            <div className="px-3">
-                                <p className="">{item.description}</p>
+                            <h5 id="titleTopic" className="fw-bold">{item.title}</h5>
+                            <div className="">
+                                <p className="fs-6">{item.description}</p>
 
                                 {item.text.length > 0 &&
                                     <div className=""><ul>
                                         {item.text.map((ttem, tdex) =>
 
-                                            <li key={tdex}>
+                                            <li className="fs-6" key={tdex}>
                                                 {ttem.content}
                                             </li>
 
@@ -147,44 +179,71 @@ const CoursePageteacher = () => {
                                     </div>
                                 }
                                 {item.file.length > 0 &&
-                                    <div className=""><ul>
+                                    <div className="">
+
+
                                         {item.file.map((ttem, tdex) =>
 
-                                            <li key={tdex} className="mb-2">
-                                                {ttem.filetype == 'image/jpeg'
-                                                    ? <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} style={{ maxWidth: "400px" }} />
+                                            <div key={tdex} className="mb-2">
+                                                {ttem.filetype === 'image/jpeg'
+                                                    ? <div className="container"><img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" /></div>
                                                     :
                                                     <>
-                                                        {ttem.filetype == 'application/pdf'
+                                                        {ttem.filetype === 'application/pdf'
                                                             ? <div>
-                                                                <a href={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="text-danger">
+                                                                <a href={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="text-danger size-pdf">
                                                                     <i className="bi bi-file-earmark-pdf"></i> {ttem.name}</a>
                                                             </div>
                                                             :
                                                             <>
-                                                                {ttem.filetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                                {ttem.filetype === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                                                     ? <div>
                                                                         <a href={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="text-primary">
                                                                             <i className="bi bi-file-earmark-word"></i> {ttem.name}</a>
                                                                     </div>
                                                                     :
                                                                     <>
-                                                                {ttem.filetype == "image/png"
-                                                                    ? <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} style={{ maxWidth: "400px" }} />
-                                                                    :
-                                                                    <></>
-                                                                }
-                                                            </>
+                                                                        {ttem.filetype === "image/png"
+                                                                            ? <div className="container">
+                                                                                <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                            </div>
+                                                                            : <>
+                                                                                {ttem.filetype == "image/webp"
+                                                                                    ? <div className="container">
+                                                                                        <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                                    </div>
+                                                                                    :
+
+                                                                                    <>
+                                                                                        {ttem.filetype == "video/mp4"
+                                                                                            ? <div className="container">
+                                                                                                <p>{(ttem.name).split('.')[0]}</p>
+                                                                                                <video className="w-100" controls>
+                                                                                                    <source src={`${process.env.REACT_APP_IMG}/${ttem.filename}`}
+                                                                                                        type={ttem.filetype} />
+                                                                                                    Your browser does not support the video tag.
+                                                                                                </video>
+                                                                                            </div>
+                                                                                            :
+                                                                                            <>
+                                                                                                <p>ไม่สามารถอ่านไฟลได้</p>
+                                                                                            </>
+                                                                                        }
+                                                                                    </>
+                                                                                }
+                                                                            </>
+                                                                        }
+                                                                    </>
                                                                 }
                                                             </>
                                                         }
                                                     </>
                                                 }
 
-                                            </li>
+                                            </div>
 
                                         )}
-                                    </ul>
+
                                     </div>
                                 }
                                 {item.quiz.length > 0 &&

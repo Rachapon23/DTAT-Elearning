@@ -23,8 +23,8 @@ headers:{
 }
 });
 
-export const getmyCourseTeacher  = async(authtoken, id) =>
-await axios.get(process.env.REACT_APP_API+'/get-mycourse-teacher/'+id,
+export const getmyCourseTeacher  = async(authtoken) =>
+await axios.get(process.env.REACT_APP_API+'/get-mycourse-teacher',
 {
 headers:{
     authtoken,
@@ -41,10 +41,18 @@ headers:{
 });
 
 export const removeCourse = async(authtoken,params) => 
-    await axios.delete(process.env.REACT_APP_API+'/delete-courses/'+params,
-    {
+await axios.delete(process.env.REACT_APP_API+'/delete-courses/'+params,
+{
     headers:{
         authtoken,
     }
 });
 
+
+export const enablecourse  = async(authtoken,value) =>
+await axios.post(process.env.REACT_APP_API+'/enable-course/',value,
+{
+headers:{
+    authtoken,
+}
+});

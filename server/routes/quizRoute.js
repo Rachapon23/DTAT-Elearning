@@ -34,7 +34,7 @@ const {
 
 // teacher
 router.post('/quiz/create',createQuiz)
-router.get('/quiz/list-teacher/:id',listQuiz)
+router.get('/quiz/list-teacher',checkUser,listQuiz)
 router.get('/quiz/get-quiz/:id',getQuiz)
 router.delete('/quiz/remove-quiz/:params',remove)
 router.put("/quiz/update-quiz", updateQuiz);

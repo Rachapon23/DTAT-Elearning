@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { register } from "../../function/auth";
 import Swal from 'sweetalert2'
-
+import './auth.css'
 const Register = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState({
@@ -32,12 +32,13 @@ const Register = () => {
     e.preventDefault();
     // console.log(value); 
     if(value.password !== value.repassword ){
+
       Swal.fire(
         'รหัสผ่านไม่ตรงกัน',
         'รหัสผ่านไม่ตรงกัน',
         'error'
       )
-    }else{
+    } else {
       register(value)
       .then((res) => {
         console.log(res);
@@ -73,12 +74,11 @@ const Register = () => {
           )
         }
       });
-
     }
   };
   return (
-    <div className="container mt-5">
-      <div className="d-flex justify-content-center">
+    <div>
+      <nav className="navbar navbar-light  bg-nav">
         <div className="container">
           <div className="card">
             <div className="card-body">
@@ -181,7 +181,7 @@ const Register = () => {
                     สมัครสมาชิก
                   </button>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
