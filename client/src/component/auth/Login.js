@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import './auth.css'
 import { sendEmail } from "../../function/auth";
+import { checkRole } from "../../function/teacher/funcMiscellaneous";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Login = () => {
         sessionStorage.setItem("token", res.data.token);
         sessionStorage.setItem("firstname", res.data.Payload.user.fisrtname)
         sessionStorage.setItem("user_id", res.data.Payload.user.user_id)
-        sessionStorage.setItem("role", res.data.Payload.user.role)
+        // sessionStorage.setItem("role", res.data.Payload.user.role)
 
         roleBaseRedirect(res.data.Payload.user.role);
       })
@@ -55,15 +56,34 @@ const Login = () => {
 
   useEffect(() => {
 
-    if (sessionStorage.length != 0) {
-      if (sessionStorage.getItem("role") === "admin") {
+    console.log(!!sessionStorage.getItem('token'))
+    if(!!sessionStorage.getItem('token')){
+      checkRole(sessionStorage.getItem("token"))
+      .then(res => {
+        console.log(res)
+      if (res.data === "admin") {
         navigate("/admin/home");
-      } else if (sessionStorage.getItem("role") === "teacher") {
+      } else if (res.data === "teacher") {
         navigate("/teacher/home");
       } else {
         navigate("/student/home");
       }
+
+
+      }).catch(err => {
+        console.log(err)
+
+      })
     }
+    // if (sessionStorage.length != 0) {
+    //   if (sessionStorage.getItem("role") === "admin") {
+    //     navigate("/admin/home");
+    //   } else if (sessionStorage.getItem("role") === "teacher") {
+    //     navigate("/teacher/home");
+    //   } else {
+    //     navigate("/student/home");
+    //   }
+    // }
   }, [])
 
   const handleSendEmail = (e) => {
@@ -99,7 +119,6 @@ const Login = () => {
   return (
     <div className="">
       <nav className="navbar navbar-light  bg-nav">
-      {/* <nav className="navbar navbar-expand-md navbar-light bg-danger"> */}
         <div className="container">
           <a className="navbar-brand text-white brand" href="/">E-learning</a>
         </div>

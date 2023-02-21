@@ -13,8 +13,7 @@ const Listquiz = () => {
 
   const loadQuiz = () => {
     listQuiz(
-      sessionStorage.getItem("token"),
-      sessionStorage.getItem('user_id')
+      sessionStorage.getItem("token")
     )
       .then(res => {
         console.log(res.data)

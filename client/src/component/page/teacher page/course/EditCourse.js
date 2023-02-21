@@ -77,6 +77,7 @@ const EditCourse = () => {
             text: [],
             link: [],
             quiz: [],
+            file:[],
         }
         ])
     }
@@ -316,7 +317,7 @@ const EditCourse = () => {
                                         {course.image
                                             ?
                                             <div>
-                                                {file == '' &&
+                                                {file === '' &&
                                                     <div className="card">
                                                         <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="card-img-top" />
                                                     </div>
@@ -325,7 +326,7 @@ const EditCourse = () => {
                                                     <button className="btn text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                         <i className="bi bi-pencil-square text-warning"></i> อัปเดต
                                                     </button>
-                                                    {file == '' &&
+                                                    {file === '' &&
                                                         <button className="btn text-danger" type="button" onClick={deleteFornt}>
                                                             <i className="bi bi-trash text-danger"></i> ลบ
                                                         </button>
@@ -337,7 +338,7 @@ const EditCourse = () => {
                                                         <input type="file" className="form-control"
                                                             onChange={handleImg}
                                                         />
-                                                        <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 123px * 456px</p>
+                                                        <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 820px * 312px</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -347,7 +348,7 @@ const EditCourse = () => {
                                                     <input type="file" className="form-control"
                                                         onChange={handleImg}
                                                     />
-                                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 123px * 456px</p>
+                                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 820px * 312px</p>
                                                 </div>
                                             </div>
                                         }
@@ -491,8 +492,8 @@ const EditCourse = () => {
                                                                 :
 
                                                                 <div className="d-flex justify-content-between">
-                                                                    <p>{ttem.name}</p>
-                                                                    <p>{ttem.filename}</p>
+                                                                    <p className='size-file' >{ttem.name}</p>
+                                                                    {/* <p>{ttem.filename}</p> */}
                                                                     <button className="btn btn-outline-secondary"
                                                                         onClick={(e) => handleRemovefile(e, index, tdex)} type='Button'
                                                                     >

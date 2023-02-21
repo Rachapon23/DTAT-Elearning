@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-
+/* Multer  */
+const multer = require('multer')
 //middleware
 const {checkUser,checkAdmin,checkTeacher} = require('../middleware/middleward')
 
@@ -13,7 +14,24 @@ const {
     getTeacherByCourseId,
     resetPassword,
     checkToken,
+    checkRole,
+    getMyaccount,
+    uploadProfile,
+    updateProfile
 } = require('../controllers/userController')
+
+/* Multer  */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './public/uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, 'file-' + Date.now() + '.' +
+            file.originalname.split('.')[file.originalname.split('.').length - 1])
+    }
+})
+const upload = multer({ storage: storage }).single('file')
+/* Multer  */
 
 // สมัครสมาชิก
 router.post('/register',register)
@@ -32,6 +50,15 @@ router.post('/current-teacher',checkUser,checkTeacher,currentUser)
 router.post('/current-admin',checkUser,checkAdmin,currentUser)
 router.post('/get_teacher_by_course_id', getTeacherByCourseId)
 
+
+router.get('/check-role',
+checkUser,
+// checkTeacher,
+checkRole
+)
+router.get('/get-myaccount',checkUser,getMyaccount)
+router.post('/upload-profile',checkUser,upload,uploadProfile)
+router.post('/update-profile',checkUser,updateProfile)
 
 
 

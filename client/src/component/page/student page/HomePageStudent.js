@@ -42,7 +42,7 @@ const HomePageStudent = () => {
       <NavStudent />
       <div className='mx-4'>
         <div className="row mb-4 ">
-          <div className="col-md-9">
+          <div className="col-lg-9">
             <div className="bg-white p-4 mt-3 border">
               <label className="form-label mb-2">บทเรียนทั่วไป</label>
               <div className="">
@@ -54,12 +54,24 @@ const HomePageStudent = () => {
             <div className="bg-white p-4 borderl mt-3">
               <label className="form-labe mb-2">บทเรียนของฉัน</label>
               <div className="">
-                <Mycourse data={data} loadMycourse={loadMycourse} />
+           
+                  <div className="row">
+
+                    <div className="col-md-12">
+                      <div className="row">
+                        {data && data.map((item, index) =>(
+                          <Mycourse item={item} key={index} loadMycourse={loadMycourse} />
+                        )
+                        )}
+                      </div>
+                    </div>
+                  </div>
+               
               </div>
             </div>
 
           </div>
-          <div className="col-md-3">
+          <div className="col-lg-3">
             <div className="bg-white p-4 border mt-3">
               <label className="form-label mb-2">Search courses</label>
               <div className="">

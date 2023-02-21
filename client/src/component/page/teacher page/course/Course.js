@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import './course.css'
 import Swal from "sweetalert2";
 import Resizer from "react-image-file-resizer";
+import { useNavigate } from "react-router-dom";
 
 const Course = () => {
 
@@ -15,7 +16,7 @@ const Course = () => {
     const [dataquiz, setDataQuiz] = useState([]);
     const [room, setRoom] = useState([]);
     const [file, setFile] = useState('');
-
+    const navigate = useNavigate()
 
     const [nameCourse, setNameCourse] = useState
         ({
@@ -161,56 +162,7 @@ const Course = () => {
 
     const handdleSubmit = async (e) => {
         e.preventDefault();
-        console.log(valuetopic[0].file)
-        // if (!!!nameCourse.name) {
-        //     document.getElementById("nameCourse").focus({ focusVisible: true });
-        // }
-        // else if (!!!nameCourse.course_number) {
-        //     document.getElementById("course_number").focus({ focusVisible: true });
-        // }
-        // else if (!!!nameCourse.description) {
-        //     document.getElementById("description").focus({ focusVisible: true });
-        // }
-        // else if (!!!nameCourse.room) {
-        //     document.getElementById("room").focus({ focusVisible: true });
-        // }
-        // else if (valuetopic.length > 0) {
-        //     // console.log("for")
-        //     for (let i = 0; i < valuetopic.length; i++) {
-        //         // console.log("for 2")
-        //         if (!!!valuetopic[i].title) {
-        //             document.getElementById(`title${i}`).focus({ focusVisible: true });
-        //         }
-        //         else if (!!!valuetopic[i].description) {
-        //             document.getElementById(`description${i}`).focus({ focusVisible: true });
-        //         }
-        //         else if (valuetopic[i].link.length > 0) {
-        //             for (let j = 0; j < valuetopic[i].link.length; j++) {
-        //                 if (!!!valuetopic[i].link[j].name) {
-        //                     document.getElementById(`linkname${i}${j}`).focus({ focusVisible: true });
-        //                 } else if (!!!valuetopic[i].link[j].url) {
-        //                     document.getElementById(`linkurl${i}${j}`).focus({ focusVisible: true });
-        //                 }
-        //             }
-        //         }
-        //         else if (valuetopic[i].text.length > 0) {
-        //             for (let j = 0; j < valuetopic[i].text.length; j++) {
-        //                 if (!!!valuetopic[i].text[j].content) {
-        //                     document.getElementById(`text${i}${j}`).focus({ focusVisible: true });
-        //                 }
-        //             }
-        //         }
-        //         else if (valuetopic[i].quiz.length > 0) {
-        //             for (let j = 0; j < valuetopic[i].quiz.length; j++) {
-        //                 if (!!!valuetopic[i].quiz[j].quiz) {
-        //                     document.getElementById(`quiz${i}${j}`).focus({ focusVisible: true });
-        //                 }
-        //             }
-        //         }
 
-        //     }
-        // }
-        // else {
         await createCourse(sessionStorage.getItem("token")
             ,
             {
@@ -225,11 +177,7 @@ const Course = () => {
             if (file != '') {
                 await uploadImg(sessionStorage.getItem("token"), formData).then(res => {
                     console.log(res)
-                    // Toast.fire({
-                    //     icon: 'success',
-                    //     title: 'Your file has been deleted successfully'
-                    // })
-                    // window.location.reload(false);
+                   
                 }).catch(err => {
                     console.log(err)
                 })
@@ -256,7 +204,8 @@ const Course = () => {
                 icon: 'success',
                 title: 'Your file has been deleted successfully'
             })
-            window.location.reload(false);
+            // window.location.reload(false);
+            navigate('/teacher/get-course/'+res.data._id)
         }).catch(err => {
             console.log(err)
         })
@@ -312,7 +261,7 @@ const Course = () => {
                                 <label className="form-label  mt-3">รูปหน้าปก</label>
                                 <div className="">
                                     <input type="file" className="form-control" onChange={handleImg} />
-                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 123px * 456px</p>
+                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 820px * 312px</p>
                                 </div>
                             </div>
                         </div>
@@ -476,7 +425,8 @@ const Course = () => {
                                                                 <select
                                                                     id={`quiz${index}${tdex}`}
                                                                     onChange={(e) => {
-                                                                        ttem.quiz = JSON.parse(e.target.value)._id
+                                                                        ttem.quiz = JSON.parse(e.target.value).key
+                                                                        // console.log(e.target.value) 
                                                                         ttem.name = JSON.parse(e.target.value).name
 
                                                                         SetValueTopic([...valuetopic])

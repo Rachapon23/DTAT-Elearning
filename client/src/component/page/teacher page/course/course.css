@@ -20,9 +20,17 @@
     background-color: rgba(0, 0, 0, 0.2);  
   }
 
-  .size-150{
-    max-height: 150px;
+
+.size-pdf{
+  font-size: 16px;
+}
+@media screen and (max-width:414px) {
+  .size-pdf{
+    font-size: 11px;
   }
-  .size-200{
-    max-height: 200px;
+}
+@media screen and (max-width:428px) {
+  .size-file{
+    font-size: 9px;
   }
+}

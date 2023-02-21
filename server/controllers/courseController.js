@@ -236,8 +236,9 @@ exports.deleteMyCourse = async (req, res) => {
 
 exports.getMyCourseTeacher = async (req, res) => {
     try {
-        const { id } = req.params
-        const courses = await Coursee.find({ teacher: id }).populate("teacher", "-password").exec()
+        const { user_id } = req.user
+        // console.log(req.user)
+        const courses = await Coursee.find({ teacher: user_id }).populate("teacher", "-password").exec()
         res.send(courses)
         // res.send("ok")
     }
@@ -417,8 +418,25 @@ exports.deleteCourse = async (req, res) => {
 
             });
         }
+
+        for(let i = 0 ; i < course.topic.length ; i++){
+            for(let j = 0 ; j <course.topic[i].file.length ; j++ ){
+                console.log("name : ",course.topic[i].file[j].filename)
+                await fs.unlink("./public/uploads/" + course.topic[i].file[j].filename, (err) => {
+                            if (err) {
+                                console.log(err);
+                                res.status(400).send('err on delete file')
+                            } else {
+                                console.log("remove file Success");
+                            }
+            
+                        });
+            }
+        }
+
         const course_delete = await Coursee.findOneAndDelete({ _id: req.params.id }).exec()
         res.send(course_delete)
+
     } catch (err) {
         console.log(err)
         res.status(500).send('Server Error!!! on remove course')
@@ -525,5 +543,23 @@ exports.uploadfile = async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(500).send('Server Error!!! on upload img')
+    }
+}
+exports.enablecourse = async (req, res) => {
+    try {
+        const { id, enable  } = req.body;
+        console.log(id, enable)
+        
+
+        const update = await Coursee.findOneAndUpdate(
+            { _id: id },
+            { enabled: enable }
+        ).exec()
+
+        res.send(update)
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Server Error!!! on enablecourse')
     }
 }

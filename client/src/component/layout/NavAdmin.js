@@ -36,7 +36,7 @@ const NavAdmin = () => {
         <Navbar.Collapse className="justify-content-end">
 
           <Navbar.Text className="">
-            Signed in {sessionStorage.getItem("role")} as: 
+            Signed in as: 
           </Navbar.Text>
 
             <NavDropdown title={sessionStorage.getItem("firstname")} id="navbarScrollingDropdown">

@@ -17,8 +17,7 @@ const CoursesPageteacher = () => {
     }
 
     const fetchMyCourse = () => {
-        getmyCourseTeacher(sessionStorage.getItem("token"),
-            sessionStorage.getItem("user_id"))
+        getmyCourseTeacher(sessionStorage.getItem("token"))
             .then((response) => {
                 console.log(response)
                 setCourses(response.data)
@@ -53,35 +52,31 @@ const CoursesPageteacher = () => {
                 <div className='row mt-3'>
                     {
                         courses.map((course, index) => (
-                            // <div className="row p-3 bg-white border mt-3" key={index}
-                            // onClick={()=>nextToCourse(course._id)}
-                            // >
-                            //     <div className="col pt-3 pb-2">
-                            //        <h3 id='titleTopic'>{course.name}</h3>
-                            //         <p>{(course.description.substring(0, 200))}...</p>
-                            //         <p className="text-muted">ผู้สอน {course.teacher.firstname}</p>
-                            //     </div>
-                            // </div>
                             <div className="col-md-6 p-2" key={index}>
-                                {course.image
-                                     ? <div className="card back-public-2 shadow-sm back-public-black-2" onClick={() => nextToCourse(course._id)}>
-                                     <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="card-img-top size-150" />
+                                 <div className="card back-public-2 shadow-sm back-public-black-2" onClick={() => nextToCourse(course._id)}>
+                                     {course.image 
+                                     ?<img src={`${process.env.REACT_APP_IMG}/${course.image}`} className="card-img-top w-100" />
+                                        :<img src="/book-main-img-3.png" className="card-img-top w-100"/>
+                                        }
+                                     {/* <img src={`${process.env.REACT_APP_IMG}/${course.image}`} className="card-img-top w-100" /> */}
                                      <div className="card-body ">
-                                         <p id='' className="card-title mb-0">{course.name}</p>
+                                        <div className="d-flex justify-content-between">
+                                            <p className="card-title mb-0">{course.name}</p>
+                                            <div className="d-flex">
+                                              <p className="card-title mb-0">สถานะ :</p>  
+                                              {course.enabled
+                                              ?<p className="card-title text-success ms-2">เปิดใช้งาน</p>  
+                                            :<p className="card-title text-danger ms-2">ปิดการใช้งาน</p>  
+                                            }
+                                            </div>
+                                            
+                                        </div>
+                                         
                                          {/* <p id='text-p-5' className="card-text my-0">รายละเอียด : {course.description}</p> */}
                                          {/* <p id='text-p-6' className="card-text mt-1 "><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p> */}
                                      </div>
                                  </div>
-                                 : <div className="card back-public-2 shadow-sm back-public-black-2" onClick={() => nextToCourse(course._id)}>
-                                     <div className="img-fact"></div>
-                                     <div className="card-body ">
-                                         <p id='' className="card-title mb-0">{course.name}</p>
-                                         {/* <p id='text-p-5' className="card-text my-0">รายละเอียด : {course.description}</p> */}
-                                         {/* <p id='text-p-6' className="card-text mt-1 "><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p> */}
-                                     </div>
-                                 </div>
-
-                                }
+                                
                             </div>))
                     } </div>
             </div>

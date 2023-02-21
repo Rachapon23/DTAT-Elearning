@@ -21,7 +21,8 @@ const {
     createRoom,
     uploadimg,
     updateimg,
-    uploadfile
+    uploadfile,
+    enablecourse
 
 } = require("../controllers/courseController");
 
@@ -39,6 +40,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single('file')
 /* Multer  */
 
+const {checkUser,checkAdmin,checkTeacher} = require('../middleware/middleward')
 
 
 
@@ -49,10 +51,11 @@ router.post("/upload-file",upload,uploadfile);
 
 
 router.post("/create-course", createCourse);
+router.post("/enable-course", enablecourse);
 router.put("/update-course", updateCourse);
 router.get("/list-courses", listCourses);
 router.delete("/delete-courses/:id", deleteCourse);
-router.get("/get-mycourse-teacher/:id", getMyCourseTeacher);
+router.get("/get-mycourse-teacher",checkUser,getMyCourseTeacher);
 router.get("/list-room", getRoom);
 // router.post("/create-room", createRoom);
 

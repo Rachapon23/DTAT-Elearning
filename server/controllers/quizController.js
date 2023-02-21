@@ -90,9 +90,9 @@ exports.createQuiz = async (req, res) => {
 }
 exports.listQuiz = async (req, res) => {
     try {
-        const {id} = req.params
+        const {user_id} = req.user
 
-        const quizzs = await Quize.find({teacher:id}).exec()
+        const quizzs = await Quize.find({teacher:user_id}).exec()
       
         console.log(quizzs)
         let payload = [];

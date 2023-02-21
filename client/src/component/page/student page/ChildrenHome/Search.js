@@ -48,11 +48,11 @@ const Search = ({ loadMycourse }) => {
         timer: 3000,
         timerProgressBar: true,
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-      })
-      
+    })
+
     const handleAddcourse = (id) => {
         // e.preventDefault();
 
@@ -82,7 +82,7 @@ const Search = ({ loadMycourse }) => {
                             Toast.fire({
                                 icon: 'success',
                                 title: 'Signed in successfully'
-                              })
+                            })
                         }).catch(err => {
                             if (err.response.data == "Password Invalid!!!"
                             ) {
@@ -93,7 +93,7 @@ const Search = ({ loadMycourse }) => {
                                     confirmButtonColor: '#0d6efd',
                                     confirmButtonText: 'try again'
                                 })
-                            }else if(err.response.data == "course already exist"){
+                            } else if (err.response.data == "course already exist") {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Oops...',
@@ -101,7 +101,7 @@ const Search = ({ loadMycourse }) => {
                                     confirmButtonColor: '#0d6efd',
                                     confirmButtonText: 'try again'
                                 })
-                            }else{
+                            } else {
                                 console.log(err)
                             }
 
@@ -140,23 +140,35 @@ const Search = ({ loadMycourse }) => {
                             <p className='mt-2'>ไม่พบคอร์สเรียนที่ค้นหา</p>
                         }
                     </>
-                    : <> <div className="row">
+                    : <> <div className="row mt-3">
                         {data && data.map((course, index) => (
-                            <div key={index} className="search mt-2 p-3">
-                                <h5 className='mb-2'>วิชา : {course.name}</h5>
-                                <div className="" >
-                                    <p className=" text-muted mb-0">รหัสวิชา :  {course.course_number} </p>
-                                    <p className=" text-muted">ผู้สอน : {course.teacher.firstname}</p>
-                                </div>
-                                <div className="mt-3">
-                                    <button className="btn btn-primary btn-sm"
-                                        onClick={() => handleAddcourse(course._id)}
-                                    >ลงทะเบียน</button>
-                                </div>
 
+                            <div className="" key={index}>
+                                {course.enabled &&
+                                    <div className="">
+                                        <div className="card text-white bg-secondary p-0">
+                                            <img src={`${process.env.REACT_APP_IMG}/${course.image}`} className="card-img w-100" />
+                                            <div className="card-img-overlay overlay">
+                                                {/* <p className="card-title fw-bold">วิชา : {course.name}</p> */}
+                                                {course.name.length > 55
+                                                    ? <p className="card-title fw-bold size-title">{(course.name).substring(0, 55)} ...</p>
+                                                    : <p className="card-title fw-bold size-title">{(course.name)}</p>
+                                                }
+                                                <p className="mb-0">รหัสวิชา :  {course.course_number} </p>
+                                                {/* <p className="">ผู้สอน : {course.teacher.firstname}</p> */}
+                                            </div>
+                                        </div>
+                                        <div className="d-grid mb-2">
+                                            <button className="btn btn-outline-secondary btn-sm"
+                                                onClick={() => handleAddcourse(course._id)}
+                                            >ลงทะเบียน</button>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         ))
-                        }</div>
+                        }
+                    </div>
                     </>
                 }
             </div>
