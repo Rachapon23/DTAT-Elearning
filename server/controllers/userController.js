@@ -9,18 +9,25 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const UserValiation = require("../validation/userValidation")
 
 //สมัครสมาชิก
-exports.register = async (req, res) => {
-  try {
-    const validated_req = await UserValiation.registerValidate(req)
-    if (validated_req === null) return res.status(400).send("invalid register request");
 
-    const {
-      employee_ID,
-      password,
-      department_ID,
-      firstname,
-      lastname,
-    } = validated_req.body
+exports.register = async(req,res)=>{
+    try{
+        const validated_result = await UserValiation.registerValidate(req)
+        if(!validated_result.valid) return res.status(400).send(validated_result);
+
+        const {
+            employee_ID,
+            password,
+            department_ID,
+            firstname,
+            lastname,
+        } = validated_result.data.body
+
+        //ตรวจสอบว่าเป็นสมาชิกหรือยัง
+        let user = await User.findOne({employee_ID})
+        if(user){
+            return res.status(400).send("User already");
+        }
 
     //ตรวจสอบว่าเป็นสมาชิกหรือยัง
     let user = await User.findOne({ employee_ID })
@@ -52,19 +59,41 @@ exports.register = async (req, res) => {
 
 //เข้าสู่ระบบ
 exports.login = async (req, res) => {
-  try {
-    const validated_req = await UserValiation.loginValidate(req)
-    if (validated_req === null) return res.status(400).send("invalid login request");
+    try {
+      const validated_result = await UserValiation.loginValidate(req)
+      if(!validated_result.valid) return res.status(400).send(validated_result);
 
-    const { employee_ID, password } = validated_req.body;
-    var user = await User.findOneAndUpdate({ employee_ID }, { new: true });
-    if (user && user.enabled) {
+      const { employee_ID, password } = validated_result.data.body;
+      var user = await User.findOneAndUpdate({ employee_ID }, { new: true });
+      if (user && user.enabled) {
 
-      // Check password
-      const isMatch = await bcrypt.compare(password, user.password);
+        // Check password
+        const isMatch = await bcrypt.compare(password, user.password);
+  
+        if (!isMatch) {
+          return res.status(400).send("Password Invalid!!!");
+        }
 
-      if (!isMatch) {
-        return res.status(400).send("Password Invalid!!!");
+        // user_id = user._id.toString();
+        const Payload = {
+          user: {
+            fisrtname: user.firstname,
+            role: user.role,
+            user_id: user._id,
+          },
+        };
+
+        // Generate Token Time_limit( 1 day )
+        jwt.sign(Payload, "jwtSecret", { expiresIn: '1d' }, (err, token) => {
+          if (err) throw err;
+          res.json({ token, Payload });
+        });
+      } 
+      else if(user && user.enabled === false) {
+        return res.status(400).send("User not active!!! Please contact admin");
+      }
+      else {
+        return res.status(400).send("User not found!!!");
       }
 
       // user_id = user._id.toString();
@@ -131,28 +160,18 @@ exports.getTeacherByCourseId = async (req, res) => {
 };
 
 exports.sendEmail = async (req, res) => {
-  try {
-    const validated_req = await UserValiation.sendEmailValidate(req)
-    if (validated_req === null) return res.status(400).send("invalid send email request");
 
-    const { email } = req.body
-    const transporter = nodeMailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'densoeleaning@gmail.com',
-        pass: 'hqqabmpdjxmqsevf'
-      }
-    });
+    try {
+      console.log(req)
+      const validated_result = await UserValiation.sendEmailValidate(req)
+      if(!validated_result.valid) return res.status(400).send(validated_result);
 
-    const token = jwt.sign({ email: email }, "jwtSecret", { expiresIn: '5m' });
-    const reset_password_data = await ResetPassword.findOne({ email: email }).exec()
-
-    let isTokenExpire = true;
-    if (reset_password_data) {
-      jwt.verify(reset_password_data.token, "jwtSecret", (err, _) => {
-        if (!err) {
-          isTokenExpire = false;
-          return res.status(500).send("cannot reset password because previous token is not expire");
+      const {email} = validated_result.data.body
+      const transporter = nodeMailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'densoeleaning@gmail.com',
+          pass: 'hqqabmpdjxmqsevf'
         }
       });
       // return res.status(500).send("cannot reset password because previous token is not expire");

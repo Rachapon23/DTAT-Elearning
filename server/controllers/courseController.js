@@ -5,9 +5,12 @@ const Coursee = require('../models/course')
 const Layout = require('../models/layout')
 const Calendar = require('../models/calendar')
 const User = require('../models/userModel')
+const CourseValidation = require("../validation/courseValidation")
 
 exports.createCourse = async (req, res) => {
     try {
+        // await CourseValidation.createCourseValidate(req)
+
         const { head, body } = req.body
         if (!head.password) {
             const status = "public"
