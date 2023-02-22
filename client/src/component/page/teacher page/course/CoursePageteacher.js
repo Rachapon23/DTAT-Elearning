@@ -9,16 +9,6 @@ import { Switch } from 'antd';
 // import Parser from 'html-react-parser';
 import { useNavigate } from 'react-router-dom'
 import { getCourse, removeCourse,enablecourse } from "../../../../function/teacher/funcCourse";
-import { useParams, useLocation, Link} from "react-router-dom";
-import NavTeacher from "../../../layout/NavTeacher";
-import './course.css'
-import Swal from "sweetalert2";
-import { Switch } from 'antd';
-// import { Link } from "react-router-dom";
-// import Parser from 'html-react-parser';
-import { useNavigate } from 'react-router-dom'
-import { getCourse, removeCourse,enablecourse } from "../../../../function/teacher/funcCourse";
-
 
 
 const CoursePageteacher = () => {

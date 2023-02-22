@@ -78,117 +78,124 @@ const Register = () => {
   };
   return (
     <div>
-      <nav className="navbar navbar-light  bg-nav"/>
-
+      <nav className="navbar navbar-light  bg-nav">
         <div className="container">
+          <a className="navbar-brand text-white brand" href="/"> E-learning</a>
+        </div>
+      </nav>
 
-          <div className="card">
-            <div className="card-body">
-              <h3 className="text-center my-4">สมัครสมาชิก</h3>
-              
-              <form onSubmit={handleSubmit}>
-
-                <div className="row">
-                  <div className="form-group col-md-6">
-                    <label className="form-label">รหัสพนักงาน</label>
-                    <input
-                      className={
-                        error.employee_ID && error.employee_ID.length !== 0 ? "form-control is-invalid" : "form-control"
-                      }
-                      type="text"
-                      name="employee_ID"
-                      onChange={handleChange}
-                    />
-                    <div class="invalid-feedback">
-                      {error.employee_ID}
+        <div className="black-g">
+          <div className="container mt-5">
+            <div className="d-flex justify-content-center">
+            <div className="container">
+              <div className="card">
+                <div className="card-body p-5">
+                  <h3 className="text-center my-4">สมัครสมาชิก</h3>
+                  <form onSubmit={handleSubmit}>
+                    <div className="row">
+                      <div className="form-group col-md-6 mt-3">
+                        <label className="form-label">รหัสพนักงาน</label>
+                        <input
+                          className={
+                            error.employee_ID && error.employee_ID.length !== 0 ? "form-control is-invalid" : "form-control"
+                          }
+                          type="text"
+                          name="employee_ID"
+                          onChange={handleChange}
+                        />
+                        <div class="invalid-feedback">
+                          {error.employee_ID}
+                        </div>
+                      </div>
+                      <div className="form-group col-md-6  mt-3">
+                        <label className="form-label">รหัสแผนก</label>
+                        <input
+                          className={
+                            error.department_ID && error.department_ID.length !== 0 ? "form-control is-invalid" : "form-control"
+                          }
+                          type="text"
+                          name="department_ID"
+                          onChange={handleChange}
+                        />
+                        <div class="invalid-feedback">
+                          {error.department_ID}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label className="form-label">รหัสแผนก</label>
-                    <input
-                      className={
-                        error.department_ID && error.department_ID.length !== 0 ? "form-control is-invalid" : "form-control"
-                      }
-                      type="text"
-                      name="department_ID"
-                      onChange={handleChange}
-                    />
-                    <div class="invalid-feedback">
-                      {error.department_ID}
+                    <div className="row">
+                      <div className="form-group col-md-6  mt-3">
+                        <label className="form-label">รหัสผ่าน</label>
+                        <input
+                          className={
+                            error.password && error.password.length !== 0 ? "form-control is-invalid" : "form-control"
+                          }
+                          type="text"
+                          name="password"
+                          onChange={handleChange}
+                        />
+                        <div class="invalid-feedback">
+                          {error.password}
+                        </div>
+                      </div>
+                      <div className="form-group col-md-6  mt-3">
+                        <label className="form-label">ยืนยันรหัสผ่าน</label>
+                        <input
+                          className={
+                            error.repassword && error.repassword.length !== 0 ? "form-control is-invalid" : "form-control"
+                          }
+                          type="text"
+                          name="repassword"
+                          onChange={handleChange}
+                        />
+                        <div class="invalid-feedback">
+                          {error.repassword}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="form-group col-md-6">
-                    <label className="form-label">รหัสผ่าน</label>
-                    <input
-                      className={
-                        error.password && error.password.length !== 0 ? "form-control is-invalid" : "form-control"
-                      }
-                      type="text"
-                      name="password"
-                      onChange={handleChange}
-                    />
-                    <div class="invalid-feedback">
-                      {error.password}
+                    <div className="row">
+                      <div className="form-group col-md-6  mt-3">
+                        <label className="form-label">ชื่อ</label>
+                        <input
+                          className={
+                            error.firstname && error.firstname.length !== 0 ? "form-control is-invalid" : "form-control"
+                          }
+                          type="text"
+                          name="firstname"
+                          onChange={handleChange}
+                        />
+                        <div class="invalid-feedback">
+                          {error.firstname}
+                        </div>
+                      </div>
+                      <div className="form-group col-md-6  mt-3">
+                        <label className="form-label">นามสกุล</label>
+                        <input
+                          className={
+                            error.lastname && error.lastname.length !== 0 ? "form-control is-invalid" : "form-control"
+                          }
+                          type="text"
+                          name="lastname"
+                          onChange={handleChange}
+                        />
+                        <div class="invalid-feedback">
+                          {error.lastname}
+                        </div>
+                      </div>
+                      
                     </div>
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label className="form-label">ยืนยันรหัสผ่าน</label>
-                    <input
-                      className={
-                        error.repassword && error.repassword.length !== 0 ? "form-control is-invalid" : "form-control"
-                      }
-                      type="text"
-                      name="repassword"
-                      onChange={handleChange}
-                    />
-                    <div class="invalid-feedback">
-                      {error.repassword}
+                    <br />
+                    <div className="d-flex justify-content-center">
+                      <button type="submit" className="btn btn-outline-success">
+                        สมัครสมาชิก
+                      </button>
                     </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="form-group col-md-6">
-                    <label className="form-label">ชื่อ</label>
-                    <input
-                      className={
-                        error.firstname && error.firstname.length !== 0 ? "form-control is-invalid" : "form-control"
-                      }
-                      type="text"
-                      name="firstname"
-                      onChange={handleChange}
-                    />
-                    <div class="invalid-feedback">
-                      {error.firstname}
-                    </div>
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label className="form-label">นามสกุล</label>
-                    <input
-                      className={
-                        error.lastname && error.lastname.length !== 0 ? "form-control is-invalid" : "form-control"
-                      }
-                      type="text"
-                      name="lastname"
-                      onChange={handleChange}
-                    />
-                    <div class="invalid-feedback">
-                      {error.lastname}
-                    </div>
-                  </div>
-                  
-                </div>
-                <br />
-                <div className="d-flex justify-content-center">
-                  <button type="submit" className="btn btn-outline-success">
-                    สมัครสมาชิก
-                  </button>
-                </div>
-                </form>
+                    </form>
+              </div>
+            </div>
+            </div>
+            </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };
