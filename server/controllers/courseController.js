@@ -483,6 +483,7 @@ exports.uploadimg = async (req, res) => {
         res.status(500).send('Server Error!!! on upload img')
     }
 }
+
 exports.updateimg = async (req, res) => {
     try {
         const id = req.body.id;

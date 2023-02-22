@@ -9,6 +9,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const UserValiation = require("../validation/userValidation")
 
 //สมัครสมาชิก
+
 exports.register = async(req,res)=>{
     try{
         const validated_result = await UserValiation.registerValidate(req)
@@ -146,7 +147,6 @@ exports.sendEmail = async (req, res) => {
           pass: 'hqqabmpdjxmqsevf'
         }
       });
-
       const token = jwt.sign({email: email}, "jwtSecret", { expiresIn: '5m' });
       const reset_password_data = await ResetPassword.findOne({email: email}).exec()
 
@@ -158,21 +158,21 @@ exports.sendEmail = async (req, res) => {
             return res.status(500).send("cannot reset password because previous token is not expire");
           }
         });
-        // return res.status(500).send("cannot reset password because previous token is not expire");
-      }
+      // return res.status(500).send("cannot reset password because previous token is not expire");
+    }
 
+    if (isTokenExpire && reset_password_data) {
+      await ResetPassword.findOneAndDelete({ email: email }).exec()
+    }
 
-      if (isTokenExpire && reset_password_data) {
-        await ResetPassword.findOneAndDelete({ email: email }).exec()
-      }
-
-      if (isTokenExpire) {
+    if (isTokenExpire) {
       const reset_password_request = new ResetPassword({
         email: email,
         token: token,
         is_used: false
       })
       await reset_password_request.save()
+
 
       var mailOptions = {
         from: 'densoeleaning@gmail.com',

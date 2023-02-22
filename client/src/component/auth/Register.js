@@ -32,6 +32,7 @@ const Register = () => {
     e.preventDefault();
     // console.log(value); 
     if(value.password !== value.repassword ){
+
       Swal.fire(
         'รหัสผ่านไม่ตรงกัน',
         'รหัสผ่านไม่ตรงกัน',

@@ -1,6 +1,5 @@
 import React from 'react'
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { useParams, useLocation, Link } from "react-router-dom";
 import NavTeacher from "../../../layout/NavTeacher";
 import './course.css'
@@ -10,17 +9,17 @@ import { Switch } from 'antd';
 // import Parser from 'html-react-parser';
 import { useNavigate } from 'react-router-dom'
 import { getCourse, removeCourse,enablecourse } from "../../../../function/teacher/funcCourse";
-
-=======
 import { useParams, useLocation, Link} from "react-router-dom";
 import NavTeacher from "../../../layout/NavTeacher";
 import './course.css'
 import Swal from "sweetalert2";
+import { Switch } from 'antd';
 // import { Link } from "react-router-dom";
 // import Parser from 'html-react-parser';
 import { useNavigate } from 'react-router-dom'
-import { getCourse, removeCourse } from "../../../../function/teacher/funcCourse";
->>>>>>> 7ba2869915dc0d2479dc6c0ff64a31449b89fd8a
+import { getCourse, removeCourse,enablecourse } from "../../../../function/teacher/funcCourse";
+
+
 
 const CoursePageteacher = () => {
     const { id } = useParams();
@@ -28,11 +27,8 @@ const CoursePageteacher = () => {
     const [topic, setTopic] = useState();
     const [dataQuiz, setDataQuiz] = useState([])
     const navigate = useNavigate()
-<<<<<<< HEAD
     const { pathname } = useLocation()
-=======
-    const {pathname} = useLocation()
->>>>>>> 7ba2869915dc0d2479dc6c0ff64a31449b89fd8a
+
 
     const fetchCourse = () => {
         getCourse(sessionStorage.getItem("token"), id)
@@ -104,7 +100,6 @@ const CoursePageteacher = () => {
         })
 
     }
-<<<<<<< HEAD
 
     const onChangeEnable = (checked) => {
         console.log(`switch to ${checked}`);
@@ -121,8 +116,7 @@ const CoursePageteacher = () => {
         })
     };
 
-=======
->>>>>>> 7ba2869915dc0d2479dc6c0ff64a31449b89fd8a
+
     return (
         <div>
             <NavTeacher />
@@ -130,7 +124,6 @@ const CoursePageteacher = () => {
             <div className="container ">
                 {/* {JSON.stringify(course_id)} */}
                 {course &&
-<<<<<<< HEAD
                     <>
                         <div className="d-flex justify-content-end mt-4">
                             <label className='form-label me-3'>สถานะเปิดใช้งาน</label>
@@ -162,24 +155,6 @@ const CoursePageteacher = () => {
                                         }
                                     </div>
                                 </div>
-=======
-
-                    <>
-                        {course.image
-                            ? <div className="card text-white mt-3">
-                                <img src={`${process.env.REACT_APP_IMG}/${course.image}`} width="100%" className="card-img" />
-                                <div className="card-img-overlay bg-body-course-t p-5">
-                                    <h3 className="card-title">{course.name}</h3>
-                                    <p className="card-text">รายละเอียด : {course.description}</p>
-                                    <p className="card-text">ผู้สอน : {course.teacher.firstname}</p>
-                                </div>
-                            </div>
-                            :
-                            <div className="card mt-3 p-5 alert-primary text-dark">
-                                <h3 className="card-title">{course.name}</h3>
-                                <p className="card-text">รายละเอียด : {course.description}</p>
-                                <p className="card-text">ผู้สอน : {course.teacher.firstname}</p>
->>>>>>> 7ba2869915dc0d2479dc6c0ff64a31449b89fd8a
                             </div>
                         }
                     </>
@@ -187,25 +162,16 @@ const CoursePageteacher = () => {
                 <div className="border bg-white my-3 ">
                     {topic && topic.map((item, index) => (
                         <div key={index} className="px-5 mt-3">
-<<<<<<< HEAD
+
                             <h5 id="titleTopic" className="fw-bold">{item.title}</h5>
                             <div className="">
                                 <p className="fs-6">{item.description}</p>
-=======
-                            <h3 id="titleTopic">{item.title}</h3>
-                            <div className="px-3">
-                                <p className="">{item.description}</p>
->>>>>>> 7ba2869915dc0d2479dc6c0ff64a31449b89fd8a
+
 
                                 {item.text.length > 0 &&
                                     <div className=""><ul>
                                         {item.text.map((ttem, tdex) =>
-
-<<<<<<< HEAD
                                             <li className="fs-6" key={tdex}>
-=======
-                                            <li key={tdex}>
->>>>>>> 7ba2869915dc0d2479dc6c0ff64a31449b89fd8a
                                                 {ttem.content}
                                             </li>
 
@@ -218,18 +184,13 @@ const CoursePageteacher = () => {
                                         {item.link.map((ttem, tdex) =>
 
                                             <li key={tdex}>
-<<<<<<< HEAD
                                                 <a className='text-info' href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
-=======
-                                                <a href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
->>>>>>> 7ba2869915dc0d2479dc6c0ff64a31449b89fd8a
                                             </li>
 
                                         )}
                                     </ul>
                                     </div>
                                 }
-<<<<<<< HEAD
                                 {item.file.length > 0 &&
                                     <div className="">
 
@@ -298,18 +259,13 @@ const CoursePageteacher = () => {
 
                                     </div>
                                 }
-=======
->>>>>>> 7ba2869915dc0d2479dc6c0ff64a31449b89fd8a
+
                                 {item.quiz.length > 0 &&
                                     <div className=""><ul>
                                         {item.quiz.map((ttem, tdex) =>
 
                                             <li key={tdex}>
-<<<<<<< HEAD
                                                 <Link className="text-success" to={`/student/test/` + ttem.quiz} state={{ path: pathname }}>
-=======
-                                                <Link className="text-success" to={`/student/test/` + ttem.quiz} state={{path: pathname}}>
->>>>>>> 7ba2869915dc0d2479dc6c0ff64a31449b89fd8a
                                                     <i className="bi bi-clipboard2-check"></i>&nbsp;{ttem.name}
                                                 </Link>
                                             </li>

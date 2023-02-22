@@ -87,6 +87,7 @@ const Course = () => {
         )
         setNextState([...nextState])
     }
+
     const handdleAddquiz = (e, index) => {
         e.preventDefault();
         valuetopic[index].quiz.push(
@@ -300,6 +301,7 @@ const Course = () => {
                 })
                 // window.location.reload(false);
                 navigate('/teacher/get-course/'+res.data._id)
+                
             }).catch(err => {
                 console.log(err)
             })
@@ -582,6 +584,43 @@ const Course = () => {
                                             )}
                                         </ul>
                                     </div>
+                                    <div className="d-flex justify-content-between mb-0 mt-3" >
+                                        <p className="">File</p>
+                                        <button className="btn h4 text-primary mb-0"
+                                            type='Button' onClick={(e) => handdleAddfile(e, index)}
+                                        >+</button>
+                                    </div>
+                                    <hr className="mt-0" />
+
+                                    <div className="mt-2">
+                                        <ul>
+
+                                            {item.file.map((ttem, tdex) =>
+                                                <li key={tdex} className="mt-3">
+                                                    <div className="">
+                                                        <div className="input-group mb-2">
+                                                            <input type="file" className="form-control" placeholder="name"
+                                                                // id={`linkname${index}${tdex}`}
+                                                                onChange={(e) => {
+                                                                    ttem.name = e.target.files[0].name
+                                                                    ttem.filetype = e.target.files[0].type
+                                                                    ttem.file = e.target.files[0]
+                                                                    // ttem.name = e.target.value
+                                                                    SetValueTopic([...valuetopic])
+                                                                }}
+                                                            />
+                                                            <button className="btn btn-outline-secondary"
+                                                                onClick={(e) => handleRemoveFile(e, index, tdex)} type='Button'
+                                                            >
+                                                                <i className="bi bi-trash"></i>
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </div>
 
                                     <div className="d-flex justify-content-between mb-0 mt-3" >
                                         <p className="">แบบทดสอบ</p>
@@ -598,7 +637,7 @@ const Course = () => {
                                             </div>
                                         }
                                         <ul>
-                                            {item.quiz.map((ttem, tdex) =>
+                                            {item.quiz.map((ttem, tdex) => 
                                                 <div key={tdex} className="mt-2">
                                                     <div>
                                                         <li>
