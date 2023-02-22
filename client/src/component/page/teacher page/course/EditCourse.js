@@ -343,7 +343,6 @@ const EditCourse = () => {
         setFile(e.target.files[0])
     }
 
-
     return (
 
         <div>

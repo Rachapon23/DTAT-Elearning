@@ -9,7 +9,6 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const UserValiation = require("../validation/userValidation")
 
 //สมัครสมาชิก
-
 exports.register = async(req,res)=>{
     try{
         const validated_result = await UserValiation.registerValidate(req)

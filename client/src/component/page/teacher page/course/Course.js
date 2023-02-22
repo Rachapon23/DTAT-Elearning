@@ -87,7 +87,6 @@ const Course = () => {
         )
         setNextState([...nextState])
     }
-
     const handdleAddquiz = (e, index) => {
         e.preventDefault();
         valuetopic[index].quiz.push(
