@@ -147,18 +147,27 @@ exports.sendEmail = async (req, res) => {
           pass: 'hqqabmpdjxmqsevf'
         }
       });
-      // return res.status(500).send("cannot reset password because previous token is not expire");
 
-    const token = jwt.sign({email: email}, "jwtSecret", { expiresIn: '5m' });
-    const reset_password_data = await ResetPassword.findOne({email: email}).exec()
+      const token = jwt.sign({email: email}, "jwtSecret", { expiresIn: '5m' });
+      const reset_password_data = await ResetPassword.findOne({email: email}).exec()
 
-    let isTokenExpire = true;
+      let isTokenExpire = true;
+      if(reset_password_data) {
+        jwt.verify(reset_password_data.token,"jwtSecret", (err, _) => {
+          if (!err) {
+            isTokenExpire = false;
+            return res.status(500).send("cannot reset password because previous token is not expire");
+          }
+        });
+        // return res.status(500).send("cannot reset password because previous token is not expire");
+      }
 
-    if (isTokenExpire && reset_password_data) {
-      await ResetPassword.findOneAndDelete({ email: email }).exec()
-    }
 
-    if (isTokenExpire) {
+      if (isTokenExpire && reset_password_data) {
+        await ResetPassword.findOneAndDelete({ email: email }).exec()
+      }
+
+      if (isTokenExpire) {
       const reset_password_request = new ResetPassword({
         email: email,
         token: token,
