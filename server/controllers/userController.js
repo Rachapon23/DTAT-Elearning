@@ -148,7 +148,11 @@ exports.sendEmail = async (req, res) => {
         }
       });
       // return res.status(500).send("cannot reset password because previous token is not expire");
-    }
+
+    const token = jwt.sign({email: email}, "jwtSecret", { expiresIn: '5m' });
+    const reset_password_data = await ResetPassword.findOne({email: email}).exec()
+
+    let isTokenExpire = true;
 
     if (isTokenExpire && reset_password_data) {
       await ResetPassword.findOneAndDelete({ email: email }).exec()
@@ -175,7 +179,7 @@ exports.sendEmail = async (req, res) => {
                 `
       };
 
-      await transporter.sendMail(mailOptions, function (error, info) {
+      transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
         } else {
