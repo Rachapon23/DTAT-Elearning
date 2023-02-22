@@ -18,6 +18,7 @@ const CoursesPageteacher = () => {
 
     const fetchMyCourse = () => {
         getmyCourseTeacher(sessionStorage.getItem("token"))
+
             .then((response) => {
                 console.log(response)
                 setCourses(response.data)
@@ -71,12 +72,10 @@ const CoursesPageteacher = () => {
                                             </div>
                                             
                                         </div>
-                                         
                                          {/* <p id='text-p-5' className="card-text my-0">รายละเอียด : {course.description}</p> */}
                                          {/* <p id='text-p-6' className="card-text mt-1 "><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p> */}
                                      </div>
                                  </div>
-                                
                             </div>))
                     } </div>
             </div>

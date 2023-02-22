@@ -48,26 +48,27 @@ exports.getAccessNumber = async(req, res) => {
         const examiners = await Examiner.find({examiner_id: examiner_id, quiz: quiz}).exec()
         if(examiners.length === 0) {
             const quiz_access_number = await Quiz.findOne({_id: quiz}).exec()
+            // console.log("qan -> ",quiz_access_number)
             return res.send({
                 quiz_active: true,
                 access_number: 0, 
-                maximum_access: quiz_access_number.access_number,
+                maximum_access: quiz_access_number.attemp,
             })
         }
         else {
             const quiz_access_number = await Quiz.findOne({_id: quiz}).exec()
-            console.log(quiz_access_number)
-            if(examiners.length < quiz_access_number.access_number) {
+            // console.log(quiz_access_number)s
+            if(examiners.length < quiz_access_number.attemp) {
                 return res.send({
                     quiz_active: true,
                     access_number: examiners.length, 
-                    maximum_access: quiz_access_number.access_number,
+                    maximum_access: quiz_access_number.attemp,
                 })
             }
             return res.send({
                 quiz_active: false,
                 access_number: examiners.length, 
-                maximum_access: quiz_access_number.access_number,
+                maximum_access: quiz_access_number.attemp,
             })
         }
         

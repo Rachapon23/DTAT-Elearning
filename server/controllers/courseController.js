@@ -9,9 +9,11 @@ const CourseValidation = require("../validation/courseValidation")
 
 exports.createCourse = async (req, res) => {
     try {
-        // await CourseValidation.createCourseValidate(req)
+        const validated_result = await CourseValidation.createCourseValidate(req);
+        if(!validated_result.valid) return res.status(400).send(validated_result);
+        
 
-        const { head, body } = req.body
+        const { head, body } = validated_result.data.body
         if (!head.password) {
             const status = "public"
             const course = new Coursee(
@@ -21,7 +23,6 @@ exports.createCourse = async (req, res) => {
                     course_number: head.course_number,
                     password: head.password,
                     teacher: head.teacher,
-                    room: head.room,
                     status: status,
                     topic: body,
 

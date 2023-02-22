@@ -29,27 +29,21 @@ exports.register = async(req,res)=>{
             return res.status(400).send("User already");
         }
 
-    //ตรวจสอบว่าเป็นสมาชิกหรือยัง
-    let user = await User.findOne({ employee_ID })
-    if (user) {
-      return res.status(400).send("User already");
-    }
+        user = new User({
+          employee_ID,
+          password,
+          department_ID,
+          firstname,
+          lastname,
+        });
 
-    user = new User({
-      employee_ID,
-      password,
-      department_ID,
-      firstname,
-      lastname,
-    });
+        // Encrypt password
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
 
-    // Encrypt password
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-
-    //register
-    await user.save();
-    res.send('register Success')
+        //register
+        await user.save();
+        res.send('register Success')
 
   } catch (err) {
     console.log(err)
@@ -95,29 +89,8 @@ exports.login = async (req, res) => {
       else {
         return res.status(400).send("User not found!!!");
       }
-
-      // user_id = user._id.toString();
-      const Payload = {
-        user: {
-          fisrtname: user.firstname,
-          role: user.role,
-          user_id: user._id,
-        },
-      };
-
-      // Generate Token Time_limit( 1 day )
-      jwt.sign(Payload, "jwtSecret", { expiresIn: '1d' }, (err, token) => {
-        if (err) throw err;
-        res.json({ token, Payload });
-      });
-    }
-    else if (user.enabled === false) {
-      return res.status(400).send("User not active!!! Please contact admin");
-    }
-    else {
-      return res.status(400).send("User not found!!!");
-    }
-  } catch (err) {
+  } 
+  catch (err) {
     console.log(err);
     res.status(500).send("Server Error!!! on Login");
   }
@@ -174,6 +147,17 @@ exports.sendEmail = async (req, res) => {
           pass: 'hqqabmpdjxmqsevf'
         }
       });
+      const token = jwt.sign({email: email}, "jwtSecret", { expiresIn: '5m' });
+      const reset_password_data = await ResetPassword.findOne({email: email}).exec()
+
+      let isTokenExpire = true;
+      if(reset_password_data) {
+        jwt.verify(reset_password_data.token,"jwtSecret", (err, _) => {
+          if (!err) {
+            isTokenExpire = false;
+            return res.status(500).send("cannot reset password because previous token is not expire");
+          }
+        });
       // return res.status(500).send("cannot reset password because previous token is not expire");
     }
 
@@ -189,6 +173,7 @@ exports.sendEmail = async (req, res) => {
       })
       await reset_password_request.save()
 
+
       var mailOptions = {
         from: 'densoeleaning@gmail.com',
         to: email,
@@ -202,7 +187,7 @@ exports.sendEmail = async (req, res) => {
                 `
       };
 
-      await transporter.sendMail(mailOptions, function (error, info) {
+      transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
         } else {

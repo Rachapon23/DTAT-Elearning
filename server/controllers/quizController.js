@@ -1,6 +1,6 @@
 
 const Quize = require('../models/quize')
-
+const QuizValidation = require("../validation/quizValidation")
 
 // exports.listquizUser = async (req, res) => {
 //     try {
@@ -53,7 +53,8 @@ exports.updateQuiz = async (req, res) => {
                 new: true,
                 name: head.name,
                 explanation: head.explanation,
-                question: body
+                question: body,
+                attemp: head.attemp,
             },
 
 
@@ -70,14 +71,18 @@ exports.updateQuiz = async (req, res) => {
 
 exports.createQuiz = async (req, res) => {
     try {
-        const {head,body} = req.body
-        console.log(head,body)
+
+        const validated_result = await QuizValidation.createQuizValidate(req);
+        if(!validated_result.valid) return res.status(400).send(validated_result);
+
+        const {head,body} = validated_result.data.body
+        // console.log(head,body)
 
         const quiz = new Quize({
             name:head.name,
             explanation:head.explanation,
             question:body,
-            access_number: head.attemp,
+            attemp: head.attemp,
             teacher:head.teacher
         })
         await quiz.save()
@@ -94,7 +99,7 @@ exports.listQuiz = async (req, res) => {
 
         const quizzs = await Quize.find({teacher:user_id}).exec()
       
-        console.log(quizzs)
+        // console.log(quizzs)
         let payload = [];
         quizzs.forEach((quiz, index) => {
             payload.push({
@@ -102,7 +107,7 @@ exports.listQuiz = async (req, res) => {
                 key: quiz._id,
                 name: quiz.name,
                 explanation: quiz.explanation,
-                access_number: quiz.access_number,
+                attemp: quiz.attemp,
                 noq: quiz.question.length,
             })
         })

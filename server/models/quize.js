@@ -15,7 +15,7 @@ const QuizeSchema = new mongoose.Schema({
         type: ObjectId,
         ref:"users"
     },
-    access_number: {
+    attemp: {
         type: Number,
         default: 1,
     }

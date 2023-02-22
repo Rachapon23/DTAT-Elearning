@@ -36,6 +36,18 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if(!!!value.employee_ID) {
+      setError({employee_ID: "Please enter employee ID"})
+      document.getElementById("employee_ID").focus({ focusVisible: true });
+      return
+    }
+    else if(!!!value.password) {
+      setError({password: "Please enter password"})
+      document.getElementById("password").focus({ focusVisible: true });
+      return
+    }
+
     login(value)
       .then((res) => {
         console.log(res.data);
@@ -49,7 +61,6 @@ const Login = () => {
       .catch((err) => {
         const err_obj = err.response.data
         
-        // console.log(err)
         try {
           console.log(err_obj.field)
           if(err_obj.field === "employee_ID") setError({employee_ID: err_obj.data});
@@ -181,9 +192,10 @@ const Login = () => {
                       }
                       type="text"
                       name="employee_ID"
+                      id="employee_ID"
                       onChange={handleChange}
                     />
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                       {error.employee_ID}
                     </div>
                   </div>
@@ -196,10 +208,11 @@ const Login = () => {
                       }
                       type="text"
                       name="password"
+                      id="password"
                       onChange={handleChange}
                     />
                     
-                    <div class="invalid-feedback">
+                    <div className="invalid-feedback">
                       {error.password}
                     </div>
 
@@ -228,7 +241,7 @@ const Login = () => {
                         name="email"
                         onChange={handleEmail}
                       />
-                      <div class="invalid-feedback">
+                      <div className="invalid-feedback">
                       {error.email}
                     </div>
                     </div>

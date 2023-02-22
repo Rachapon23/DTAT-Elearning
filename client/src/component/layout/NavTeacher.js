@@ -32,7 +32,7 @@ const NavTeacher = () => {
             {/* <Nav.Link href="/teacher/create-course">สร้างบทเรียน</Nav.Link> */}
             {/* <Nav.Link href="/teacher/create-quiz">สร้างแบบทดสอบ</Nav.Link> */}
             {/* <Nav.Link href="/teacher/list-score">ดูคะแนน</Nav.Link> */}
-            <Nav.Link href="/teacher/calendar">ตารางสอน</Nav.Link>
+            {/* <Nav.Link href="/teacher/calendar">ตารางสอน</Nav.Link> */}
             <Nav.Link href="/teacher/list-quiz">แบบทดสอบของฉัน</Nav.Link>
             <Nav.Link href="/teacher/calendar-teacher">--ตารางสอน--</Nav.Link>
             <Nav.Link href="/teacher/quiz">--QUIZ--</Nav.Link>

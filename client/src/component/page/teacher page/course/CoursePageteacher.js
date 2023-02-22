@@ -9,6 +9,16 @@ import { Switch } from 'antd';
 // import Parser from 'html-react-parser';
 import { useNavigate } from 'react-router-dom'
 import { getCourse, removeCourse,enablecourse } from "../../../../function/teacher/funcCourse";
+import { useParams, useLocation, Link} from "react-router-dom";
+import NavTeacher from "../../../layout/NavTeacher";
+import './course.css'
+import Swal from "sweetalert2";
+import { Switch } from 'antd';
+// import { Link } from "react-router-dom";
+// import Parser from 'html-react-parser';
+import { useNavigate } from 'react-router-dom'
+import { getCourse, removeCourse,enablecourse } from "../../../../function/teacher/funcCourse";
+
 
 
 const CoursePageteacher = () => {
@@ -18,6 +28,7 @@ const CoursePageteacher = () => {
     const [dataQuiz, setDataQuiz] = useState([])
     const navigate = useNavigate()
     const { pathname } = useLocation()
+
 
     const fetchCourse = () => {
         getCourse(sessionStorage.getItem("token"), id)
@@ -105,6 +116,7 @@ const CoursePageteacher = () => {
         })
     };
 
+
     return (
         <div>
             <NavTeacher />
@@ -150,14 +162,15 @@ const CoursePageteacher = () => {
                 <div className="border bg-white my-3 ">
                     {topic && topic.map((item, index) => (
                         <div key={index} className="px-5 mt-3">
+
                             <h5 id="titleTopic" className="fw-bold">{item.title}</h5>
                             <div className="">
                                 <p className="fs-6">{item.description}</p>
 
+
                                 {item.text.length > 0 &&
                                     <div className=""><ul>
                                         {item.text.map((ttem, tdex) =>
-
                                             <li className="fs-6" key={tdex}>
                                                 {ttem.content}
                                             </li>
@@ -246,6 +259,7 @@ const CoursePageteacher = () => {
 
                                     </div>
                                 }
+
                                 {item.quiz.length > 0 &&
                                     <div className=""><ul>
                                         {item.quiz.map((ttem, tdex) =>

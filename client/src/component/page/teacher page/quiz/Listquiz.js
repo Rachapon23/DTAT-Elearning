@@ -16,7 +16,7 @@ const Listquiz = () => {
       sessionStorage.getItem("token")
     )
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         setDataQuiz(res.data)
       })
       .catch(err => {
@@ -88,7 +88,7 @@ const Listquiz = () => {
     {
       title: "เข้าทดสอบได้",
       align: 'center',
-      dataIndex: 'access_number',
+      dataIndex: 'attemp',
     },
     {
       title: "แก้ไข",

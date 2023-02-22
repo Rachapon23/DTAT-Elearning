@@ -1,3 +1,4 @@
+// not use ??? -> wait for clean up
 const mongoose = require("mongoose");
 const {ObjectId} = mongoose.Schema;
 
@@ -10,7 +11,7 @@ const QuizAccessSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "quize",
     },
-    access_number: {
+    attemp: {
         type: Number,
     }
 }, {timestamps: true});

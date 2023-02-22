@@ -78,12 +78,16 @@ const Register = () => {
   };
   return (
     <div>
-      <nav className="navbar navbar-light  bg-nav">
+      <nav className="navbar navbar-light  bg-nav"/>
+
         <div className="container">
+
           <div className="card">
             <div className="card-body">
               <h3 className="text-center my-4">สมัครสมาชิก</h3>
+              
               <form onSubmit={handleSubmit}>
+
                 <div className="row">
                   <div className="form-group col-md-6">
                     <label className="form-label">รหัสพนักงาน</label>
@@ -181,8 +185,7 @@ const Register = () => {
                     สมัครสมาชิก
                   </button>
                 </div>
-              </div>
-            </div>
+                </form>
           </div>
         </div>
       </div>

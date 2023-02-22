@@ -39,7 +39,7 @@ const Dotest = () => {
     const loadData = () => {
         listQuizby(sessionStorage.getItem("token"), params)
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 setDataQuiz(res.data)
                 setQusetion(res.data.question)
             })
@@ -54,7 +54,7 @@ const Dotest = () => {
             quiz: quizId.params
         })
             .then(res => {
-                // console.log(res)
+                console.log(res)
                 setQuizActive(res.data.quiz_active)
                 setAttempNumber(res.data.access_number)
                 setMaxAttemp(res.data.maximum_access)
@@ -70,7 +70,7 @@ const Dotest = () => {
             quiz: quizId.params
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 setExaminerScores(res.data)
                 setMaxScore(res.data[0].max_score)
             })
@@ -105,6 +105,7 @@ const Dotest = () => {
 
     const handleStartQuiz = () => {
         setStartQuiz(true);
+        setEndQuiz(false);
     }
     const handleBackToCourse = () => {
         navigate(state.path)

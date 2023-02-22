@@ -23,6 +23,22 @@ const EditCourse = () => {
     const [room, setRoom] = useState([]);
     const [file, setFile] = useState('');
 
+    const errorTopic= {
+        title: "Please enter title of topic",
+        description: "Please enter description of topic",
+        text: "Please enter sub-content of topic",
+        link_name: "Please enter name of link",
+        link_url: "Please enter URL of link",
+        quiz: "Please select quiz of topic",
+    }
+
+    const [error, setError] = useState({
+        name: "",
+        description: "",
+        course_number: "",
+        room: "",
+    })
+
     // const [nameCourse, setNameCourse] = useState
     // ({
     //     name: "",
@@ -56,7 +72,7 @@ const EditCourse = () => {
             sessionStorage.getItem('user_id')
         )
             .then(res => {
-                // console.log(res.data)
+                console.log(res.data)
                 setDataQuiz(res.data)
             })
             .catch(err => {
@@ -88,6 +104,7 @@ const EditCourse = () => {
 
     const handAddName = (e) => {
         setCourse({ ...course, [e.target.name]: e.target.value });
+        setError({...error, [e.target.name]: ""});
     }
 
     const handdleAddtext = (e, index) => {
@@ -164,65 +181,147 @@ const EditCourse = () => {
 
     const handdleSubmit = async (e) => {
         e.preventDefault();
-        console.log(valuetopic[0].file)
-        await updateCourse(sessionStorage.getItem("token"),
-            {
-                head: course,
-                body: valuetopic
+
+        let valid = true;
+        console.log(course)
+        console.log(topic)
+        console.log(valuetopic)
+
+        if (!!!course.name) {
+            setError({name: "Please enter name of course"})
+            valid = false;
+            document.getElementById("name_course").focus({ focusVisible: true });
+        }
+        else if (!!!course.course_number) {
+            setError({course_number: "Please enter name of course id"})
+            valid = false;
+            document.getElementById("course_number").focus({ focusVisible: true });
+        }
+        else if (!!!course.description) {
+            setError({description: "Please enter name of course id"})
+            valid = false;
+            document.getElementById("description").focus({ focusVisible: true });
+        }
+        else if (!!!course.room) {
+            setError({room: "Please select room"})
+            valid = false;
+            document.getElementById("room").focus({ focusVisible: true });
+        }
+        else if (valuetopic.length > 0) {
+            // console.log("for")
+            for (let i = 0; i < valuetopic.length; i++) {
+                // console.log("for 2")
+                if (!!!valuetopic[i].title) {
+                    // setErrorTopic({title: "Please enter title of topic"})
+                    document.getElementById(`title${i}`).classList.add("is-invalid");
+                    valid = false;
+                    document.getElementById(`title${i}`).focus({ focusVisible: true });
+                }
+                else if (!!!valuetopic[i].description) {
+                    // setErrorTopic({description: "Please enter description of topic"})
+                    document.getElementById(`description${i}`).classList.add("is-invalid");
+                    valid = false;
+                    document.getElementById(`description${i}`).focus({ focusVisible: true });
+                }
+                else if (valuetopic[i].link.length > 0) {
+                    for (let j = 0; j < valuetopic[i].link.length; j++) {
+                        if (!!!valuetopic[i].link[j].name) {
+                            // setErrorTopic({link_name: "Please enter name of link"})
+                            document.getElementById(`linkname${i}${j}`).classList.add("is-invalid");
+                            valid = false;
+                            document.getElementById(`linkname${i}${j}`).focus({ focusVisible: true });
+                        } else if (!!!valuetopic[i].link[j].url) {
+                            // setErrorTopic({link_url: "Please enter URL of link"})
+                            document.getElementById(`linkurl${i}${j}`).classList.add("is-invalid");
+                            valid = false;
+                            document.getElementById(`linkurl${i}${j}`).focus({ focusVisible: true });
+                        }
+                    }
+                }
+                if (valuetopic[i].text.length > 0) {
+                    for (let j = 0; j < valuetopic[i].text.length; j++) {
+                        if (!!!valuetopic[i].text[j].content) {
+                            // setErrorTopic({text: "Please enter sub-content of topic"})
+                            document.getElementById(`text${i}${j}`).classList.add("is-invalid");
+                            valid = false;
+                            document.getElementById(`text${i}${j}`).focus({ focusVisible: true });
+                        }
+                    }
+                }
+                if (valuetopic[i].quiz.length > 0) {
+                    for (let j = 0; j < valuetopic[i].quiz.length; j++) {
+                        if (!!!valuetopic[i].quiz[j].quiz) {
+                            // setErrorTopic({quiz: "Please select quiz of topic"})
+                            document.getElementById(`quiz${i}${j}`).classList.add("is-invalid");
+                            valid = false;
+                            document.getElementById(`quiz${i}${j}`).focus({ focusVisible: true });
+                        }
+                    }
+                }
             }
-        ).then(async res => {
-            console.log(res)
-            const formData = new FormData();
-            formData.append('id', res.data.data._id)
-            formData.append('file', file)
-            if (!file) {
-                // not have not do
-                console.log("navigate")
-                // navigate('/teacher/get-course/' + id)
-            } else {
-                if (!course.image) {
-                    await uploadImg(sessionStorage.getItem("token"), formData)
-                        .then(res => {
-                            console.log(res)
-                            // navigate('/teacher/get-course/' + id)
-                        }).catch(err => {
-                            console.log(err)
-                        })
+        }
+
+        if(valid) {
+            console.log(valuetopic[0].file)
+            await updateCourse(sessionStorage.getItem("token"),
+                {
+                    head: course,
+                    body: valuetopic
+                }
+            ).then(async res => {
+                console.log(res)
+                const formData = new FormData();
+                formData.append('id', res.data.data._id)
+                formData.append('file', file)
+                if (!file) {
+                    // not have not do
+                    console.log("navigate")
+                    // navigate('/teacher/get-course/' + id)
                 } else {
-                    await upDateImg(sessionStorage.getItem("token"), formData)
-                        .then(res => {
+                    if (!course.image) {
+                        await uploadImg(sessionStorage.getItem("token"), formData)
+                            .then(res => {
+                                console.log(res)
+                                // navigate('/teacher/get-course/' + id)
+                            }).catch(err => {
+                                console.log(err)
+                            })
+                    } else {
+                        await upDateImg(sessionStorage.getItem("token"), formData)
+                            .then(res => {
+                                console.log(res)
+                                // navigate('/teacher/get-course/' + id)
+                            }).catch(err => {
+                                console.log(err)
+                            })
+                    }
+    
+                }
+                if (res.data.upload.length > 0) {
+                    const array = res.data.upload
+                    for (let i = 0; i < array.length; i++) {
+                        // console.log(array[i].topic_number, array[i].file_number,valuetopic[array[i].topic_number].file[array[i].file_number].file )
+                        const formDatafile = new FormData();
+                        formDatafile.append('id', res.data.data._id)
+                        formDatafile.append('topic_number', array[i].topic_number)
+                        formDatafile.append('file_number', array[i].file_number)
+                        formDatafile.append('file', valuetopic[array[i].topic_number].file[array[i].file_number].file)
+                        await uploadfile(sessionStorage.getItem("token"), formDatafile).then(res => {
                             console.log(res)
-                            // navigate('/teacher/get-course/' + id)
+                            navigate('/teacher/get-course/' + id)
                         }).catch(err => {
                             console.log(err)
                         })
+                    }
+                } else {
+                    navigate('/teacher/get-course/' + id)
                 }
-
-            }
-            if (res.data.upload.length > 0) {
-                const array = res.data.upload
-                for (let i = 0; i < array.length; i++) {
-                    // console.log(array[i].topic_number, array[i].file_number,valuetopic[array[i].topic_number].file[array[i].file_number].file )
-                    const formDatafile = new FormData();
-                    formDatafile.append('id', res.data.data._id)
-                    formDatafile.append('topic_number', array[i].topic_number)
-                    formDatafile.append('file_number', array[i].file_number)
-                    formDatafile.append('file', valuetopic[array[i].topic_number].file[array[i].file_number].file)
-                    await uploadfile(sessionStorage.getItem("token"), formDatafile).then(res => {
-                        console.log(res)
-                        navigate('/teacher/get-course/' + id)
-                    }).catch(err => {
-                        console.log(err)
-                    })
-                }
-            } else {
-                navigate('/teacher/get-course/' + id)
-            }
-
-
-        }).catch(err => {
-            console.log(err)
-        })
+    
+    
+            }).catch(err => {
+                console.log(err)
+            })
+        }   
 
     }
     const loadRoom = () => {
@@ -259,10 +358,19 @@ const EditCourse = () => {
                                 <div className="bg-warning head-form"></div>
                                 <div className="card-body p-5">
                                     <label className="form-label">ชื่อบทเรียน</label>
-                                    <input type="text" className="form-control" name='name'
+                                    <input 
+                                        type="text" 
+                                        className={
+                                            error.name && error.name.length !== 0 ? "form-control is-invalid" : "form-control"
+                                        }
+                                        name='name'
+                                        id="name_course"
                                         onChange={handAddName}
                                         value={course.name}
                                     />
+                                    <div className="invalid-feedback">
+                                        {error.name}
+                                    </div>
 
                                     <div className="row mt-3">
 
@@ -270,19 +378,37 @@ const EditCourse = () => {
                                             ? <>
                                                 <div className="col-md-6">
                                                     <label className="form-label">รหัสบทเรียน</label>
-                                                    <input type="text" className="form-control" name='course_number'
+                                                    <input 
+                                                        type="text" 
+                                                        className={
+                                                            error.course_number && error.course_number.length !== 0 ? "form-control is-invalid" : "form-control"
+                                                        } 
+                                                        name='course_number'
+                                                        id="course_number"
                                                         onChange={handAddName}
                                                         value={course.course_number}
                                                     />
+                                                    <div className="invalid-feedback">
+                                                        {error.course_number}
+                                                    </div>
                                                 </div>
                                             </>
                                             : <>
                                                 <div className="col-md-6">
                                                     <label className="form-label">รหัสบทเรียน</label>
-                                                    <input type="text" className="form-control" name='course_number'
+                                                    <input 
+                                                        type="text" 
+                                                        className={
+                                                            error.course_number && error.course_number.length !== 0 ? "form-control is-invalid" : "form-control"
+                                                        }  
+                                                        name='course_number'
+                                                        id="course_number"
                                                         onChange={handAddName}
                                                         value={course.course_number}
                                                     />
+                                                </div>
+                                                <div className="invalid-feedback">
+                                                    {error.course_number}
                                                 </div>
 
                                                 <div className="col-md-6">
@@ -298,18 +424,36 @@ const EditCourse = () => {
                                     </div>
 
                                     <label className="form-label  mt-3">รายละเอียด</label>
-                                    <textarea type="text" className="form-control" name='description'
+                                    <textarea 
+                                        type="text" 
+                                        className={
+                                            error.description && error.description.length !== 0 ? "form-control is-invalid" : "form-control"
+                                        }  
+                                        name='description'
+                                        id="description"
                                         onChange={handAddName}
                                         value={course.description}
                                     />
+                                    <div className="invalid-feedback">
+                                        {error.description}
+                                    </div>
                                     <label className="form-label  mt-3">ห้องเรียน</label>
                                     <div className="">
-                                        <select name="room" id="" className='form-select ' onChange={handAddName}>
+                                        <select 
+                                            name="room" 
+                                            id="room" 
+                                            className={
+                                                error.room && error.room.length !== 0 ? "form-control is-invalid" : "form-control"
+                                            } 
+                                            onChange={handAddName}>
                                             {course.room && <option value="">{course.room.room}</option>}
                                             {room.map((item, index) =>
                                                 <option key={index} value={item._id}>{item.room}</option>
                                             )}
                                         </select>
+                                        <div className="invalid-feedback">
+                                            {error.room}
+                                        </div>
 
                                     </div>
                                     <div className="">
@@ -367,21 +511,37 @@ const EditCourse = () => {
                                     </div>
                                     <div className="card-body p-5">
                                         <p>หัวเรื่อง</p>
-                                        <input type="text" className="form-control" name='title'
+                                        <input 
+                                            type="text" 
+                                            className="form-control" 
+                                            name='title'
+                                            id={`title${index}`}
                                             onChange={(e) => {
                                                 item.title = e.target.value
                                                 SetValueTopic([...valuetopic])
+                                                document.getElementById(`title${index}`).classList.remove("is-invalid");
                                             }}
                                             value={item.title}
                                         />
+                                        <div className="invalid-feedback">
+                                            {errorTopic.title}
+                                        </div>
                                         <label className="form-label  mt-3">รายละเอียด</label>
-                                        <textarea type="text" className="form-control"
+                                        <textarea 
+                                            type="text" 
+                                            className="form-control"
+                                            name='description' 
+                                            id={`description${index}`}
                                             onChange={(e) => {
                                                 item.description = e.target.value
                                                 SetValueTopic([...valuetopic])
+                                                document.getElementById(`description${index}`).classList.remove("is-invalid");
                                             }}
                                             value={item.description}
                                         />
+                                        <div className="invalid-feedback">
+                                            {errorTopic.description}
+                                        </div>
 
                                         <div className="d-flex justify-content-between mb-0 mt-5" >
                                             <p className="">เนื้อหาย่อย</p>
@@ -397,10 +557,15 @@ const EditCourse = () => {
                                                 {item.text.map((ttem, tdex) =>
                                                     <li key={tdex} className="mt-3">
                                                         <div className="input-group">
-                                                            <textarea type="text" className="form-control"
+                                                            <textarea 
+                                                                type="text" 
+                                                                className="form-control"
+                                                                name="text"
+                                                                id={`text${index}${tdex}`}
                                                                 onChange={(e) => {
                                                                     ttem.content = e.target.value
                                                                     SetValueTopic([...valuetopic])
+                                                                    document.getElementById(`text${index}${tdex}`).classList.remove("is-invalid");
                                                                 }}
                                                                 value={ttem.content}
                                                             />
@@ -409,6 +574,9 @@ const EditCourse = () => {
                                                             >
                                                                 <i className="bi bi-trash"></i>
                                                             </button>
+                                                            <div className="invalid-feedback">
+                                                                {errorTopic.text}
+                                                            </div>
                                                         </div>
                                                     </li>
                                                 )}
@@ -430,23 +598,38 @@ const EditCourse = () => {
                                                     <li key={tdex} className="mt-3">
                                                         <div className="">
                                                             <div className="input-group mb-2">
-                                                                <input type="text" className="form-control" placeholder="name"
+                                                                <input 
+                                                                    type="text" 
+                                                                    className="form-control" 
+                                                                    placeholder="name"
+                                                                    id={`linkname${index}${tdex}`}
                                                                     onChange={(e) => {
                                                                         ttem.name = e.target.value
                                                                         SetValueTopic([...valuetopic])
+                                                                        document.getElementById(`linkname${index}${tdex}`).classList.remove("is-invalid");
                                                                     }}
                                                                     value={ttem.name}
                                                                 />
-                                                                <button className="btn btn-outline-secondary"
-                                                                    onClick={(e) => handleRemoveLink(e, index, tdex)} type='Button'
+                                                                <button 
+                                                                    className="btn btn-outline-secondary"
+                                                                    onClick={(e) => handleRemoveLink(e, index, tdex)} 
+                                                                    type='Button'
                                                                 >
                                                                     <i className="bi bi-trash"></i>
                                                                 </button>
+                                                                <div className="invalid-feedback">
+                                                                    {errorTopic.link_name}
+                                                                </div>
                                                             </div>
-                                                            <input type="text" className="form-control" placeholder="url"
+                                                            <input 
+                                                                type="text" 
+                                                                className="form-control" 
+                                                                placeholder="url"
+                                                                id={`linkurl${index}${tdex}`}
                                                                 onChange={(e) => {
                                                                     ttem.url = e.target.value
                                                                     SetValueTopic([...valuetopic])
+                                                                    document.getElementById(`linkurl${index}${tdex}`).classList.remove("is-invalid");
                                                                 }}
                                                                 value={ttem.url}
                                                             />
@@ -533,11 +716,13 @@ const EditCourse = () => {
                                                                 <div className="input-group mb-2">
 
                                                                     <select
+                                                                        id={`quiz${index}${tdex}`}
+                                                                        name="quiz"
                                                                         onChange={(e) => {
-                                                                            ttem.quiz = JSON.parse(e.target.value)._id
+                                                                            ttem.quiz = JSON.parse(e.target.value).key
                                                                             ttem.name = JSON.parse(e.target.value).name
-
                                                                             SetValueTopic([...valuetopic])
+                                                                            document.getElementById(`quiz${index}${tdex}`).classList.remove("is-invalid");
                                                                         }}
                                                                         className="form-select" value={ttem.name}
                                                                     >
@@ -545,14 +730,17 @@ const EditCourse = () => {
                                                                         {dataquiz.map((dtem, ddex) => (
                                                                             <option key={ddex} value={JSON.stringify(dtem)} >{dtem.name}</option>
                                                                         ))}
-
-
                                                                     </select>
-                                                                    <button className="btn btn-outline-secondary"
-                                                                        onClick={(e) => handleRemoveQuiz(e, index, tdex)} type='Button'
+                                                                    <button 
+                                                                        className="btn btn-outline-secondary"
+                                                                        onClick={(e) => handleRemoveQuiz(e, index, tdex)} 
+                                                                        type='Button'
                                                                     >
                                                                         <i className="bi bi-trash"></i>
                                                                     </button>
+                                                                    <div className="invalid-feedback">
+                                                                        {errorTopic.quiz}
+                                                                    </div>
                                                                 </div>
                                                             </li>
                                                         </div>
