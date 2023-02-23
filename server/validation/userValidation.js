@@ -68,7 +68,8 @@ exports.registerValidate = async (payload) => {
             employee_ID: "string", 
             department_ID: "string",
             password: "string",
-            repassword: "string",  
+            repassword: "string", 
+            email: "string", 
             firstname: "string",
             lastname: "string"
         }
@@ -84,7 +85,7 @@ exports.registerValidate = async (payload) => {
             const payloadKeys = Object.keys(payload.body)
             let counter = 0;
 
-            if(payloadKeys.length !== 6) {
+            if(payloadKeys.length !== 7) {
                 console.log(`[-] invalid login body ${payloadKeys.length}`)
                 return {valid: false, data: `Length of body in payload does not match`}
             }
@@ -214,7 +215,7 @@ exports.resetPasswordValidate = async (payload) => {
             console.log(`[-] invalid reset password request ${Object.keys(payload).length}`)
             return null
         }
-        // console.log("<validate> ",payload)
+        // console.log("<validate> ",payload.body)
         
         
         if(typeof payload.body === "object") {
