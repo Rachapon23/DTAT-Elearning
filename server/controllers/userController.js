@@ -19,6 +19,7 @@ exports.register = async(req,res)=>{
             employee_ID,
             password,
             department_ID,
+            email,
             firstname,
             lastname,
         } = validated_result.data.body
@@ -29,10 +30,18 @@ exports.register = async(req,res)=>{
             return res.status(400).send("User already");
         }
 
+        if(email.length > 0) {
+          const query_email = await User.findOne({email: email}).exec()
+          if(query_email) {
+            return res.status(400).send("This email has been used");
+          }
+        }
+
         user = new User({
           employee_ID,
           password,
           department_ID,
+          email,
           firstname,
           lastname,
         });
@@ -212,7 +221,7 @@ exports.resetPassword = async (req, res) => {
     const tokenEmail = decoded.email;
 
     const reset_password_data = await ResetPassword.findOne({ token: req.headers.authtoken }).exec()
-    // console.log(reset_password_data)
+    // console.log(req)
     if (reset_password_data) {
       if (reset_password_data.is_used) {
         return res.status(500).send("Cannot reset password because previous token is not expire")
@@ -224,7 +233,16 @@ exports.resetPassword = async (req, res) => {
 
     if (userEmail === tokenEmail) {
       await ResetPassword.findOneAndDelete({ token: req.headers.authtoken }).exec()
-      return res.send("OK")
+      if(req.body.confirm_new_password === req.body.new_password) {
+        const salt = await bcrypt.genSalt(10);
+        const encrypted_password = await bcrypt.hash(req.body.confirm_new_password, salt);
+        await User.findOneAndUpdate({email: userEmail}, {password: encrypted_password})
+        return res.send("OK")
+      }
+      else {
+        return res.status(500).send("New password and Confirm new password are not the same")  
+      }
+      
     }
     else {
       return res.status(500).send("Entered email does not match with email that server send to")

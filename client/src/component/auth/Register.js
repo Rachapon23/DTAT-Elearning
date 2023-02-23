@@ -19,6 +19,7 @@ const Register = () => {
     department_ID: "",
     password: "",
     repassword: "",
+    email: "",
     firstname: "",
     lastname: "",
   });
@@ -58,6 +59,7 @@ const Register = () => {
           else if(err_obj.field === "department_ID") setError({department_ID: err_obj.data});
           else if(err_obj.field === "password") setError({password: err_obj.data});
           else if(err_obj.field === "repassword") setError({repassword: err_obj.data});
+          else if(err_obj.field === "email") setError({email: err_obj.data});
           else if(err_obj.field === "firstname") setError({firstname: err_obj.data});
           else if(err_obj.field === "lastname") setError({lastname: err_obj.data});
           else Swal.fire(
@@ -151,6 +153,22 @@ const Register = () => {
                           {error.repassword}
                         </div>
                       </div>
+                    </div>
+                    <div className="row">
+                        <div className="form-group mt-3">
+                          <label className="form-label">Email</label>
+                          <input
+                            className={
+                              error.email && error.email.length !== 0 ? "form-control is-invalid" : "form-control"
+                            }
+                            type="text"
+                            name="email"
+                            onChange={handleChange}
+                          />
+                          <div class="invalid-feedback">
+                            {error.email}
+                          </div>
+                        </div>
                     </div>
                     <div className="row">
                       <div className="form-group col-md-6  mt-3">
