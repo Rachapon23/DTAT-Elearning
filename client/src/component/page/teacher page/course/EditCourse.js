@@ -182,86 +182,86 @@ const EditCourse = () => {
     const handdleSubmit = async (e) => {
         e.preventDefault();
 
-        let valid = true;
-        console.log(course)
-        console.log(topic)
-        console.log(valuetopic)
+        // let valid = true;
+        // console.log(course)
+        // console.log(topic)
+        // console.log(valuetopic)
 
-        if (!!!course.name) {
-            setError({name: "Please enter name of course"})
-            valid = false;
-            document.getElementById("name_course").focus({ focusVisible: true });
-        }
-        else if (!!!course.course_number) {
-            setError({course_number: "Please enter name of course id"})
-            valid = false;
-            document.getElementById("course_number").focus({ focusVisible: true });
-        }
-        else if (!!!course.description) {
-            setError({description: "Please enter name of course id"})
-            valid = false;
-            document.getElementById("description").focus({ focusVisible: true });
-        }
-        else if (!!!course.room) {
-            setError({room: "Please select room"})
-            valid = false;
-            document.getElementById("room").focus({ focusVisible: true });
-        }
-        else if (valuetopic.length > 0) {
-            // console.log("for")
-            for (let i = 0; i < valuetopic.length; i++) {
-                // console.log("for 2")
-                if (!!!valuetopic[i].title) {
-                    // setErrorTopic({title: "Please enter title of topic"})
-                    document.getElementById(`title${i}`).classList.add("is-invalid");
-                    valid = false;
-                    document.getElementById(`title${i}`).focus({ focusVisible: true });
-                }
-                else if (!!!valuetopic[i].description) {
-                    // setErrorTopic({description: "Please enter description of topic"})
-                    document.getElementById(`description${i}`).classList.add("is-invalid");
-                    valid = false;
-                    document.getElementById(`description${i}`).focus({ focusVisible: true });
-                }
-                else if (valuetopic[i].link.length > 0) {
-                    for (let j = 0; j < valuetopic[i].link.length; j++) {
-                        if (!!!valuetopic[i].link[j].name) {
-                            // setErrorTopic({link_name: "Please enter name of link"})
-                            document.getElementById(`linkname${i}${j}`).classList.add("is-invalid");
-                            valid = false;
-                            document.getElementById(`linkname${i}${j}`).focus({ focusVisible: true });
-                        } else if (!!!valuetopic[i].link[j].url) {
-                            // setErrorTopic({link_url: "Please enter URL of link"})
-                            document.getElementById(`linkurl${i}${j}`).classList.add("is-invalid");
-                            valid = false;
-                            document.getElementById(`linkurl${i}${j}`).focus({ focusVisible: true });
-                        }
-                    }
-                }
-                if (valuetopic[i].text.length > 0) {
-                    for (let j = 0; j < valuetopic[i].text.length; j++) {
-                        if (!!!valuetopic[i].text[j].content) {
-                            // setErrorTopic({text: "Please enter sub-content of topic"})
-                            document.getElementById(`text${i}${j}`).classList.add("is-invalid");
-                            valid = false;
-                            document.getElementById(`text${i}${j}`).focus({ focusVisible: true });
-                        }
-                    }
-                }
-                if (valuetopic[i].quiz.length > 0) {
-                    for (let j = 0; j < valuetopic[i].quiz.length; j++) {
-                        if (!!!valuetopic[i].quiz[j].quiz) {
-                            // setErrorTopic({quiz: "Please select quiz of topic"})
-                            document.getElementById(`quiz${i}${j}`).classList.add("is-invalid");
-                            valid = false;
-                            document.getElementById(`quiz${i}${j}`).focus({ focusVisible: true });
-                        }
-                    }
-                }
-            }
-        }
+        // if (!!!course.name) {
+        //     setError({name: "Please enter name of course"})
+        //     valid = false;
+        //     document.getElementById("name_course").focus({ focusVisible: true });
+        // }
+        // else if (!!!course.course_number) {
+        //     setError({course_number: "Please enter name of course id"})
+        //     valid = false;
+        //     document.getElementById("course_number").focus({ focusVisible: true });
+        // }
+        // else if (!!!course.description) {
+        //     setError({description: "Please enter name of course id"})
+        //     valid = false;
+        //     document.getElementById("description").focus({ focusVisible: true });
+        // }
+        // else if (!!!course.room) {
+        //     setError({room: "Please select room"})
+        //     valid = false;
+        //     document.getElementById("room").focus({ focusVisible: true });
+        // }
+        // else if (valuetopic.length > 0) {
+        //     // console.log("for")
+        //     for (let i = 0; i < valuetopic.length; i++) {
+        //         // console.log("for 2")
+        //         if (!!!valuetopic[i].title) {
+        //             // setErrorTopic({title: "Please enter title of topic"})
+        //             document.getElementById(`title${i}`).classList.add("is-invalid");
+        //             valid = false;
+        //             document.getElementById(`title${i}`).focus({ focusVisible: true });
+        //         }
+        //         else if (!!!valuetopic[i].description) {
+        //             // setErrorTopic({description: "Please enter description of topic"})
+        //             document.getElementById(`description${i}`).classList.add("is-invalid");
+        //             valid = false;
+        //             document.getElementById(`description${i}`).focus({ focusVisible: true });
+        //         }
+        //         else if (valuetopic[i].link.length > 0) {
+        //             for (let j = 0; j < valuetopic[i].link.length; j++) {
+        //                 if (!!!valuetopic[i].link[j].name) {
+        //                     // setErrorTopic({link_name: "Please enter name of link"})
+        //                     document.getElementById(`linkname${i}${j}`).classList.add("is-invalid");
+        //                     valid = false;
+        //                     document.getElementById(`linkname${i}${j}`).focus({ focusVisible: true });
+        //                 } else if (!!!valuetopic[i].link[j].url) {
+        //                     // setErrorTopic({link_url: "Please enter URL of link"})
+        //                     document.getElementById(`linkurl${i}${j}`).classList.add("is-invalid");
+        //                     valid = false;
+        //                     document.getElementById(`linkurl${i}${j}`).focus({ focusVisible: true });
+        //                 }
+        //             }
+        //         }
+        //         if (valuetopic[i].text.length > 0) {
+        //             for (let j = 0; j < valuetopic[i].text.length; j++) {
+        //                 if (!!!valuetopic[i].text[j].content) {
+        //                     // setErrorTopic({text: "Please enter sub-content of topic"})
+        //                     document.getElementById(`text${i}${j}`).classList.add("is-invalid");
+        //                     valid = false;
+        //                     document.getElementById(`text${i}${j}`).focus({ focusVisible: true });
+        //                 }
+        //             }
+        //         }
+        //         if (valuetopic[i].quiz.length > 0) {
+        //             for (let j = 0; j < valuetopic[i].quiz.length; j++) {
+        //                 if (!!!valuetopic[i].quiz[j].quiz) {
+        //                     // setErrorTopic({quiz: "Please select quiz of topic"})
+        //                     document.getElementById(`quiz${i}${j}`).classList.add("is-invalid");
+        //                     valid = false;
+        //                     document.getElementById(`quiz${i}${j}`).focus({ focusVisible: true });
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
-        if(valid) {
+        // if(valid) {
             console.log(valuetopic[0].file)
             await updateCourse(sessionStorage.getItem("token"),
                 {
@@ -321,7 +321,7 @@ const EditCourse = () => {
             }).catch(err => {
                 console.log(err)
             })
-        }   
+        // }   
 
     }
     const loadRoom = () => {
@@ -348,6 +348,7 @@ const EditCourse = () => {
 
         <div>
             <NavTeacher />
+            <h1>save ไม่มี topic จะ error, delete course ถ้าไม่มีไฟล์ที่หัวข้อจะ error</h1>
             <div className="container">
                 <div className="mt-5">
                     {course &&
@@ -646,6 +647,7 @@ const EditCourse = () => {
                                         </div>
                                         <hr className="mt-0" />
 
+                                        
                                         <div className="mt-2">
                                             <ul>
 
