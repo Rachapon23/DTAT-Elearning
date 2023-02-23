@@ -157,7 +157,7 @@ const CoursePageteacher = () => {
                             <div className="">
                                 <p className="fs-6">{item.description}</p>
 
-
+                                {console.log("-> ",item)}
                                 {item.text.length > 0 &&
                                     <div className=""><ul>
                                         {item.text.map((ttem, tdex) =>
@@ -181,7 +181,8 @@ const CoursePageteacher = () => {
                                     </ul>
                                     </div>
                                 }
-                                {item.file.length > 0 &&
+                                {console.log("-> ", item.file)}
+                                {item.file &&
                                     <div className="">
 
 

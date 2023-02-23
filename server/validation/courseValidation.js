@@ -1,6 +1,7 @@
 
 exports.createCourseValidate = async (payload) => {
     try {
+        console.log(payload.body.body)
         const structure_validator = {
             head: "object",
             body: "object",
@@ -130,7 +131,7 @@ exports.createCourseValidate = async (payload) => {
                         if(Object.keys(item).length === 5)  console.log(`[+] body length is correct`)
                         else {
                             console.log(`[-] body length is not correct`)
-                            return {valid: false, data: `body length is not correct`, field: key}
+                            return {valid: false, data: `body length is not correct`}
                         }
 
                         for(let key in data_body_validator) {

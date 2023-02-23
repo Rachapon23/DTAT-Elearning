@@ -584,7 +584,7 @@ const Course = () => {
                                             )}
                                         </ul>
                                     </div>
-                                    <div className="d-flex justify-content-between mb-0 mt-3" >
+                                    {/* <div className="d-flex justify-content-between mb-0 mt-3" >
                                         <p className="">File</p>
                                         <button className="btn h4 text-primary mb-0"
                                             type='Button' onClick={(e) => handdleAddfile(e, index)}
@@ -620,7 +620,7 @@ const Course = () => {
                                                 </li>
                                             )}
                                         </ul>
-                                    </div>
+                                    </div> */}
 
                                     <div className="d-flex justify-content-between mb-0 mt-3" >
                                         <p className="">แบบทดสอบ</p>

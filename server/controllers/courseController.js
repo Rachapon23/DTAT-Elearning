@@ -423,20 +423,21 @@ exports.deleteCourse = async (req, res) => {
             });
         }
 
-        for(let i = 0 ; i < course.topic.length ; i++){
-            for(let j = 0 ; j <course.topic[i].file.length ; j++ ){
-                console.log("name : ",course.topic[i].file[j].filename)
-                await fs.unlink("./public/uploads/" + course.topic[i].file[j].filename, (err) => {
-                            if (err) {
-                                console.log(err);
-                                res.status(400).send('err on delete file')
-                            } else {
-                                console.log("remove file Success");
-                            }
+        // TODO: if file not found in course it cannot delete course 
+        // for(let i = 0 ; i < course.topic.length ; i++){
+        //     for(let j = 0 ; j <course.topic[i].file.length ; j++ ){
+        //         console.log("name : ",course.topic[i].file[j].filename)
+        //         await fs.unlink("./public/uploads/" + course.topic[i].file[j].filename, (err) => {
+        //                     if (err) {
+        //                         console.log(err);
+        //                         res.status(400).send('err on delete file')
+        //                     } else {
+        //                         console.log("remove file Success");
+        //                     }
             
-                        });
-            }
-        }
+        //                 });
+        //     }
+        // }
 
         const course_delete = await Coursee.findOneAndDelete({ _id: req.params.id }).exec()
         res.send(course_delete)
