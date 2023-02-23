@@ -23,7 +23,7 @@ const EditCourse = () => {
     const [room, setRoom] = useState([]);
     const [file, setFile] = useState('');
 
-    const errorTopic= {
+    const errorTopic = {
         title: "Please enter title of topic",
         description: "Please enter description of topic",
         text: "Please enter sub-content of topic",
@@ -93,7 +93,7 @@ const EditCourse = () => {
             text: [],
             link: [],
             quiz: [],
-            file:[],
+            file: [],
         }
         ])
     }
@@ -104,7 +104,7 @@ const EditCourse = () => {
 
     const handAddName = (e) => {
         setCourse({ ...course, [e.target.name]: e.target.value });
-        setError({...error, [e.target.name]: ""});
+        setError({ ...error, [e.target.name]: "" });
     }
 
     const handdleAddtext = (e, index) => {
@@ -262,65 +262,65 @@ const EditCourse = () => {
         // }
 
         // if(valid) {
-            console.log(valuetopic[0].file)
-            await updateCourse(sessionStorage.getItem("token"),
-                {
-                    head: course,
-                    body: valuetopic
-                }
-            ).then(async res => {
-                console.log(res)
+        // console.log(valuetopic[0].file)
+        await updateCourse(sessionStorage.getItem("token"),
+            {
+                head: course,
+                body: valuetopic
+            }
+        ).then(async res => {
+            console.log(res)
+            if (!!file) {
                 const formData = new FormData();
                 formData.append('id', res.data.data._id)
                 formData.append('file', file)
-                if (!file) {
-                    // not have not do
-                    console.log("navigate")
-                    // navigate('/teacher/get-course/' + id)
-                } else {
-                    if (!course.image) {
-                        await uploadImg(sessionStorage.getItem("token"), formData)
-                            .then(res => {
-                                console.log(res)
-                                // navigate('/teacher/get-course/' + id)
-                            }).catch(err => {
-                                console.log(err)
-                            })
-                    } else {
-                        await upDateImg(sessionStorage.getItem("token"), formData)
-                            .then(res => {
-                                console.log(res)
-                                // navigate('/teacher/get-course/' + id)
-                            }).catch(err => {
-                                console.log(err)
-                            })
-                    }
-    
-                }
-                if (res.data.upload.length > 0) {
-                    const array = res.data.upload
-                    for (let i = 0; i < array.length; i++) {
-                        // console.log(array[i].topic_number, array[i].file_number,valuetopic[array[i].topic_number].file[array[i].file_number].file )
-                        const formDatafile = new FormData();
-                        formDatafile.append('id', res.data.data._id)
-                        formDatafile.append('topic_number', array[i].topic_number)
-                        formDatafile.append('file_number', array[i].file_number)
-                        formDatafile.append('file', valuetopic[array[i].topic_number].file[array[i].file_number].file)
-                        await uploadfile(sessionStorage.getItem("token"), formDatafile).then(res => {
+
+                if (!course.image) {
+                    await uploadImg(sessionStorage.getItem("token"), formData)
+                        .then(res => {
                             console.log(res)
-                            navigate('/teacher/get-course/' + id)
+                            // navigate('/teacher/get-course/' + id)
                         }).catch(err => {
                             console.log(err)
                         })
-                    }
                 } else {
-                    navigate('/teacher/get-course/' + id)
+                    await upDateImg(sessionStorage.getItem("token"), formData)
+                        .then(res => {
+                            console.log(res)
+                            // navigate('/teacher/get-course/' + id)
+                        }).catch(err => {
+                            console.log(err)
+                        })
                 }
-    
-    
-            }).catch(err => {
-                console.log(err)
-            })
+
+
+            }
+
+
+            if (res.data.upload.length > 0) {
+                const array = res.data.upload
+                for (let i = 0; i < array.length; i++) {
+                    // console.log(array[i].topic_number, array[i].file_number,valuetopic[array[i].topic_number].file[array[i].file_number].file )
+                    const formDatafile = new FormData();
+                    formDatafile.append('id', res.data.data._id)
+                    formDatafile.append('topic_number', array[i].topic_number)
+                    formDatafile.append('file_number', array[i].file_number)
+                    formDatafile.append('file', valuetopic[array[i].topic_number].file[array[i].file_number].file)
+                    await uploadfile(sessionStorage.getItem("token"), formDatafile).then(res => {
+                        console.log(res)
+                        navigate('/teacher/get-course/' + id)
+                    }).catch(err => {
+                        console.log(err)
+                    })
+                }
+            } else {
+                navigate('/teacher/get-course/' + id)
+            }
+
+
+        }).catch(err => {
+            console.log(err)
+        })
         // }   
 
     }
@@ -348,7 +348,7 @@ const EditCourse = () => {
 
         <div>
             <NavTeacher />
-            <h1>save ไม่มี topic จะ error, delete course ถ้าไม่มีไฟล์ที่หัวข้อจะ error</h1>
+            {/* <h1>save ไม่มี topic จะ error, delete course ถ้าไม่มีไฟล์ที่หัวข้อจะ error</h1> */}
             <div className="container">
                 <div className="mt-5">
                     {course &&
@@ -359,8 +359,8 @@ const EditCourse = () => {
                                 <div className="bg-warning head-form"></div>
                                 <div className="card-body p-5">
                                     <label className="form-label">ชื่อบทเรียน</label>
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         className={
                                             error.name && error.name.length !== 0 ? "form-control is-invalid" : "form-control"
                                         }
@@ -379,11 +379,11 @@ const EditCourse = () => {
                                             ? <>
                                                 <div className="col-md-6">
                                                     <label className="form-label">รหัสบทเรียน</label>
-                                                    <input 
-                                                        type="text" 
+                                                    <input
+                                                        type="text"
                                                         className={
                                                             error.course_number && error.course_number.length !== 0 ? "form-control is-invalid" : "form-control"
-                                                        } 
+                                                        }
                                                         name='course_number'
                                                         id="course_number"
                                                         onChange={handAddName}
@@ -397,11 +397,11 @@ const EditCourse = () => {
                                             : <>
                                                 <div className="col-md-6">
                                                     <label className="form-label">รหัสบทเรียน</label>
-                                                    <input 
-                                                        type="text" 
+                                                    <input
+                                                        type="text"
                                                         className={
                                                             error.course_number && error.course_number.length !== 0 ? "form-control is-invalid" : "form-control"
-                                                        }  
+                                                        }
                                                         name='course_number'
                                                         id="course_number"
                                                         onChange={handAddName}
@@ -425,11 +425,11 @@ const EditCourse = () => {
                                     </div>
 
                                     <label className="form-label  mt-3">รายละเอียด</label>
-                                    <textarea 
-                                        type="text" 
+                                    <textarea
+                                        type="text"
                                         className={
                                             error.description && error.description.length !== 0 ? "form-control is-invalid" : "form-control"
-                                        }  
+                                        }
                                         name='description'
                                         id="description"
                                         onChange={handAddName}
@@ -440,12 +440,12 @@ const EditCourse = () => {
                                     </div>
                                     <label className="form-label  mt-3">ห้องเรียน</label>
                                     <div className="">
-                                        <select 
-                                            name="room" 
-                                            id="room" 
+                                        <select
+                                            name="room"
+                                            id="room"
                                             className={
                                                 error.room && error.room.length !== 0 ? "form-control is-invalid" : "form-control"
-                                            } 
+                                            }
                                             onChange={handAddName}>
                                             {course.room && <option value="">{course.room.room}</option>}
                                             {room.map((item, index) =>
@@ -512,9 +512,9 @@ const EditCourse = () => {
                                     </div>
                                     <div className="card-body p-5">
                                         <p>หัวเรื่อง</p>
-                                        <input 
-                                            type="text" 
-                                            className="form-control" 
+                                        <input
+                                            type="text"
+                                            className="form-control"
                                             name='title'
                                             id={`title${index}`}
                                             onChange={(e) => {
@@ -528,10 +528,10 @@ const EditCourse = () => {
                                             {errorTopic.title}
                                         </div>
                                         <label className="form-label  mt-3">รายละเอียด</label>
-                                        <textarea 
-                                            type="text" 
+                                        <textarea
+                                            type="text"
                                             className="form-control"
-                                            name='description' 
+                                            name='description'
                                             id={`description${index}`}
                                             onChange={(e) => {
                                                 item.description = e.target.value
@@ -558,8 +558,8 @@ const EditCourse = () => {
                                                 {item.text.map((ttem, tdex) =>
                                                     <li key={tdex} className="mt-3">
                                                         <div className="input-group">
-                                                            <textarea 
-                                                                type="text" 
+                                                            <textarea
+                                                                type="text"
                                                                 className="form-control"
                                                                 name="text"
                                                                 id={`text${index}${tdex}`}
@@ -599,9 +599,9 @@ const EditCourse = () => {
                                                     <li key={tdex} className="mt-3">
                                                         <div className="">
                                                             <div className="input-group mb-2">
-                                                                <input 
-                                                                    type="text" 
-                                                                    className="form-control" 
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-control"
                                                                     placeholder="name"
                                                                     id={`linkname${index}${tdex}`}
                                                                     onChange={(e) => {
@@ -611,9 +611,9 @@ const EditCourse = () => {
                                                                     }}
                                                                     value={ttem.name}
                                                                 />
-                                                                <button 
+                                                                <button
                                                                     className="btn btn-outline-secondary"
-                                                                    onClick={(e) => handleRemoveLink(e, index, tdex)} 
+                                                                    onClick={(e) => handleRemoveLink(e, index, tdex)}
                                                                     type='Button'
                                                                 >
                                                                     <i className="bi bi-trash"></i>
@@ -622,9 +622,9 @@ const EditCourse = () => {
                                                                     {errorTopic.link_name}
                                                                 </div>
                                                             </div>
-                                                            <input 
-                                                                type="text" 
-                                                                className="form-control" 
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
                                                                 placeholder="url"
                                                                 id={`linkurl${index}${tdex}`}
                                                                 onChange={(e) => {
@@ -647,7 +647,7 @@ const EditCourse = () => {
                                         </div>
                                         <hr className="mt-0" />
 
-                                        
+
                                         <div className="mt-2">
                                             <ul>
 
@@ -733,9 +733,9 @@ const EditCourse = () => {
                                                                             <option key={ddex} value={JSON.stringify(dtem)} >{dtem.name}</option>
                                                                         ))}
                                                                     </select>
-                                                                    <button 
+                                                                    <button
                                                                         className="btn btn-outline-secondary"
-                                                                        onClick={(e) => handleRemoveQuiz(e, index, tdex)} 
+                                                                        onClick={(e) => handleRemoveQuiz(e, index, tdex)}
                                                                         type='Button'
                                                                     >
                                                                         <i className="bi bi-trash"></i>

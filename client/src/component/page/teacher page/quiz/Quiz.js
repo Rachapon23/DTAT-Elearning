@@ -172,6 +172,7 @@ const Quiz = () => {
             <NavTeacher />
             {/* {JSON.stringify(nameQuiz)} */}
             <div className="container">
+                
                 <div className="mt-5">
                     <form onSubmit={handSubmit}>
                         <div className="card">
