@@ -19,8 +19,8 @@ const NavStudent = () => {
   };
   // console.log(user)
   return (
-    <Navbar className="bg-nav" expand="lg">
-      <Container>
+    <Navbar className="bg-nav px-4" expand="lg">
+      {/* <Container> */}
 
         <Navbar.Brand href="/student/home" className="text-white">
           Denso elearning Student
@@ -47,7 +47,7 @@ const NavStudent = () => {
 
           {/* <Nav.Link onClick={logout}>logout</Nav.Link> */}
         </Navbar.Collapse>
-      </Container>
+      {/* </Container> */}
     </Navbar>
   );
 };
