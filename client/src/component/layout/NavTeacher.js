@@ -33,10 +33,10 @@ const NavTeacher = () => {
             {/* <Nav.Link href="/teacher/create-quiz">สร้างแบบทดสอบ</Nav.Link> */}
             {/* <Nav.Link href="/teacher/list-score">ดูคะแนน</Nav.Link> */}
             {/* <Nav.Link href="/teacher/calendar">ตารางสอน</Nav.Link> */}
-            <Nav.Link href="/teacher/list-quiz">แบบทดสอบของฉัน</Nav.Link>
-            <Nav.Link href="/teacher/calendar-teacher">--ตารางสอน--</Nav.Link>
-            <Nav.Link href="/teacher/quiz">--QUIZ--</Nav.Link>
-            <Nav.Link href="/teacher/course">--COURSE--</Nav.Link>
+            <Nav.Link href="/teacher/list-quiz" >แบบทดสอบของฉัน</Nav.Link>
+            <Nav.Link href="/teacher/calendar-teacher">จัดการตารางสอน</Nav.Link>
+            {/* <Nav.Link href="/teacher/quiz">--QUIZ--</Nav.Link>
+            <Nav.Link href="/teacher/course">--COURSE--</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">

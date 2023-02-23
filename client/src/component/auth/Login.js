@@ -179,8 +179,8 @@ const Login = () => {
       <div className="black-g">
         <div className="container">
           <div className="d-flex justify-content-center">
-            <div className="card w-75  mt-5">
-              <div className="card-body">
+            <div className="card w-75  mt-5 shadow-sm">
+              <div className="card-body p-5">
                 <h3 className="text-center my-4">เข้าสู่ระบบ</h3>
                 <form onSubmit={handleSubmit}>
 

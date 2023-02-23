@@ -88,7 +88,7 @@ const Register = () => {
           <div className="container mt-5">
             <div className="d-flex justify-content-center">
             <div className="container">
-              <div className="card">
+              <div className="card shadow-sm">
                 <div className="card-body p-5">
                   <h3 className="text-center my-4">สมัครสมาชิก</h3>
                   <form onSubmit={handleSubmit}>
