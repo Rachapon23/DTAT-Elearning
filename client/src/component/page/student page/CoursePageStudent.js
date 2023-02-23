@@ -181,7 +181,12 @@ const CoursePageStudent = () => {
                                                     <div key={tdex} className="mb-2">
                                                         {ttem.filetype === 'image/jpeg'
                                                             ? <div className="container">
-                                                                <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                <div className="d-flex justify-content-center">
+                                                                    <div className="w-50">
+                                                                        <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                             :
                                                             <>
@@ -201,12 +206,22 @@ const CoursePageStudent = () => {
                                                                             <>
                                                                                 {ttem.filetype === "image/png"
                                                                                     ? <div className="container">
-                                                                                        <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                                        <div className="d-flex justify-content-center">
+                                                                                            <div className="w-50">
+                                                                                                <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                                            </div>
+                                                                                        </div>
+
                                                                                     </div>
                                                                                     : <>
                                                                                         {ttem.filetype == "image/webp"
                                                                                             ? <div className="container">
-                                                                                                <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                                                <div className="d-flex justify-content-center">
+                                                                                                    <div className="w-50">
+                                                                                                        <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                                                    </div>
+                                                                                                </div>
+
                                                                                             </div>
                                                                                             :
 
@@ -214,11 +229,16 @@ const CoursePageStudent = () => {
                                                                                                 {ttem.filetype == "video/mp4"
                                                                                                     ? <div className="container">
                                                                                                         <p>{(ttem.name).split('.')[0]}</p>
-                                                                                                        <video className="w-100" controls>
-                                                                                                            <source src={`${process.env.REACT_APP_IMG}/${ttem.filename}`}
-                                                                                                                type={ttem.filetype} />
-                                                                                                            Your browser does not support the video tag.
-                                                                                                        </video>
+                                                                                                        <div className="d-flex justify-content-center">
+                                                                                                            <div className="w-50">
+                                                                                                                <video className="w-100" controls>
+                                                                                                                    <source src={`${process.env.REACT_APP_IMG}/${ttem.filename}`}
+                                                                                                                        type={ttem.filetype} />
+                                                                                                                    Your browser does not support the video tag.
+                                                                                                                </video>
+                                                                                                            </div>
+                                                                                                        </div>
+
                                                                                                     </div>
                                                                                                     :
                                                                                                     <>

@@ -8,7 +8,7 @@ import { Switch } from 'antd';
 // import { Link } from "react-router-dom";
 // import Parser from 'html-react-parser';
 import { useNavigate } from 'react-router-dom'
-import { getCourse, removeCourse,enablecourse } from "../../../../function/teacher/funcCourse";
+import { getCourse, removeCourse, enablecourse } from "../../../../function/teacher/funcCourse";
 
 
 const CoursePageteacher = () => {
@@ -94,16 +94,17 @@ const CoursePageteacher = () => {
     const onChangeEnable = (checked) => {
         console.log(`switch to ${checked}`);
         enablecourse(sessionStorage.getItem("token"),
-        {   id:id,
-            enable:checked
-        })
-        .then((response) => {
-            console.log(response)
-            fetchCourse()
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            {
+                id: id,
+                enable: checked
+            })
+            .then((response) => {
+                console.log(response)
+                fetchCourse()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     };
 
 
@@ -157,7 +158,7 @@ const CoursePageteacher = () => {
                             <div className="">
                                 <p className="fs-6">{item.description}</p>
 
-                                {console.log("-> ",item)}
+                                {console.log("-> ", item)}
                                 {item.text.length > 0 &&
                                     <div className=""><ul>
                                         {item.text.map((ttem, tdex) =>
@@ -190,7 +191,13 @@ const CoursePageteacher = () => {
 
                                             <div key={tdex} className="mb-2">
                                                 {ttem.filetype === 'image/jpeg'
-                                                    ? <div className="container"><img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" /></div>
+                                                    ? <div className="container">
+                                                        <div className="d-flex justify-content-center">
+                                                            <div className="w-50">
+                                                                <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     :
                                                     <>
                                                         {ttem.filetype === 'application/pdf'
@@ -209,12 +216,22 @@ const CoursePageteacher = () => {
                                                                     <>
                                                                         {ttem.filetype === "image/png"
                                                                             ? <div className="container">
-                                                                                <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                                <div className="d-flex justify-content-center">
+                                                                                    <div className="w-50">
+                                                                                        <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                                    </div>
+                                                                                </div>
+
                                                                             </div>
                                                                             : <>
                                                                                 {ttem.filetype == "image/webp"
                                                                                     ? <div className="container">
-                                                                                        <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                                        <div className="d-flex justify-content-center">
+                                                                                            <div className="w-50">
+                                                                                                <img src={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="w-100" />
+                                                                                            </div>
+                                                                                        </div>
+
                                                                                     </div>
                                                                                     :
 
@@ -222,11 +239,16 @@ const CoursePageteacher = () => {
                                                                                         {ttem.filetype == "video/mp4"
                                                                                             ? <div className="container">
                                                                                                 <p>{(ttem.name).split('.')[0]}</p>
-                                                                                                <video className="w-100" controls>
-                                                                                                    <source src={`${process.env.REACT_APP_IMG}/${ttem.filename}`}
-                                                                                                        type={ttem.filetype} />
-                                                                                                    Your browser does not support the video tag.
-                                                                                                </video>
+                                                                                                <div className="d-flex justify-content-center">
+                                                                                                    <div className="w-50">
+                                                                                                        <video className="w-100" controls>
+                                                                                                            <source src={`${process.env.REACT_APP_IMG}/${ttem.filename}`}
+                                                                                                                type={ttem.filetype} />
+                                                                                                            Your browser does not support the video tag.
+                                                                                                        </video>
+                                                                                                    </div>
+                                                                                                </div>
+
                                                                                             </div>
                                                                                             :
                                                                                             <>
