@@ -32,16 +32,6 @@ headers:{
 }
 });
 
-//---------
-export const checkRole  = async(authtoken) =>
-await axios.get(process.env.REACT_APP_API+'/check-role',
-{
-    headers:{
-        authtoken,
-    }
-});
-
-//---------
 
 export const getMyaccount  = async(authtoken) =>
 await axios.get(process.env.REACT_APP_API+'/get-myaccount',

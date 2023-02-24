@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import './auth.css'
 import { sendEmail } from "../../function/auth";
-import { checkRole } from "../../function/teacher/funcMiscellaneous";
+import { checkRole } from "../../function/funcroute";
 
 const Login = () => {
   const navigate = useNavigate();

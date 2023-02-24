@@ -9,8 +9,6 @@ exports.checkUser = (req,res,next) =>{
             return res.status(401).send("no token, authorization denied")
         }
         const decoded = jwt.verify(token,"jwtSecret")
-        
-
         // console.log("Middleware: ",decoded)
         req.user = decoded.user
         next()

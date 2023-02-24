@@ -3,7 +3,7 @@ const router = express.Router()
 /* Multer  */
 const multer = require('multer')
 //middleware
-const {checkUser,checkAdmin,checkTeacher} = require('../middleware/middleward')
+const {checkUser,checkTeacher,checkAdmin} = require('../middleware/middleward')
 
 //controller
 const {
@@ -17,7 +17,8 @@ const {
     checkRole,
     getMyaccount,
     uploadProfile,
-    updateProfile
+    updateProfile,
+    returnRoute
 } = require('../controllers/userController')
 
 /* Multer  */
@@ -51,15 +52,15 @@ router.post('/current-admin',checkUser,checkAdmin,currentUser)
 router.post('/get_teacher_by_course_id', getTeacherByCourseId)
 
 
-router.get('/check-role',
-checkUser,
-// checkTeacher,
-checkRole
-)
+router.get('/check-role',checkUser,checkRole)
+
 router.get('/get-myaccount',checkUser,getMyaccount)
 router.post('/upload-profile',checkUser,upload,uploadProfile)
 router.post('/update-profile',checkUser,updateProfile)
 
-
+//route
+router.get('/route-user',checkUser,returnRoute)
+router.get('/route-teacher',checkUser,checkTeacher,returnRoute)
+router.get('/route-admin',checkUser,checkTeacher,checkAdmin,returnRoute)
 
 module.exports = router;

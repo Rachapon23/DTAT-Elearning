@@ -343,3 +343,13 @@ exports.updateProfile = async (req, res) => {
     res.status(500).send("error on updateProfile")
   }
 }
+
+exports.returnRoute = async (req, res) => {
+  try {
+    res.send(true)
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).send("Error your access denied")
+  }
+}
