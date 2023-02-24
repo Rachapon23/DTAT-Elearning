@@ -5,20 +5,21 @@ import { routeTeacher } from "../function/funcroute";
 const PrivateTeacher = () => {
     const [status, setStatus] = useState(true);
 
+    
     const CheckTeacher = () => {
         routeTeacher(sessionStorage.getItem("token"))
             .then((res) => {
-                // console.log(res.data)
+                console.log(res.data)
                 setStatus(res.data)
             }).catch(err=>{
-                // console.log(err)
+                console.log(err)
                 setStatus(false)
             })
     }
 
     useEffect(() => {
         CheckTeacher()
-    }, [status])
+    }, [])
   return (
     status ? <Outlet/> : <Navigate to="/"/> 
   )

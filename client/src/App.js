@@ -49,64 +49,33 @@ function App() {
 
 
         {/* admin */}
-        <Route element={<Privateadmin />}>
+        {/* <Route element={<Privateadmin />}> */}
           <Route path="/admin/home" element={<HomePageadmin />} />
-        </Route>
-        <Route element={<Privateadmin />}>
           <Route path="/admin/list-users" element={<AlluserFromadmin />} />
-        </Route>
-        <Route element={<Privateadmin />}>
           <Route path="/admin/list-students" element={<StudentFormAdmin />} />
-        </Route>
-        <Route element={<Privateadmin />}>
           <Route path="/admin/list-teachers" element={<TeacherFromAdmin />} />
-        </Route>
-
+        {/* </Route> */}
+ 
         {/* teacher */}
-        <Route element={<PrivateTeacher />}>
+        {/* <Route element={<PrivateTeacher />}> */}
           <Route path="/teacher/home" element={<HomePageTeacher />} />
-        </Route>
-        <Route element={<PrivateTeacher />}>
           <Route path="/teacher/quiz" element={<Quiz />} />
-        </Route>
-        <Route element={<PrivateTeacher />}>
           <Route path="/teacher/course" element={<Course />} />
-        </Route>
-        <Route element={<PrivateTeacher />}>
           <Route path="/teacher/edit-course/:id" element={<EditCourse />} />
-        </Route>
-        <Route element={<PrivateTeacher />}>
           <Route path="/teacher/edit-quiz/:id" element={<Editquiz />} />
-        </Route>
-        <Route element={<PrivateTeacher />}>
           <Route path="/teacher/list-quiz" element={<Listquiz />} />
-        </Route>
-        <Route element={<PrivateTeacher />}>
           <Route path="/teacher/list-courses" element={<CoursesPageteacher />} />
-        </Route>
-        <Route element={<PrivateTeacher />}>
           <Route path="/teacher/get-course/:id" element={<CoursePageteacher />} />
-        </Route>
-        <Route element={<PrivateTeacher />}>
           <Route path="/teacher/calendar-teacher" element={<Calendar />} />
-        </Route>
-
-
+        {/* </Route> */}
 
         {/* student */}
-        <Route element={<PrivateUser />}>
+        {/* <Route element={<PrivateUser />}> */}
           <Route path="/student/home" element={<HomePageStudent />} />
-        </Route>
-        <Route element={<PrivateUser />}>
           <Route path="/student/get-course/:id" element={<CoursePageStudent />} />
-        </Route>
-        <Route element={<PrivateUser />}>
           <Route path="/student/test/:params" element={<Dotest />} />
-        </Route>
-
-
-
-
+        {/* </Route> */}
+        
 
       </Routes>
     </div>

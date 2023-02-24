@@ -228,7 +228,7 @@ const CoursePageStudent = () => {
                                                                                             <>
                                                                                                 {ttem.filetype == "video/mp4"
                                                                                                     ? <div className="container">
-                                                                                                        <p>{(ttem.name).split('.')[0]}</p>
+                                                                                                        {/* <p>{(ttem.name).split('.')[0]}</p> */}
                                                                                                         <div className="d-flex justify-content-center">
                                                                                                             <div className="w-50">
                                                                                                                 <video className="w-100" controls>

@@ -34,7 +34,7 @@ const PublicCourse = () => {
                 <>
                     {item.enabled
                         ?
-                        <div className="col-md-6" >
+                        <div className="col-md-6 my-2" >
                             <div className="card back-public-2 shadow-sm back-public-black-2" onClick={() => nextToCourse(item._id)}>
                                 {item.image
                                     ? <img src={`${process.env.REACT_APP_IMG}/${item.image}`} className="card-img-top w-100" />
