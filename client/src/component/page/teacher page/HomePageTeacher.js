@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { getMyaccount, uploadProfile,updateProfile } from '../../../function/teacher/funcMiscellaneous'
 import { getmyCourseTeacher } from '../../../function/teacher/funcCourse';
 import { listQuiz} from "../../../function/teacher/funcQuiz";
-
+import './teacher.css'
 const HomePageTeacher = () => {
   // const [nextState, setNextState] = useState([]);
   const [edit, setEdit] = useState(false);
