@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 //middleware
-const {checkUser,checkTeacher,checkAdmin} = require('../middleware/middleward')
+const {checkUser, checkTeacher, checkAdmin} = require('../middleware/middleward')
 
 const {
     // create,
@@ -33,13 +33,13 @@ const {
 
 
 // teacher
-router.post('/quiz/create',createQuiz)
-router.get('/quiz/list-teacher',checkUser,listQuiz)
-router.get('/quiz/get-quiz/:id',getQuiz)
-router.delete('/quiz/remove-quiz/:params',remove)
-router.put("/quiz/update-quiz", updateQuiz);
+router.post('/quiz/create', checkUser, checkTeacher, createQuiz)
+router.get('/quiz/list-teacher',checkUser, checkTeacher, listQuiz)
+router.get('/quiz/get-quiz/:id', checkUser, checkTeacher, getQuiz)
+router.delete('/quiz/remove-quiz/:params', checkUser, checkTeacher, remove)
+router.put("/quiz/update-quiz", checkUser, checkTeacher, updateQuiz);
 
 //student
-router.get('/quiz/list-quiz-by/:params',listquizby)
+router.get('/quiz/list-quiz-by/:params', checkUser, listquizby) // ???
 
 module.exports = router;

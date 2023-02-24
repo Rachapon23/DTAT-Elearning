@@ -12,12 +12,12 @@ const {
     changeEnable
 } = require('../controllers/adminController')
 
-router.get('/listalluser',checkUser,checkTeacher,checkAdmin,listAlluser)
-router.get('/liststudentuser',checkUser,checkTeacher,listStudentuser)
-router.get('/listteacheruser',checkUser,checkTeacher,checkAdmin,listTeacheruser)
+router.get('/listalluser',checkUser, checkAdmin, listAlluser)
+router.get('/liststudentuser',checkUser, checkAdmin, listStudentuser)
+router.get('/listteacheruser',checkUser, checkAdmin, listTeacheruser)
 
 
-router.post('/change-role',checkUser,checkTeacher,checkAdmin,ChangeRole)
-router.post('/change_enable',checkUser,checkTeacher,checkAdmin,changeEnable)
+router.post('/change-role',checkUser, checkAdmin, ChangeRole)
+router.post('/change_enable',checkUser, checkAdmin, changeEnable)
 
 module.exports = router;

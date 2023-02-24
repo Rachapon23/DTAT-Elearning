@@ -45,27 +45,27 @@ const {checkUser,checkAdmin,checkTeacher} = require('../middleware/middleward')
 
 
 // // teacher
-router.post("/upload-img",upload,uploadimg);
-router.post("/update-img",upload,updateimg);
-router.post("/upload-file",upload,uploadfile);
+router.post("/upload-img",upload, checkUser, checkTeacher, uploadimg);
+router.post("/update-img",upload, checkUser, checkTeacher, updateimg);
+router.post("/upload-file",upload, checkUser ,checkTeacher, uploadfile);
 
 
-router.post("/create-course", createCourse);
-router.post("/enable-course", enablecourse);
-router.put("/update-course", updateCourse);
-router.get("/list-courses", listCourses);
-router.delete("/delete-courses/:id", deleteCourse);
-router.get("/get-mycourse-teacher",checkUser,getMyCourseTeacher);
-router.get("/list-room", getRoom);
+router.post("/create-course", checkUser, checkTeacher, createCourse);
+router.post("/enable-course", checkUser, checkTeacher, enablecourse);
+router.put("/update-course", checkUser, checkTeacher, updateCourse);
+router.get("/list-courses", checkUser, listCourses);
+router.delete("/delete-courses/:id", checkUser, checkTeacher, deleteCourse);
+router.get("/get-mycourse-teacher",checkUser, checkTeacher, getMyCourseTeacher);
+router.get("/list-room", checkUser, checkTeacher, getRoom);
 // router.post("/create-room", createRoom);
 
 // student
-router.post("/searchcourse", searchCourse);
-router.post("/addchcourse", addCourse);
-router.post("/get-my-course/:id", getMyCourse);
-router.post("/get-course/:id", getCourse);
-router.get("/list-public-courses", publicCourses);
-router.post("/delete-my-course/:id", deleteMyCourse);
+router.post("/searchcourse", checkUser, searchCourse);
+router.post("/addchcourse", checkUser, addCourse);
+router.get("/get-my-course/:id", checkUser, getMyCourse);
+router.get("/get-course/:id", checkUser, getCourse);
+router.get("/list-public-courses", checkUser, publicCourses);
+router.post("/delete-my-course/:id", checkUser, deleteMyCourse);
 
 
 module.exports = router

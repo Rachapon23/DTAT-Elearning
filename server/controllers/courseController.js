@@ -112,7 +112,6 @@ exports.listCourses = async (req, res) => {
 
 exports.publicCourses = async (req, res) => {
     try {
-
         await Coursee.find({ status: "public" })
             .exec((err, courses) => {
                 res.json(courses);
