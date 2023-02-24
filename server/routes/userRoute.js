@@ -53,9 +53,10 @@ router.post('/get_teacher_by_course_id', checkUser, getTeacherByCourseId)
 
 
 router.get('/check-role',checkUser,checkRole)
-router.get('/get-myaccount',checkUser,getMyaccount)
-router.post('/upload-profile',checkUser,upload,uploadProfile)
-router.post('/update-profile',checkUser,updateProfile)
+router.get('/get-myaccount',checkUser,checkTeacher,getMyaccount)
+
+router.post('/upload-profile',checkUser,checkTeacher,upload,uploadProfile)
+router.post('/update-profile',checkUser,checkTeacher, updateProfile)
 
 //route
 router.get('/route-user',checkUser,returnRoute)

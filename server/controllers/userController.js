@@ -346,7 +346,8 @@ exports.updateProfile = async (req, res) => {
 
 exports.returnRoute = async (req, res) => {
   try {
-    res.send(true)
+    console.log(req.user)
+    res.send({status: true, role: req.user.role})
   }
   catch (err) {
     console.log(err);
