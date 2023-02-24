@@ -45,7 +45,7 @@ const Quiz = () => {
     }) 
 
     const handAddName = (e) => {
-        if([e.target.name] === "attemp") {
+        if(e.target.name === "attemp") {
             setNameQuiz({ ...nameQuiz, [e.target.name]: Number(e.target.value) });    
             return
         }

@@ -9,11 +9,12 @@ const {
     updateCalendar,
     deleteCalendar
 } = require('../controllers/calendarController')
+const {checkUser,checkTeacher,checkAdmin} = require('../middleware/middleward')
 
-router.post('/create-calendar',createCalendar)
-router.get('/list-calendar',listCalendar)
-router.put('/update-calendar',updateCalendar)
-router.delete('/delete-calendar/:id',deleteCalendar)
+router.post('/create-calendar', checkUser, checkTeacher, createCalendar)
+router.get('/list-calendar', checkUser, listCalendar)
+router.put('/update-calendar', checkUser, checkTeacher, updateCalendar)
+router.delete('/delete-calendar/:id', checkUser, checkTeacher, deleteCalendar)
 
 
 module.exports = router;

@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-export const createQuiz  = async(authtoken,nameQuiz,value) => 
-    await axios.post(process.env.REACT_APP_API+'/quiz/create',nameQuiz,value,
+export const createQuiz  = async(authtoken,value) => 
+    await axios.post(process.env.REACT_APP_API+'/quiz/create',value,
     {
-    headers:{
-        authtoken,
+        headers:{
+            authtoken,
+        }
     }
-});
+);
 
 export const listQuiz  = async(authtoken) =>  
     await axios.get(process.env.REACT_APP_API+'/quiz/list-teacher', 
