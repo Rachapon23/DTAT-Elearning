@@ -87,6 +87,7 @@ exports.createQuizValidate = async (payload) => {
     
                         if(typeof payload.body[structure_key[i]][key] === data_head_validator[key])  console.log(`[+] ${typeof payload.body[structure_key[i]][key]}`)
                         else {
+                            console.log(typeof payload.body[structure_key[i]][key] ,data_head_validator[key])
                             console.log(`[-] ${payload.body[structure_key[i]][key]} ${typeof payload.body[structure_key[i]][key]}`)
                             return {valid: false, data: `${key} is not ${typeof payload.body[structure_key[i]][key]}`, field: key}
                         }

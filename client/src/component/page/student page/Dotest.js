@@ -94,6 +94,7 @@ const Dotest = () => {
                 // navigate('/student/get-course/'+state.id)
                 setStartQuiz(false);
                 setEndQuiz(true);
+                setValue([])
             })
             .catch(err => {
                 console.log(err)

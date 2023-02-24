@@ -11,7 +11,7 @@ const PublicCourse = () => {
     const [data, setData] = useState([])
 
     const loadData = () => {
-        publicCourses().then(res => {
+        publicCourses(sessionStorage.getItem("token")).then(res => {
             console.log(res)
             setData(res.data)
         }).catch(err => {

@@ -12,6 +12,7 @@ exports.createExaminer = async(req, res) => {
         } = req.body
         
         const teacherQuiz = await Quiz.findOne({_id: ObjectId(quiz)}).exec()
+        console.log(req.body)
         
         const examiner = new Examiner({
             examiner_id: ObjectId(examiner_id),
@@ -86,11 +87,13 @@ exports.listScore = async(req, res) => {
             quiz,
         } = req.body
         const examiners = await Examiner.find({examiner_id: examiner_id, quiz: quiz}).exec()
+        // console.log("---->",examiners)
+        const query_quiz = await Quiz.findOne({_id: quiz}).exec()
         let payload = []
         examiners.forEach((examiner, index) => {
-            payload.push({key: index+1, score: examiner.score, max_score: examiner.max_score})    
+            payload.push({key: index+1, score: examiner.score, max_score: query_quiz.question.length})    
         });
-        console.log(payload)
+        // console.log(payload)
         res.send(payload)
         
     }
