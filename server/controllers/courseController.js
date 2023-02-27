@@ -97,7 +97,7 @@ exports.createCourse = async (req, res) => {
 
 exports.listCourses = async (req, res) => {
     try {
-
+        
         await Coursee.find({}).populate("teacher", "-password")
             .exec((err, courses) => {
                 res.json(courses);
@@ -126,6 +126,7 @@ exports.publicCourses = async (req, res) => {
 
 exports.getCourse = async (req, res) => {
     try {
+        // console.log(req.params)
         const { id } = req.params
         const course = await Coursee.findOne({ _id: id })
             .populate('teacher room')
@@ -193,6 +194,7 @@ exports.addCourse = async (req, res) => {
 
 exports.getMyCourse = async (req, res) => {
     try {
+        
         const { id } = req.params
         const user = await User.findOne({ _id: id })
             .populate("coursee")

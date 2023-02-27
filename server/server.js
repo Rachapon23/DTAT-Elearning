@@ -31,8 +31,7 @@ readdirSync('./routes').map((r)=>app.use('/api',require('./routes/'+r)))
 
 //run on PORT
 const port = process.env.PORT
-app.listen(port,()=>{
-    console.log(`Server run on port ${port}`)
-    
+app.listen(port, () => {
+    console.log("running on port", port)
 })
 

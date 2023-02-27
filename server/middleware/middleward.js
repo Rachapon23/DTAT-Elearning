@@ -5,7 +5,7 @@ exports.checkUser = (req,res,next) =>{
     try{
         const token = req.headers["authtoken"]
         
-        // console.log("token: ",req.headers["authtoken"])
+        console.log("token: ",req.headers["authtoken"])
         if(!token){
             return res.status(401).send("no token, authorization denied")
         }

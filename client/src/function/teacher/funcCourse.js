@@ -33,7 +33,7 @@ headers:{
 
 
 export const getCourse  = async(authtoken,id) =>
-await axios.post(process.env.REACT_APP_API+'/get-course/'+id,
+await axios.get(process.env.REACT_APP_API+'/get-course/'+id,
 {
 headers:{
     authtoken,
