@@ -150,7 +150,7 @@ const Course = () => {
             })
     }
     const loadRoom = () => {
-        listRoom()
+        listRoom(sessionStorage.getItem("token"))
             .then(res => {
                 // console.log(res.data)
                 setRoom(res.data)
