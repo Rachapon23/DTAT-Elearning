@@ -134,7 +134,8 @@ exports.getCourse = async (req, res) => {
         res.send(course)
     }
     catch (err) {
-
+        console.log("fail to get courses");
+        res.status(500).json({ error: "fail to get courses" });
     }
 }
 

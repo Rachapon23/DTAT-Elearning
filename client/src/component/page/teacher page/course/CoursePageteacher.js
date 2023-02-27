@@ -36,7 +36,7 @@ const CoursePageteacher = () => {
                 )
             })
     }
-
+// console.log(id)
 
     useEffect(() => {
         fetchCourse()
