@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import PrivateUser from "./route/PrivateUser";
 import PrivateTeacher from "./route/PrivateTeacher";
 import Privateadmin from "./route/Privateadmin";
+import Notfound from "./component/page/Notfound";
 //auth
 import Login from "./component/auth/Login";
 import Register from "./component/auth/Register";
@@ -41,6 +42,7 @@ function App() {
 
       <Routes>
         {/* auth */}
+        <Route path="*" element={<Notfound/>} />
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<ResetPasswordRoute />}>
