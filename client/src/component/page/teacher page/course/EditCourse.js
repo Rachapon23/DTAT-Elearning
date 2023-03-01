@@ -174,6 +174,22 @@ const EditCourse = () => {
         setNextState([...nextState])
     }
 
+    const hadleAddNewQuiz = () => {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Warning',
+            text: 'Are you sure to leave this page your unsave data will be lost',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sure'
+        }).then((result) => {
+            if(result.isConfirmed) {
+                navigate("/teacher/quiz")
+            }
+        })
+    }
+
     useEffect(() => {
         fetchCourse()
     }, []);
@@ -707,7 +723,7 @@ const EditCourse = () => {
 
                                             {item.quiz.length > 0 &&
                                                 <div className="d-grid">
-                                                    <button className="btn btn-outline-secondary">สร้างแบบทดสอบใหม่</button>
+                                                    <button className="btn btn-outline-secondary" type="button" onClick={hadleAddNewQuiz}>สร้างแบบทดสอบใหม่</button>
                                                 </div>
                                             }
                                             <ul>
@@ -721,7 +737,7 @@ const EditCourse = () => {
                                                                         id={`quiz${index}${tdex}`}
                                                                         name="quiz"
                                                                         onChange={(e) => {
-                                                                            ttem.quiz = JSON.parse(e.target.value).key
+                                                                            ttem.quiz = JSON.parse(e.target.value)._id
                                                                             ttem.name = JSON.parse(e.target.value).name
                                                                             SetValueTopic([...valuetopic])
                                                                             document.getElementById(`quiz${index}${tdex}`).classList.remove("is-invalid");
