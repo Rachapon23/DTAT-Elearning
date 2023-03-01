@@ -28,7 +28,7 @@ const StudentFormAdmin = () => {
   }
   // console.log(data)
   const handlechange = (e, id) => {
-    // console.log(e.target.value,id)
+    console.log(e.target.value,id)
     let value = {
       id: id,
       role: e.target.value
@@ -98,7 +98,7 @@ const StudentFormAdmin = () => {
             <select onChange={(e) => handlechange(e, item._id)}
                 className="form-select " >
                 <option selected>{item.role}</option>
-                <option value="student">teacher</option>
+                <option value="teacher">teacher</option>
             </select>
         )
       }
