@@ -49,15 +49,15 @@ function App() {
 
 
         {/* admin */}
-        {/* <Route element={<Privateadmin />}> */}
+        <Route element={<Privateadmin />}>
           <Route path="/admin/home" element={<HomePageadmin />} />
           <Route path="/admin/list-users" element={<AlluserFromadmin />} />
           <Route path="/admin/list-students" element={<StudentFormAdmin />} />
           <Route path="/admin/list-teachers" element={<TeacherFromAdmin />} />
-        {/* </Route> */}
+        </Route>
  
         {/* teacher */}
-        {/* <Route element={<PrivateTeacher />}> */}
+        <Route element={<PrivateTeacher />}>
           <Route path="/teacher/home" element={<HomePageTeacher />} />
           <Route path="/teacher/quiz" element={<Quiz />} />
           <Route path="/teacher/course" element={<Course />} />
@@ -67,14 +67,14 @@ function App() {
           <Route path="/teacher/list-courses" element={<CoursesPageteacher />} />
           <Route path="/teacher/get-course/:id" element={<CoursePageteacher />} />
           <Route path="/teacher/calendar-teacher" element={<Calendar />} />
-        {/* </Route> */}
+        </Route>
 
         {/* student */}
-        {/* <Route element={<PrivateUser />}> */}
+        <Route element={<PrivateUser />}>
           <Route path="/student/home" element={<HomePageStudent />} />
           <Route path="/student/get-course/:id" element={<CoursePageStudent />} />
           <Route path="/student/test/:params" element={<Dotest />} />
-        {/* </Route> */}
+        </Route>
         
 
       </Routes>

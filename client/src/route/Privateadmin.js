@@ -19,7 +19,7 @@ const Privateadmin = () => {
 
     useEffect(() => {
         CheckAdmin()
-    }, [status])
+    }, [])
     return status ? <Outlet /> : <Navigate to="/" />
 
 }
