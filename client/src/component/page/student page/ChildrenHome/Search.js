@@ -147,7 +147,11 @@ const Search = ({ loadMycourse }) => {
                                 {course.enabled &&
                                     <div className="">
                                         <div className="card text-white bg-secondary p-0">
-                                            <img src={`${process.env.REACT_APP_IMG}/${course.image}`} className="card-img w-100" />
+                                            {!!course.image
+                                                ? <img src={`${process.env.REACT_APP_IMG}/${course.image}`} className="card-img w-100" />
+                                                : <img src="/book-main-img-3.png" className="card-img-top w-100" />
+                                            }
+
                                             <div className="card-img-overlay overlay">
                                                 {/* <p className="card-title fw-bold">วิชา : {course.name}</p> */}
                                                 {course.name.length > 55

@@ -31,5 +31,8 @@
   }
 
 
-
+  .head-form{
+    height: 10px;
+    border-radius: 3px 3px 0px 0px;
+}
 

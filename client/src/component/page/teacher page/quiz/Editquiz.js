@@ -5,12 +5,13 @@ import { useParams } from "react-router-dom";
 import { getQuiz, updateQuiz } from '../../../../function/teacher/funcQuiz'
 import './quiz.css'
 import Swal from "sweetalert2";
+import { useNavigate } from 'react-router-dom'
 
 const Editquiz = () => {
 
     const [valueQuiz, setValueQuiz] = useState([])
     const [nextState, setNextState] = useState([]);
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const { id } = useParams();
     const [nameQuiz, setNameQuiz] = useState
         ({
@@ -160,6 +161,7 @@ const Editquiz = () => {
                         `${response.data}`,
                         'success'
                     )
+                    navigate('/teacher/list-quiz')
                 })
                 .catch((err) => {
                     console.log(err)

@@ -10,49 +10,49 @@ const UserValiation = require("../validation/userValidation")
 
 //สมัครสมาชิก
 
-exports.register = async(req,res)=>{
-    try{
-        const validated_result = await UserValiation.registerValidate(req)
-        if(!validated_result.valid) return res.status(400).send(validated_result);
+exports.register = async (req, res) => {
+  try {
+    const validated_result = await UserValiation.registerValidate(req)
+    if (!validated_result.valid) return res.status(400).send(validated_result);
 
-        const {
-            employee_ID,
-            password,
-            department_ID,
-            email,
-            firstname,
-            lastname,
-        } = validated_result.data.body
+    const {
+      employee_ID,
+      password,
+      department_ID,
+      email,
+      firstname,
+      lastname,
+    } = validated_result.data.body
 
-        //ตรวจสอบว่าเป็นสมาชิกหรือยัง
-        let user = await User.findOne({employee_ID})
-        if(user){
-            return res.status(400).send("User already");
-        }
+    //ตรวจสอบว่าเป็นสมาชิกหรือยัง
+    let user = await User.findOne({ employee_ID })
+    if (user) {
+      return res.status(400).send("User already");
+    }
 
-        if(email.length > 0) {
-          const query_email = await User.findOne({email: email}).exec()
-          if(query_email) {
-            return res.status(400).send("This email has been used");
-          }
-        }
+    if (email.length > 0) {
+      const query_email = await User.findOne({ email: email }).exec()
+      if (query_email) {
+        return res.status(400).send("This email has been used");
+      }
+    }
 
-        user = new User({
-          employee_ID,
-          password,
-          department_ID,
-          email,
-          firstname,
-          lastname,
-        });
+    user = new User({
+      employee_ID,
+      password,
+      department_ID,
+      email,
+      firstname,
+      lastname,
+    });
 
-        // Encrypt password
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, salt);
+    // Encrypt password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
 
-        //register
-        await user.save();
-        res.send('register Success')
+    //register
+    await user.save();
+    res.send('register Success')
 
   } catch (err) {
     console.log(err)
@@ -62,43 +62,43 @@ exports.register = async(req,res)=>{
 
 //เข้าสู่ระบบ
 exports.login = async (req, res) => {
-    try {
-      const validated_result = await UserValiation.loginValidate(req)
-      if(!validated_result.valid) return res.status(400).send(validated_result);
+  try {
+    const validated_result = await UserValiation.loginValidate(req)
+    if (!validated_result.valid) return res.status(400).send(validated_result);
 
-      const { employee_ID, password } = validated_result.data.body;
-      var user = await User.findOneAndUpdate({ employee_ID }, { new: true });
-      if (user && user.enabled) {
+    const { employee_ID, password } = validated_result.data.body;
+    var user = await User.findOneAndUpdate({ employee_ID }, { new: true });
+    if (user && user.enabled) {
 
-        // Check password
-        const isMatch = await bcrypt.compare(password, user.password);
-  
-        if (!isMatch) {
-          return res.status(400).send("Password Invalid!!!");
-        }
+      // Check password
+      const isMatch = await bcrypt.compare(password, user.password);
 
-        // user_id = user._id.toString();
-        const Payload = {
-          user: {
-            fisrtname: user.firstname,
-            role: user.role,
-            user_id: user._id,
-          },
-        };
-
-        // Generate Token Time_limit( 1 day )
-        jwt.sign(Payload, "jwtSecret", { expiresIn: '1d' }, (err, token) => {
-          if (err) throw err;
-          res.json({ token, Payload });
-        });
-      } 
-      else if(user && user.enabled === false) {
-        return res.status(400).send("User not active!!! Please contact admin");
+      if (!isMatch) {
+        return res.status(400).send("Password Invalid!!!");
       }
-      else {
-        return res.status(400).send("User not found!!!");
-      }
-  } 
+
+      // user_id = user._id.toString();
+      const Payload = {
+        user: {
+          fisrtname: user.firstname,
+          role: user.role,
+          user_id: user._id,
+        },
+      };
+
+      // Generate Token Time_limit( 1 day )
+      jwt.sign(Payload, "jwtSecret", { expiresIn: '1d' }, (err, token) => {
+        if (err) throw err;
+        res.json({ token, Payload });
+      });
+    }
+    else if (user && user.enabled === false) {
+      return res.status(400).send("User not active!!! Please contact admin");
+    }
+    else {
+      return res.status(400).send("User not found!!!");
+    }
+  }
   catch (err) {
     console.log(err);
     res.status(500).send("Server Error!!! on Login");
@@ -143,30 +143,30 @@ exports.getTeacherByCourseId = async (req, res) => {
 
 exports.sendEmail = async (req, res) => {
 
-    try {
-      console.log(req)
-      const validated_result = await UserValiation.sendEmailValidate(req)
-      if(!validated_result.valid) return res.status(400).send(validated_result);
+  try {
+    console.log(req)
+    const validated_result = await UserValiation.sendEmailValidate(req)
+    if (!validated_result.valid) return res.status(400).send(validated_result);
 
-      const {email} = validated_result.data.body
-      const transporter = nodeMailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'densoeleaning@gmail.com',
-          pass: 'hqqabmpdjxmqsevf'
+    const { email } = validated_result.data.body
+    const transporter = nodeMailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'densoeleaning@gmail.com',
+        pass: 'hqqabmpdjxmqsevf'
+      }
+    });
+    const token = jwt.sign({ email: email }, "jwtSecret", { expiresIn: '5m' });
+    const reset_password_data = await ResetPassword.findOne({ email: email }).exec()
+
+    let isTokenExpire = true;
+    if (reset_password_data) {
+      jwt.verify(reset_password_data.token, "jwtSecret", (err, _) => {
+        if (!err) {
+          isTokenExpire = false;
+          return res.status(500).send("cannot reset password because previous token is not expire");
         }
       });
-      const token = jwt.sign({email: email}, "jwtSecret", { expiresIn: '5m' });
-      const reset_password_data = await ResetPassword.findOne({email: email}).exec()
-
-      let isTokenExpire = true;
-      if(reset_password_data) {
-        jwt.verify(reset_password_data.token,"jwtSecret", (err, _) => {
-          if (!err) {
-            isTokenExpire = false;
-            return res.status(500).send("cannot reset password because previous token is not expire");
-          }
-        });
       // return res.status(500).send("cannot reset password because previous token is not expire");
     }
 
@@ -233,16 +233,16 @@ exports.resetPassword = async (req, res) => {
 
     if (userEmail === tokenEmail) {
       await ResetPassword.findOneAndDelete({ token: req.headers.authtoken }).exec()
-      if(req.body.confirm_new_password === req.body.new_password) {
+      if (req.body.confirm_new_password === req.body.new_password) {
         const salt = await bcrypt.genSalt(10);
         const encrypted_password = await bcrypt.hash(req.body.confirm_new_password, salt);
-        await User.findOneAndUpdate({email: userEmail}, {password: encrypted_password})
+        await User.findOneAndUpdate({ email: userEmail }, { password: encrypted_password })
         return res.send("OK")
       }
       else {
-        return res.status(500).send("New password and Confirm new password are not the same")  
+        return res.status(500).send("New password and Confirm new password are not the same")
       }
-      
+
     }
     else {
       return res.status(500).send("Entered email does not match with email that server send to")
@@ -329,14 +329,12 @@ exports.updateProfile = async (req, res) => {
     const user = await User.findOneAndUpdate(
       { _id: req.user.user_id },
       {
-        // profile: filename,
         email: email,
         tel: tel
       }
     ).exec()
-    // console.log(email,tel)
-    // console.log(user)
     res.send(user)
+
   }
   catch (err) {
     console.log(err);
@@ -347,7 +345,7 @@ exports.updateProfile = async (req, res) => {
 exports.returnRoute = async (req, res) => {
   try {
     console.log(req.user)
-    res.send({status: true, role: req.user.role})
+    res.send({ status: true, role: req.user.role })
   }
   catch (err) {
     console.log(err);

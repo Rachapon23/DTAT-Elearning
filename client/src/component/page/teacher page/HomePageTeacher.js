@@ -22,8 +22,12 @@ const HomePageTeacher = () => {
   const loadData = () => {
     getMyaccount(sessionStorage.getItem("token"))
       .then(res => {
-        console.log(res)
+        console.log(res.data)
         setData(res.data)
+        setValue({
+          email:res.data.email,
+      tel: res.data.tel
+        })
       })
       .catch(err => {
         console.log(err)
