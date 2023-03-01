@@ -218,7 +218,7 @@ const EditCourse = () => {
             valid = false;
             document.getElementById("description").focus({ focusVisible: true });
         }
-        else if (!!!course.room) {
+        else if (!!!course.room && course.status !== "public") {
             setError({room: "Please select room"})
             valid = false;
             document.getElementById("room").focus({ focusVisible: true });
@@ -435,6 +435,20 @@ const EditCourse = () => {
                                                         value={course.password}
                                                     />
                                                 </div>
+
+                                                <label className="form-label  mt-3">ห้องเรียน</label>
+                                                <div className="">
+                                                    <select
+                                                        name="room"
+                                                        id="room"
+                                                        className="form-control"
+                                                        onChange={handAddName}>
+                                                        {course.room && <option value="">{course.room.room}</option>}
+                                                        {room.map((item, index) =>
+                                                            <option key={index} value={item._id}>{item.room}</option>
+                                                        )}
+                                                    </select>
+                                                </div>
                                             </>
                                         }
 
@@ -454,25 +468,7 @@ const EditCourse = () => {
                                     <div className="invalid-feedback">
                                         {error.description}
                                     </div>
-                                    <label className="form-label  mt-3">ห้องเรียน</label>
-                                    <div className="">
-                                        <select
-                                            name="room"
-                                            id="room"
-                                            className={
-                                                error.room && error.room.length !== 0 ? "form-control is-invalid" : "form-control"
-                                            }
-                                            onChange={handAddName}>
-                                            {course.room && <option value="">{course.room.room}</option>}
-                                            {room.map((item, index) =>
-                                                <option key={index} value={item._id}>{item.room}</option>
-                                            )}
-                                        </select>
-                                        <div className="invalid-feedback">
-                                            {error.room}
-                                        </div>
 
-                                    </div>
                                     <div className="">
                                         <label className="form-label  mt-3">ภาพหน้าปก</label>
                                         {course.image

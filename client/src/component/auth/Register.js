@@ -131,7 +131,7 @@ const Register = () => {
                           className={
                             error.password && error.password.length !== 0 ? "form-control is-invalid" : "form-control"
                           }
-                          type="text"
+                          type="password"
                           name="password"
                           onChange={handleChange}
                         />
@@ -145,7 +145,7 @@ const Register = () => {
                           className={
                             error.repassword && error.repassword.length !== 0 ? "form-control is-invalid" : "form-control"
                           }
-                          type="text"
+                          type="password"
                           name="repassword"
                           onChange={handleChange}
                         />
