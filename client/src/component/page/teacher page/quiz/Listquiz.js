@@ -73,7 +73,10 @@ const Listquiz = () => {
     {
       title: 'ลำดับ',
       align: 'center',
-      dataIndex: 'index',
+      dataIndex: '_id',
+      render: (_, dataObj) => {
+        return dataquiz.indexOf(dataObj) + 1
+      }
     },
     {
       title: "ชื่อแบบทดสอบ",
@@ -84,6 +87,9 @@ const Listquiz = () => {
       title: "จำนวนข้อ",
       align: 'center',
       dataIndex: 'noq',
+      render: (_, dataObj) => {
+        return dataObj.question.length
+      }
     },
     {
       title: "เข้าทดสอบได้",
@@ -96,7 +102,7 @@ const Listquiz = () => {
       dataIndex: 'edit',
       render: (_, item) => (
         <div>
-          <i className="bi bi-pencil-square text-warning" onClick={()=>handleEditQuiz(item.key)}></i>
+          <i className="bi bi-pencil-square text-warning" onClick={()=>handleEditQuiz(item._id)}></i>
         </div>
       ),
     },
@@ -105,7 +111,7 @@ const Listquiz = () => {
       align: 'center',
       dataIndex: 'delete',
       render: (_, item) => (
-        <i className="bi bi-trash text-danger" onClick={()=>handleRemoveQuiz(item.key)}></i>
+        <i className="bi bi-trash text-danger" onClick={()=>handleRemoveQuiz(item._id)}></i>
       ),
     },
   ];
@@ -125,7 +131,7 @@ const Listquiz = () => {
         <div className="row p-2 ">
           <div className="card">
             <div className="card-body">
-              <Table columns={columns} dataSource={dataquiz} ></Table>
+              <Table columns={columns} dataSource={dataquiz} key={1}></Table>
               {/* <table className="table table-hover">
                 <thead>
                   <tr>

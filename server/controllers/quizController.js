@@ -1,6 +1,7 @@
 
 const Quize = require('../models/quize')
 const QuizValidation = require("../validation/quizValidation")
+const User = require("../models/userModel")
 
 // exports.listquizUser = async (req, res) => {
 //     try {
@@ -96,23 +97,16 @@ exports.createQuiz = async (req, res) => {
 exports.listQuiz = async (req, res) => {
     try {
         const {user_id} = req.user
+        const user = await User.findOne({_id: user_id}).exec()
 
-        const quizzs = await Quize.find({teacher:user_id}).exec()
-      
-        // console.log(quizzs)
-        let payload = [];
-        quizzs.forEach((quiz, index) => {
-            payload.push({
-                index: index + 1,
-                key: quiz._id,
-                name: quiz.name,
-                explanation: quiz.explanation,
-                attemp: quiz.attemp,
-                noq: quiz.question.length,
-            })
-        })
-        res.send(payload)
-      
+        if(user.role === "admin") {
+            const quizzs = await Quize.find({}).exec()
+            return res.send(quizzs)
+        }
+        else {
+            const quizzs = await Quize.find({teacher:user_id}).exec()
+            return res.send(quizzs)
+        }
     } catch (err) {
         console.log(err)
         res.status(500).send('Server Error!!! on listQuiz')

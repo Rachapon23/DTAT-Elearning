@@ -243,10 +243,16 @@ exports.deleteMyCourse = async (req, res) => {
 exports.getMyCourseTeacher = async (req, res) => {
     try {
         const { user_id } = req.user
-        // console.log(req.user)
-        const courses = await Coursee.find({ teacher: user_id }).populate("teacher", "-password").exec()
-        res.send(courses)
-        // res.send("ok")
+        const user = await User.findOne({_id: user_id}).exec()
+
+        if(user.role === "admin") {
+            const courses = await Coursee.find({}).populate("teacher", "-password").exec()
+            return res.send(courses)
+        }
+        else {
+            const courses = await Coursee.find({ teacher: user_id }).populate("teacher", "-password").exec()
+            return res.send(courses)
+        }
     }
     catch (err) {
         console.log(err);

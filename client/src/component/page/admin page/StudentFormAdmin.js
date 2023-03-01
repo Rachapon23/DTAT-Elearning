@@ -2,6 +2,7 @@ import React from 'react'
 import NavAdmin from '../../layout/NavAdmin'
 import { listStudentuser, changeRole, changeEnable } from '../../../function/funcFromAdmin'
 import { useState, useEffect } from "react";
+import { Table } from 'antd';
 
 const StudentFormAdmin = () => {
 
@@ -59,12 +60,78 @@ const StudentFormAdmin = () => {
     })
   }
 
+  const columns = [
+    {
+      title: 'ลำดับ',
+      align: 'center',
+      dataIndex: '_id',
+      render: (_, dataObj) => {
+        return data.indexOf(dataObj) + 1
+      }
+    },
+    {
+      title: `รหัสพนักงาน`,
+      align: 'center',
+      dataIndex: 'employee_ID',
+    },
+    {
+      title: `รหัสแผนก`,
+      align: 'center',
+      dataIndex: 'department_ID',
+    },
+    {
+      title: `ชื่อ`,
+      align: 'center',
+      dataIndex: 'firstname',
+    },
+    {
+      title: `นามสกุล`,
+      align: 'center',
+      dataIndex: 'lastname',
+    },
+    {
+      title: `สิทธิ์`,
+      align: 'center',
+      dataIndex: 'role',
+      render: (_, item) => {
+        return (
+            <select onChange={(e) => handlechange(e, item._id)}
+                className="form-select " >
+                <option selected>{item.role}</option>
+                <option value="student">teacher</option>
+            </select>
+        )
+      }
+    },
+    {
+        title: `สถานะ`,
+        align: 'center',
+        dataIndex: 'enabled',
+        render: (_, item) => {
+            return (
+                <div className="form-check form-switch d-flex justify-content-center">
+                    <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked={item.enabled} onChange={(e) => handleChangeEanble(e, item._id)}/>
+                </div>
+            )
+        }
+    },
+];
+
   return (
     <div>
       <NavAdmin />
       <div className='container'>
         <div className='mt-5'>
-          <table className="table">
+          <Table 
+              columns={columns} 
+              dataSource={data}
+              pagination={{
+                defaultPageSize: 20,
+                showSizeChanger: true,
+                pageSizeOptions: ['10', '20', '30'],
+              }}
+            />
+          {/* <table className="table">
             <thead>
               <tr>
                 <th scope="col">ลำดับ</th>
@@ -85,7 +152,8 @@ const StudentFormAdmin = () => {
                   <td>{item.department_ID}</td>
                   <td>{item.firstname}</td>
                   <td>{item.lastname}</td>
-                  {/* <td className='text-success'>
+
+                  <td className='text-success'>
                     <div className="dropdown">
                       <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         {item.role}
@@ -94,7 +162,8 @@ const StudentFormAdmin = () => {
                         <li><a class="dropdown-item">Teacher</a></li>
                       </ul>
                     </div>
-                  </td> */}
+                  </td>
+
                   <td>
                     <select onChange={(e) => handlechange(e, item._id)}
                       className="form-select" >
@@ -106,7 +175,7 @@ const StudentFormAdmin = () => {
                   <td>
                     <div className="form-check form-switch">
                       <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked={item.enabled} onChange={(e) => handleChangeEanble(e, item._id)}/>
-                      {/* {console.log(item.enabled)} */}
+                      {console.log(item.enabled)}
                     </div>
                   </td>
 
@@ -117,7 +186,7 @@ const StudentFormAdmin = () => {
               )}
 
             </tbody>
-          </table>
+          </table> */}
         </div>
       </div>
 

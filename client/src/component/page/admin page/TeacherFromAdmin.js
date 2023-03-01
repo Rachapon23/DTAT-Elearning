@@ -3,6 +3,7 @@ import NavAdmin from '../../layout/NavAdmin'
 import { listTeacheruser, changeRole } from '../../../function/funcFromAdmin'
 import { useState, useEffect } from "react";
 import { changeEnable } from '../../../function/funcFromAdmin';
+import { Table } from 'antd';
 
 const TeacherFromAdmin = () => {
     const [data, setData] = useState([])
@@ -58,14 +59,80 @@ const TeacherFromAdmin = () => {
         .catch(err => {
           console.log(err)
         })
-      }
+    }
+
+    const columns = [
+        {
+          title: 'ลำดับ',
+          align: 'center',
+          dataIndex: '_id',
+          render: (_, dataObj) => {
+            return data.indexOf(dataObj) + 1
+          }
+        },
+        {
+          title: `รหัสพนักงาน`,
+          align: 'center',
+          dataIndex: 'employee_ID',
+        },
+        {
+          title: `รหัสแผนก`,
+          align: 'center',
+          dataIndex: 'department_ID',
+        },
+        {
+          title: `ชื่อ`,
+          align: 'center',
+          dataIndex: 'firstname',
+        },
+        {
+          title: `นามสกุล`,
+          align: 'center',
+          dataIndex: 'lastname',
+        },
+        {
+          title: `สิทธิ์`,
+          align: 'center',
+          dataIndex: 'role',
+          render: (_, item) => {
+            return (
+                <select onChange={(e) => handlechange(e, item._id)}
+                    className="form-select " >
+                    <option selected>{item.role}</option>
+                    <option value="student">student</option>
+                </select>
+            )
+          }
+        },
+        {
+            title: `สถานะ`,
+            align: 'center',
+            dataIndex: 'enabled',
+            render: (_, item) => {
+                return (
+                    <div className="form-check form-switch d-flex justify-content-center">
+                        <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked={item.enabled} onChange={(e) => handleChangeEanble(e, item._id)}/>
+                    </div>
+                )
+            }
+        },
+    ];
 
     return (
         <div>
             <NavAdmin />
             <div className='container'>
                 <div className='mt-5' >
-                    <table className="table" >
+                    <Table 
+                        columns={columns} 
+                        dataSource={data}
+                        pagination={{
+                            defaultPageSize: 20,
+                            showSizeChanger: true,
+                            pageSizeOptions: ['10', '20', '30'],
+                        }}
+                    />
+                    {/* <table className="table" >
                         <thead >
                             <tr >
                                 <th scope="col" >ลำดับ</th>
@@ -95,9 +162,11 @@ const TeacherFromAdmin = () => {
 
                                         </select>
                                     </td>
-                                    <td><div className="form-check form-switch d-flex justify-content-center">
-                                        <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked={item.enabled} onChange={(e) => handleChangeEanble(e, item._id)}/>
-                                    </div></td>
+                                    <td>
+                                        <div className="form-check form-switch d-flex justify-content-center">
+                                            <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked={item.enabled} onChange={(e) => handleChangeEanble(e, item._id)}/>
+                                        </div>
+                                    </td>
 
 
 
@@ -106,7 +175,7 @@ const TeacherFromAdmin = () => {
                             )}
 
                         </tbody>
-                    </table>
+                    </table> */}
                 </div>
             </div>
 

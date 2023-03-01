@@ -2,6 +2,7 @@ import React from 'react'
 import NavAdmin from '../../layout/NavAdmin'
 import { listAlluser } from '../../../function/funcFromAdmin'
 import { useState, useEffect } from "react";
+import { Table } from "antd";
 
 
 const AlluserFromadmin = () => {
@@ -26,14 +27,70 @@ const AlluserFromadmin = () => {
 
 
   }
-      // console.log(data)
+
+
+  const columns = [
+    {
+      title: 'ลำดับ',
+      align: 'center',
+      dataIndex: '_id',
+      render: (_, dataObj) => {
+        return data.indexOf(dataObj) + 1
+      }
+    },
+    {
+      title: `รหัสพนักงาน`,
+      align: 'center',
+      dataIndex: 'employee_ID',
+    },
+    {
+      title: `รหัสแผนก`,
+      align: 'center',
+      dataIndex: 'department_ID',
+    },
+    {
+      title: `ชื่อ`,
+      align: 'center',
+      dataIndex: 'firstname',
+    },
+    {
+      title: `นามสกุล`,
+      align: 'center',
+      dataIndex: 'lastname',
+    },
+    {
+      title: `สิทธิ์`,
+      align: 'center',
+      dataIndex: 'role',
+      render: (role) => {
+        if(role === "admin") {
+          return <div className='text-danger'>{role}</div>
+        }
+        else if(role === "teacher") {
+          return <div className='text-primary'>{role}</div>
+        }
+        else if(role === "student") {
+          return <div className='text-success'>{role}</div>
+        }
+      }
+    },
+];
 
   return (
     <div>
       <NavAdmin />
 <div className='container'>
     <div className='mt-5'>
-    <table className="table">
+      <Table 
+        columns={columns} 
+        dataSource={data} 
+        pagination={{
+          defaultPageSize: 20,
+          showSizeChanger: true,
+          pageSizeOptions: ['10', '20', '30'],
+        }}
+      />
+    {/* <table className="table">
         <thead>
           <tr>
             <th scope="col">ลำดับ</th>
@@ -62,7 +119,7 @@ const AlluserFromadmin = () => {
     )}
 
         </tbody>
-      </table>
+      </table> */}
     </div>
 </div>
 
