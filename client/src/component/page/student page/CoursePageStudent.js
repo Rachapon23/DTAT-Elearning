@@ -235,13 +235,13 @@ const CoursePageStudent = () => {
                                                                                                     ? <div className="container">
                                                                                                         {/* <p>{(ttem.name).split('.')[0]}</p> */}
                                                                                                         <div className="d-flex justify-content-center">
-                                                                                                            <div className="w-50">
-                                                                                                                <video className="w-100" controls>
+                                                                                                            {/* <div className="w-50"> */}
+                                                                                                                <video className="w-75" controls>
                                                                                                                     <source src={`${process.env.REACT_APP_IMG}/${ttem.filename}`}
                                                                                                                         type={ttem.filetype} />
                                                                                                                     Your browser does not support the video tag.
                                                                                                                 </video>
-                                                                                                            </div>
+                                                                                                            {/* </div> */}
                                                                                                         </div>
 
                                                                                                     </div>
