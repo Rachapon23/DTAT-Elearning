@@ -23,6 +23,8 @@ const Calendar = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [events, setEvents] = useState([])
     const [color, setColor] = useColor("hex", "#0288D1");
+    const [nextState, setNextState] = useState([]);
+    const [json, setJson] = useState('');
     const [values, setValues] = useState({
         title: '',
         start: '',
@@ -45,12 +47,13 @@ const Calendar = () => {
                 .then(res => {
                     console.log(res)
                     setValues({
-                        title: '',
+                        title: "",
                         start: '',
                         end: '',
                         color: '#0288D1',
                         coursee: ""
                     })
+                    setJson("")
                     loadData()
 
                 }).catch(err => {
@@ -70,7 +73,6 @@ const Calendar = () => {
         setValues({ ...values, [e.target.name]: e.target.value })
     }
     const onChangeColor = (e) => {
-        // console.log(e.hex)
         setValues({ ...values, color: e.hex })
         setColor(e)
     }
@@ -84,9 +86,8 @@ const Calendar = () => {
             end: info.endStr
         })
     }
+
     const handleChange = (info) => {
-        // console.log(info.event._def)
-        // // console.log(info.event.startStr, info.event.endStr)
         const values = {
             id: info.event._def.extendedProps._id,
             start: info.event.startStr,
@@ -112,6 +113,7 @@ const Calendar = () => {
     })
     const handleClick = (info) => {
         const id = info.event._def.extendedProps._id
+        // console.log(info.event._def.extendedProps.coursee.teacher)
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -131,32 +133,33 @@ const Calendar = () => {
                         })
                         loadData()
                     }).catch(err => {
-                        console.log(err)
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
-                            footer: '<a href="">Why do I have this issue?</a>'
-                        })
+                        if (err.response.data == "you have no rights") {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'หยุด!!!!!!',
+                                text: 'คุณณณณ!!!!!! ไม่มี สิทธิ!!!!!!!!!!',
+                            })
+                        } else {
+                            console.log(err)
+                        }
+
+
                     })
             }
         })
     }
-
     useEffect(() => {
         loadData()
     }, [])
-
     const loadData = () => {
         listCalendar(sessionStorage.getItem("token"))
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 setEvents(res.data)
             }).catch(err => {
                 console.log(err)
             })
     }
-
     const fetchMyCourse = () => {
         getmyCourseTeacher(sessionStorage.getItem("token"),
             sessionStorage.getItem("user_id"))
@@ -169,19 +172,22 @@ const Calendar = () => {
 
             })
     }
-
     useEffect(() => {
         fetchMyCourse()
     }, [])
 
+    const handleSelector = (e) => {
+        const course = (JSON.parse(e.target.value))
+        setValues({ ...values, title: course.name, coursee: course._id })
+        setJson(e.target.value)
+
+    }
     return (
         <div>
             <NavTeacher />
             <div className="container">
                 <div className="mt-4">
                     <div className="">
-
-
                         <div className="card">
                             <div className="bg-primary head-form"></div>
                             <div className="card-body p-5 ">
@@ -193,63 +199,38 @@ const Calendar = () => {
                                         right: "next"
                                     }}
                                     height={700}
-                                    // // contentHeight={600}
-                                    // // aspectRatio={2}
                                     themeSystem='bootstrap5'
-
                                     events={events}
                                     selectable={true}
                                     select={handleSelect}
-                                    // drop={handleRecieve}
-
-                                    // datesSet={currentMonth}
                                     eventClick={handleClick}
                                     editable={true}
                                     eventChange={handleChange}
-
                                 />
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
             <Modal title="สร้างตารางเรียน" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-
                 <div className="mb-5 mt-4">
                     <div className="form-group mb-3">
                         <label className='form-label'>เลือกคอร์ส</label>
-                        <select className="form-select" 
-                            id="selector"
-                            onChange={(e) => {
-                                values.coursee = JSON.parse(e.target.value)._id
-                                values.title = JSON.parse(e.target.value).name
-                            }}
-
-                        >
-                            <option >เลือกคอร์ส...</option>
+                        <select className="form-select"
+                            id="selector" value={json}
+                            onChange={handleSelector}>
+                            <option value="">เลือกคอร์ส...</option>
                             {courses.map((item, index) =>
-                                <option key={index} value={JSON.stringify(item)} >{item.name}</option>
+                                <option key={index} value={JSON.stringify(item)}>{item.name}</option>
                             )}
                         </select>
-
                     </div>
-
-
-
-
                     <div className="form-group">
                         <label className='form-label'>ธีม</label>
                         <div className="d-flex justify-content-center">
                             <ColorPicker width={456} height={228} color={color} onChange={onChangeColor} hideHSV dark />
                         </div>
-
-
                     </div>
-
-
                 </div>
             </Modal>
 
@@ -258,13 +239,3 @@ const Calendar = () => {
 }
 
 export default Calendar
-
-{/* <select className="form-select" name='color' onChange={onChangeValues} value={values.color}>
-                            <option value="#0288D1" className='blue'>blue</option>
-                            <option value="#D32F2F" className='red'>red</option>
-                            <option value="#512DA8" className='purple'>purple</option>
-                            <option value="#388E3C" className='green'>green</option>
-                            <option value="#FBC02D" className='yellow'>yellow</option>
-                            <option value="#E64A19" className='orange'>orange</option>
-                            <option value="#455A64" className='gray'>gray</option>
-                        </select> */}

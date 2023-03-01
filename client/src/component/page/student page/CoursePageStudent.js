@@ -112,6 +112,7 @@ const CoursePageStudent = () => {
                                         <p className="card-text fs-6">รายละเอียด : {course.description}</p>
                                         {course.status !== "public" ?
                                             <div className="d-flex">
+                                                <p className="text-muted ">รหัสวิชา : {course.course_number}&nbsp;&nbsp;</p>
                                                 <p className="text-muted ">ผู้สอน :&nbsp;</p>
                                                 <a onClick={showModal} className="text-info teacher-link">{course.teacher.firstname}</a>
                                             </div>
@@ -127,7 +128,11 @@ const CoursePageStudent = () => {
                                         <h3 className="card-title mb-3 fw-bold">{course.name}</h3>
                                         <p className="card-text fs-6">รายละเอียด : {course.description}</p>
                                         {course.status !== "public" ?
-                                            <p className="text-muted ">ผู้สอน : {course.teacher.firstname}</p>
+                                            <div className="d-flex">
+                                                <p className="text-muted ">รหัสวิชา : {course.course_number}&nbsp;&nbsp;</p>
+                                                <p className="text-muted ">ผู้สอน : {course.teacher.firstname}</p>
+                                            </div>
+
                                             : <div></div>
                                         }
                                     </div>
