@@ -139,9 +139,9 @@ const loadQuiz = () => {
                           ? <img src={`${process.env.REACT_APP_IMG}/${data.profile}`} className="rounded-circle Avatar-2 shadow" />
                           :
                           <div className="my-4">
-                            <label className="form-label">เพิ่มรูปโปรไฟล์</label>
+                            <label className="form-label">Add profile picture</label>
                             <input type="file" className="form-control" onChange={(e) => setFile(e.target.files[0])} />
-                            <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 360px * 360px</p>
+                            <p className='text-end mt-2' style={{ fontSize: "12px" }}>recommend size 360px * 360px</p>
                           </div>
                         }
                       </>
@@ -168,53 +168,53 @@ const loadQuiz = () => {
                 {!edit
                   ? <div className="">
                     <div className="mb-3 row">
-                      <label className="col-sm-2 col-form-label">name</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-3 col-form-label">Name</label>
+                      <div className="col-sm-9">
                         <input type="text" readOnly className="form-control-plaintext" value={`${data.firstname} ${data.lastname}`} />
                       </div>
                     </div>
                     <div className="mb-3 row">
-                      <label className="col-sm-2 col-form-label">email</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-3 col-form-label">Email</label>
+                      <div className="col-sm-9">
                         {!!data.email
                           ? <input type="text" readOnly className="form-control-plaintext" value={`${data.email}`} />
-                          : <input type="text" readOnly className="form-control-plaintext" value="ยังไม่มีข้อมูล" />
+                          : <input type="text" readOnly className="form-control-plaintext" value="No data" />
                         }
 
                       </div>
                     </div>
                     <div className="mb-3 row">
-                      <label className="col-sm-2 col-form-label">tel</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-3 col-form-label">Tel</label>
+                      <div className="col-sm-9">
                         {/* <input type="text" readOnly className="form-control-plaintext" value={`${data.tel}`} /> */}
                         {!!data.tel
                           ? <input type="text" readOnly className="form-control-plaintext" value={`${data.tel}`} />
-                          : <input type="text" readOnly className="form-control-plaintext" value="ยังไม่มีข้อมูล" />
+                          : <input type="text" readOnly className="form-control-plaintext" value="No data" />
                         }
                       </div>
                     </div>
                   </div>
                   : <form onSubmit={handleSubmit}>
                     <div className="mb-3 row">
-                      <label className="col-sm-2 col-form-label">name</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-3 col-form-label">Name</label>
+                      <div className="col-sm-9">
                         <input type="text" readOnly className="form-control-plaintext" value={`${data.firstname} ${data.lastname}`} />
                       </div>
                     </div>
                     <div className="mb-3 row">
-                      <label className="col-sm-2 col-form-label">Email</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-3 col-form-label">Email</label>
+                      <div className="col-sm-9">
                         <input type="email" className="form-control" name='email' defaultValue={data.email} onChange={handleChange} />
                       </div>
                     </div>
                     <div className="mb-4 row">
-                      <label className="col-sm-2 col-form-label">Tel</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-3 col-form-label">Tel</label>
+                      <div className="col-sm-9">
                         <input type="text" className="form-control" name='tel' defaultValue={data.tel} onChange={handleChange} />
                       </div>
                     </div>
                     <div className="d-grid">
-                      <button className="btn btn-warning text-white" type='submit'>บันทึก</button>
+                      <button className="btn btn-warning text-white" type='submit'> Save </button>
                     </div>
                   </form>
                 }
@@ -229,24 +229,24 @@ const loadQuiz = () => {
                    <div className="card">
               <div className="card-body p-5">
                 <div>
-                  <p>ข้อมูลเบื้อต้น</p>
+                  <p> Overview </p>
                   <hr />
                   <div className="my-3">
-                  <label className="form-label">บทเรียน</label>
+                  <label className="form-label"> Course </label>
                   <div className="mb-3 row">
-                      <label className="col-sm-5 col-form-label">จำนวน</label>
+                      <label className="col-sm-5 col-form-label">Amount</label>
                       <div className="col-sm-7">
-                        <input type="text" readOnly className="form-control-plaintext" value={`${courses.length} บทเรียน`} />
+                        <input type="text" readOnly className="form-control-plaintext" value={`${courses.length} courses`} />
                       </div>
                     </div>
                   </div>
                   <hr />
                   <div className="my-3">
-                  <label className="form-label">แบบทดสอบ</label>
+                  <label className="form-label">Quiz</label>
                   <div className="mb-3 row">
-                      <label className="col-sm-5 col-form-label">จำนวน</label>
+                      <label className="col-sm-5 col-form-label"> Amount </label>
                       <div className="col-sm-7">
-                        <input type="text" readOnly className="form-control-plaintext" value={`${dataquiz.length} แบบทดสอบ`} />
+                        <input type="text" readOnly className="form-control-plaintext" value={`${dataquiz.length} quizzes`} />
                       </div>
                     </div>
                   </div>

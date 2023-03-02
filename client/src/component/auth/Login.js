@@ -133,7 +133,7 @@ const Login = () => {
         console.log(res);
         Swal.fire(
           'Success',
-          'Send Email Success',
+          'Send email success, Please check your email inbox',
           'success'
         )
       // navigate("/");
@@ -181,11 +181,11 @@ const Login = () => {
           <div className="d-flex justify-content-center">
             <div className="card w-75  mt-5 shadow-sm">
               <div className="card-body p-5">
-                <h3 className="text-center my-4">เข้าสู่ระบบ</h3>
+                <h3 className="text-center my-4"> Login </h3>
                 <form onSubmit={handleSubmit}>
 
                   <div className="form-group">
-                    <label className="form-label">รหัสพนักงาน</label>
+                    <label className="form-label"> Employee ID</label>
                     <input
                       className={
                         error.employee_ID && error.employee_ID.length !== 0 ? "form-control is-invalid" : "form-control"
@@ -201,7 +201,7 @@ const Login = () => {
                   </div>
 
                   <div className="form-group mt-3">
-                    <label className="form-label">รหัสผ่าน</label>
+                    <label className="form-label"> Password </label>
                     <input
                       className={
                         error.password && error.password.length !== 0 ? "form-control is-invalid" : "form-control"
@@ -221,14 +221,14 @@ const Login = () => {
                   <br />
                   <div className="d-flex justify-content-center">
                     <button type="submit" className="btn btn-outline-primary">
-                      เข้าสู่ระบบ
+                      login
                     </button>
                   </div>
                 </form>
     
                 <div className="d-flex justify-content-between">
 
-                  <a className="text-muted" href="/#" onClick={showModal}>ลืมรหัสผ่าน</a>
+                  <a className="text-muted" href="/#" onClick={showModal}> forgot password </a>
 
                   <Modal title="Reset Password" open={isModalOpen} onOk={handleSendEmail} onCancel={closeModal}>
                     <div className="form-group mt-3">
@@ -249,7 +249,7 @@ const Login = () => {
                   </Modal>
 
                   <a className="text-muted" href="register">
-                    สมัครสมาชิก
+                    register
                   </a>
 
                 </div>

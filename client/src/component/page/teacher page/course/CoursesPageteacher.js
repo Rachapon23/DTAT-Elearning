@@ -58,7 +58,7 @@ const CoursesPageteacher = () => {
                     <div className="d-flex justify-content-end mt-4 bg-addcouse p-3  shadow-sm">
                         {/* <label className='form-label'>สร้างบทเรียน +</label> */}
                         <button type='button' className='btn btn-outline-primary' onClick={createCourse}
-                        >เพิ่มบทเรียน &nbsp; <i className="bi bi-folder-plus"></i>
+                        >Add Course &nbsp; <i className="bi bi-folder-plus"></i>
                         </button>
                     </div>
                 </div>
@@ -78,10 +78,10 @@ const CoursesPageteacher = () => {
                                         <div className="d-flex justify-content-between">
                                             <p className="card-title mb-0">{course.name}</p>
                                             <div className="d-flex">
-                                                <p className="card-title mb-0">สถานะ :</p>
+                                                <p className="card-title mb-0">Status :</p>
                                                 {course.enabled
-                                                    ? <p className="card-title text-success ms-2">เปิดใช้งาน</p>
-                                                    : <p className="card-title text-danger ms-2">ปิดการใช้งาน</p>
+                                                    ? <p className="card-title text-success ms-2"> Enable </p>
+                                                    : <p className="card-title text-danger ms-2"> Disable </p>
                                                 }
                                             </div>
 

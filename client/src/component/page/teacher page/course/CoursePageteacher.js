@@ -82,9 +82,8 @@ const CoursePageteacher = () => {
                         console.log(err)
                         Swal.fire({
                             icon: 'error',
-                            title: 'Oops...',
+                            title: 'Error',
                             text: 'Something went wrong!',
-                            footer: '<a href="">Why do I have this issue?</a>'
                         })
                     })
             }
@@ -118,7 +117,7 @@ const CoursePageteacher = () => {
                 {course &&
                     <>
                         <div className="d-flex justify-content-end mt-4">
-                            <label className='form-label me-3'>สถานะเปิดใช้งาน</label>
+                            <label className='form-label me-3'> Course Status </label>
                             <Switch defaultChecked={course.enabled} onChange={onChangeEnable} />
                         </div>
                         {course.image
@@ -127,9 +126,9 @@ const CoursePageteacher = () => {
                                 <div className="card-body">
                                     <div className="mt-3 px-2">
                                         <h3 className="card-title mb-3 fw-bold">{course.name}</h3>
-                                        <p className="card-text fs-6">รายละเอียด : {course.description}</p>
+                                        <p className="card-text fs-6">Detail: {course.description}</p>
                                         {course.status !== "public" ?
-                                            <p className="text-muted ">ผู้สอน : {course.teacher.firstname}</p>
+                                            <p className="text-muted ">Teacher : {course.teacher.firstname}</p>
                                             : <div></div>
                                         }
                                     </div>
@@ -140,9 +139,9 @@ const CoursePageteacher = () => {
                                 <div className="card-body alert-primary">
                                     <div className="mt-3 px-2 text-dark">
                                         <h3 className="card-title mb-3 fw-bold">{course.name}</h3>
-                                        <p className="card-text fs-6">รายละเอียด : {course.description}</p>
+                                        <p className="card-text fs-6">Detail : {course.description}</p>
                                         {course.status !== "public" ?
-                                            <p className="text-muted ">ผู้สอน : {course.teacher.firstname}</p>
+                                            <p className="text-muted ">Teacher : {course.teacher.firstname}</p>
                                             : <div></div>
                                         }
                                     </div>
@@ -253,7 +252,7 @@ const CoursePageteacher = () => {
                                                                                             </div>
                                                                                             :
                                                                                             <>
-                                                                                                <p>ไม่สามารถอ่านไฟลได้</p>
+                                                                                                <p>Cannot read file</p>
                                                                                             </>
                                                                                         }
                                                                                     </>
@@ -298,8 +297,8 @@ const CoursePageteacher = () => {
                     ))}
                 </div>
                 <div className="d-flex justify-content-between mb-4">
-                    <button onClick={() => nextToCourse(course._id)} className="btn btn-warning w-25">แก้ไข</button>
-                    <button onClick={() => remove(course._id)} className="btn btn-danger w-25">ลบ</button>
+                    <button onClick={() => nextToCourse(course._id)} className="btn btn-warning w-25">Edit</button>
+                    <button onClick={() => remove(course._id)} className="btn btn-danger w-25">Delete</button>
                 </div>
 
 

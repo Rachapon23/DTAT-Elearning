@@ -44,11 +44,11 @@ const PublicCourse = () => {
                                 <div className="card-body ">
                                     <h5 className="card-title mb-1 fw-bold">{item.name}</h5>
                                     {item.description.length > 130
-                                        ? <p className="card-text my-0 fs-6">รายละเอียด : {(item.description).substring(0, 130)} . . .</p>
-                                        : <p className="card-text my-0 fs-6">รายละเอียด : {(item.description)}</p>
+                                        ? <p className="card-text my-0 fs-6">Detail : {(item.description).substring(0, 130)} . . .</p>
+                                        : <p className="card-text my-0 fs-6">Detail : {(item.description)}</p>
                                     }
                                     {/* <p className="card-text my-0 fs-6">รายละเอียด : {(item.description).substring(0, 130)}...</p> */}
-                                    <p id='text-p-6' className="card-text mt-1 "><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p>
+                                    <p id='text-p-6' className="card-text mt-1 "><i className="bi bi-hand-index"></i>&nbsp; Click to study </p>
                                 </div>
                             </div>
                         </div>

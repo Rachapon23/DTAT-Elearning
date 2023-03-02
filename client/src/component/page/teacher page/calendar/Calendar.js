@@ -136,8 +136,8 @@ const Calendar = () => {
                         if (err.response.data == "you have no rights") {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'หยุด!!!!!!',
-                                text: 'คุณณณณ!!!!!! ไม่มี สิทธิ!!!!!!!!!!',
+                                title: 'Error',
+                                text: 'You cannot delete other time table',
                             })
                         } else {
                             console.log(err)
@@ -215,18 +215,18 @@ const Calendar = () => {
             <Modal title="สร้างตารางเรียน" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <div className="mb-5 mt-4">
                     <div className="form-group mb-3">
-                        <label className='form-label'>เลือกคอร์ส</label>
+                        <label className='form-label'> Select Course </label>
                         <select className="form-select"
                             id="selector" value={json}
                             onChange={handleSelector}>
-                            <option value="">เลือกคอร์ส...</option>
+                            <option value="">select course...</option>
                             {courses.map((item, index) =>
                                 <option key={index} value={JSON.stringify(item)}>{item.name}</option>
                             )}
                         </select>
                     </div>
                     <div className="form-group">
-                        <label className='form-label'>ธีม</label>
+                        <label className='form-label'>Theme</label>
                         <div className="d-flex justify-content-center">
                             <ColorPicker width={456} height={228} color={color} onChange={onChangeColor} hideHSV dark />
                         </div>

@@ -71,7 +71,7 @@ const Listquiz = () => {
 
   const columns = [
     {
-      title: 'ลำดับ',
+      title: 'No',
       align: 'center',
       dataIndex: '_id',
       render: (_, dataObj) => {
@@ -79,12 +79,12 @@ const Listquiz = () => {
       }
     },
     {
-      title: "ชื่อแบบทดสอบ",
+      title: "Quiz Name",
       align: 'center',
       dataIndex: 'name',
     },
     {
-      title: "จำนวนข้อ",
+      title: "Number of Questions",
       align: 'center',
       dataIndex: 'noq',
       render: (_, dataObj) => {
@@ -92,12 +92,12 @@ const Listquiz = () => {
       }
     },
     {
-      title: "เข้าทดสอบได้",
+      title: "Attemp",
       align: 'center',
       dataIndex: 'attemp',
     },
     {
-      title: "แก้ไข",
+      title: "Edit",
       align: 'center',
       dataIndex: 'edit',
       render: (_, item) => (
@@ -107,7 +107,7 @@ const Listquiz = () => {
       ),
     },
     {
-      title: "ลบ",
+      title: "Delete",
       align: 'center',
       dataIndex: 'delete',
       render: (_, item) => (
@@ -124,7 +124,7 @@ const Listquiz = () => {
                     <div className="d-flex justify-content-end mt-4 bg-addcouse p-3  shadow-sm">
                         {/* <label className='form-label'>สร้างบทเรียน +</label> */}
                         <button type='button' className='btn btn-outline-success' onClick={createQuiz}
-                        >เพิ่มแบบทดสอบ &nbsp;<i className="bi bi-folder-plus"></i>
+                        >Add Quiz &nbsp;<i className="bi bi-folder-plus"></i>
                         </button>
                     </div>
                 </div>

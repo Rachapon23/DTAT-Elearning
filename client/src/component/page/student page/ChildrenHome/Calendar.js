@@ -89,7 +89,7 @@ const Calendar = () => {
             />
             <div className="d-flex justify-content-end">
                 <button className='btn my-2 zoom-calendar' onClick={showModal}
-                >ขยาย <i className="bi bi-zoom-in"></i></button>
+                > Zoom <i className="bi bi-zoom-in"></i></button>
             </div>
             <Modal open={isModalOpen} width={1000} onOk={handleOk} onCancel={handleCancel}
 
@@ -114,7 +114,7 @@ const Calendar = () => {
 
 
 
-            <Modal title="ห้องเรียน" open={isModalOpen2} width={500} onOk={handleOk2} onCancel={handleCancel2}
+            <Modal title="Class Room" open={isModalOpen2} width={500} onOk={handleOk2} onCancel={handleCancel2}
                 centered
                 footer={[
 
@@ -125,9 +125,9 @@ const Calendar = () => {
                         <div key={index}>
                             {item._id == idCalen
                                 ? <div>
-                                    <p>คอร์ส : {item.coursee.name}</p>
-                                    <p>ห้องเรียน : {item.coursee.room.room}</p>
-                                    <p>ชั้น : {item.coursee.room.floor}</p>
+                                    <p>Course : {item.coursee.name}</p>
+                                    <p>Room : {item.coursee.room.room}</p>
+                                    <p>Floor : {item.coursee.room.floor}</p>
                                 </div>
                                 : <></>
                             }

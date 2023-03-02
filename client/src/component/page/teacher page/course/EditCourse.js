@@ -374,7 +374,7 @@ const EditCourse = () => {
                             <div className="card">
                                 <div className="bg-warning head-form"></div>
                                 <div className="card-body p-5">
-                                    <label className="form-label">ชื่อบทเรียน</label>
+                                    <label className="form-label">Course Name</label>
                                     <input
                                         type="text"
                                         className={
@@ -394,7 +394,7 @@ const EditCourse = () => {
                                         {course.status === "public"
                                             ? <>
                                                 <div className="col-md-6">
-                                                    <label className="form-label">รหัสบทเรียน</label>
+                                                    <label className="form-label">Course ID</label>
                                                     <input
                                                         type="text"
                                                         className={
@@ -412,7 +412,7 @@ const EditCourse = () => {
                                             </>
                                             : <>
                                                 <div className="col-md-6">
-                                                    <label className="form-label">รหัสบทเรียน</label>
+                                                    <label className="form-label">Course ID</label>
                                                     <input
                                                         type="text"
                                                         className={
@@ -429,14 +429,14 @@ const EditCourse = () => {
                                                 </div>
 
                                                 <div className="col-md-6">
-                                                    <label className="form-label">รหัสผ่าน</label>
+                                                    <label className="form-label">Course Password</label>
                                                     <input type="text" className="form-control" name='password'
                                                         onChange={handAddName}
                                                         value={course.password}
                                                     />
                                                 </div>
 
-                                                <label className="form-label  mt-3">ห้องเรียน</label>
+                                                <label className="form-label  mt-3">Room</label>
                                                 <div className="">
                                                     <select
                                                         name="room"
@@ -454,7 +454,7 @@ const EditCourse = () => {
 
                                     </div>
 
-                                    <label className="form-label  mt-3">รายละเอียด</label>
+                                    <label className="form-label  mt-3">Detail</label>
                                     <textarea
                                         type="text"
                                         className={
@@ -470,7 +470,7 @@ const EditCourse = () => {
                                     </div>
 
                                     <div className="">
-                                        <label className="form-label  mt-3">ภาพหน้าปก</label>
+                                        <label className="form-label  mt-3">Cover Picture</label>
                                         {course.image
                                             ?
                                             <div>
@@ -481,11 +481,11 @@ const EditCourse = () => {
                                                 }
                                                 <div className="d-flex justify-content-between py-2">
                                                     <button className="btn text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                        <i className="bi bi-pencil-square text-warning"></i> อัปเดต
+                                                        <i className="bi bi-pencil-square text-warning"></i> Update
                                                     </button>
                                                     {file === '' &&
                                                         <button className="btn text-danger" type="button" onClick={deleteFornt}>
-                                                            <i className="bi bi-trash text-danger"></i> ลบ
+                                                            <i className="bi bi-trash text-danger"></i> Delete
                                                         </button>
                                                     }
                                                 </div>
@@ -495,7 +495,7 @@ const EditCourse = () => {
                                                         <input type="file" className="form-control"
                                                             onChange={handleImg}
                                                         />
-                                                        <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 820px * 312px</p>
+                                                        <p className='text-end mt-2' style={{ fontSize: "12px" }}>recommend size 820px * 312px</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -523,7 +523,7 @@ const EditCourse = () => {
                                         </button>
                                     </div>
                                     <div className="card-body p-5">
-                                        <p>หัวเรื่อง</p>
+                                        <p>Topic</p>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -539,7 +539,7 @@ const EditCourse = () => {
                                         <div className="invalid-feedback">
                                             {errorTopic.title}
                                         </div>
-                                        <label className="form-label  mt-3">รายละเอียด</label>
+                                        <label className="form-label  mt-3">Detail</label>
                                         <textarea
                                             type="text"
                                             className="form-control"
@@ -557,7 +557,7 @@ const EditCourse = () => {
                                         </div>
 
                                         <div className="d-flex justify-content-between mb-0 mt-5" >
-                                            <p className="">เนื้อหาย่อย</p>
+                                            <p className="">Sub Content</p>
                                             <button className="btn h4 text-primary mb-0"
                                                 type='Button' onClick={(e) => handdleAddtext(e, index)}
                                             >+</button>
@@ -652,7 +652,7 @@ const EditCourse = () => {
                                             </ul>
                                         </div>
                                         <div className="d-flex justify-content-between mb-0 mt-3" >
-                                            <p className="">file</p>
+                                            <p className="">File</p>
                                             <button className="btn h4 text-primary mb-0"
                                                 type='Button' onClick={(e) => handdleAddfile(e, index)}
                                             >+</button>
@@ -709,7 +709,7 @@ const EditCourse = () => {
                                         </div>
 
                                         <div className="d-flex justify-content-between mb-0 mt-3" >
-                                            <p className="">แบบทดสอบ</p>
+                                            <p className="">Quiz</p>
                                             <button className="btn h4 text-primary mb-0"
                                                 type='Button' onClick={(e) => handdleAddquiz(e, index)}
                                             >+</button>
@@ -782,7 +782,7 @@ const EditCourse = () => {
                             </div>
 
                             <div className="d-grid my-3">
-                                <button type='submit' className="btn btn-warning">บันทึก</button>
+                                <button type='submit' className="btn btn-warning"> Save </button>
                             </div>
 
                         </form>

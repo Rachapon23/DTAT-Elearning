@@ -20,8 +20,8 @@ const Search = ({ loadMycourse }) => {
         if (!!!query.query) {
             Swal.fire(
                 {
-                    title: 'ต้องการหาคอร์สเรียนหรือไม่?',
-                    text: "กรุณากรอกรหัสประจำวิชา",
+                    title: 'Are you about to search course?',
+                    text: "Please fill course ID",
                     icon: 'question',
                     confirmButtonColor: '#0d6efd',
                     confirmButtonText: 'try again'
@@ -57,7 +57,7 @@ const Search = ({ loadMycourse }) => {
         // e.preventDefault();
 
         Swal.fire({
-            title: 'ป้อนรหัสเข้าเรียน',
+            title: 'Enter course password',
             input: 'text',
             inputAttributes: {
                 autocapitalize: 'off'
@@ -88,8 +88,8 @@ const Search = ({ loadMycourse }) => {
                             ) {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'รหัสผ่านไม่ถูกต้อง',
+                                    title: 'Error',
+                                    text: 'Password not correct',
                                     confirmButtonColor: '#0d6efd',
                                     confirmButtonText: 'try again'
                                 })
@@ -97,7 +97,7 @@ const Search = ({ loadMycourse }) => {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Oops...',
-                                    text: 'มีวิชานี้อยู่แล้ว',
+                                    text: 'You already enrolled this course',
                                     confirmButtonColor: '#0d6efd',
                                     confirmButtonText: 'try again'
                                 })
@@ -137,7 +137,7 @@ const Search = ({ loadMycourse }) => {
                 {data.length == 0
                     ? <>
                         {dataload &&
-                            <p className='mt-2'>ไม่พบคอร์สเรียนที่ค้นหา</p>
+                            <p className='mt-2'> No course found on your search</p>
                         }
                     </>
                     : <> <div className="row mt-3">
@@ -158,14 +158,14 @@ const Search = ({ loadMycourse }) => {
                                                     ? <p className="card-title fw-bold size-title">{(course.name).substring(0, 55)} ...</p>
                                                     : <p className="card-title fw-bold size-title">{(course.name)}</p>
                                                 }
-                                                <p className="mb-0">รหัสวิชา :  {course.course_number} </p>
+                                                <p className="mb-0">Course ID :  {course.course_number} </p>
                                                 {/* <p className="">ผู้สอน : {course.teacher.firstname}</p> */}
                                             </div>
                                         </div>
                                         <div className="d-grid mb-2">
                                             <button className="btn btn-outline-secondary btn-sm"
                                                 onClick={() => handleAddcourse(course._id)}
-                                            >ลงทะเบียน</button>
+                                            >Enroll</button>
                                         </div>
                                     </div>
                                 }

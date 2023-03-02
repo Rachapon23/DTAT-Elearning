@@ -28,13 +28,13 @@ const NavTeacher = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
           {/* <Nav.Link href="/teacher/home">หน้าแรก</Nav.Link> */}
-            <Nav.Link href="/teacher/list-courses">คอร์สของฉัน</Nav.Link>
+            <Nav.Link href="/teacher/list-courses"> Course </Nav.Link>
             {/* <Nav.Link href="/teacher/create-course">สร้างบทเรียน</Nav.Link> */}
             {/* <Nav.Link href="/teacher/create-quiz">สร้างแบบทดสอบ</Nav.Link> */}
             {/* <Nav.Link href="/teacher/list-score">ดูคะแนน</Nav.Link> */}
             {/* <Nav.Link href="/teacher/calendar">ตารางสอน</Nav.Link> */}
-            <Nav.Link href="/teacher/list-quiz" >แบบทดสอบของฉัน</Nav.Link>
-            <Nav.Link href="/teacher/calendar-teacher">จัดการตารางสอน</Nav.Link>
+            <Nav.Link href="/teacher/list-quiz" > Quiz </Nav.Link>
+            <Nav.Link href="/teacher/calendar-teacher"> Time table </Nav.Link>
             {/* <Nav.Link href="/teacher/quiz">--QUIZ--</Nav.Link>
             <Nav.Link href="/teacher/course">--COURSE--</Nav.Link> */}
           </Nav>

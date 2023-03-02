@@ -22,8 +22,8 @@ const Register = () => {
     console.log(value);
     if(value.new_password != value.confirm_new_password){
       Swal.fire(
-        'รหัสผ่านไม่ตรงกัน',
-        'รหัสผ่านไม่ตรงกัน',
+        'Error',
+        'Password not match',
         'error'
       )
     }
@@ -32,7 +32,7 @@ const Register = () => {
       .then((res) => {
         console.log(res);
         Swal.fire(
-          'สำเร็จ',
+          'Success',
           'Reset Password Success',
           'success'
         )
@@ -95,7 +95,7 @@ const Register = () => {
 
                 <div className="d-flex justify-content-center">
                   <button type="submit" className="btn btn-outline-success">
-                    Reset
+                    reset
                   </button>
                 </div>
 

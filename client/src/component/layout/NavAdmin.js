@@ -27,10 +27,10 @@ const NavAdmin = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {/* <Nav.Link href="/admin/home">หน้าแรก</Nav.Link> */}
-            <Nav.Link href="/admin/list-users">สมาชิกทั้งหมด</Nav.Link>
+            <Nav.Link href="/admin/list-users"> All user </Nav.Link>
             {/* <Nav.Link href="/homeadmin">จัดการแอดมิน</Nav.Link> */}
-            <Nav.Link href="/admin/list-teachers">จัดการผู้สอน</Nav.Link>
-            <Nav.Link href="/admin/list-students">จัดการผู้เรียน</Nav.Link>
+            <Nav.Link href="/admin/list-teachers"> Manage teacher </Nav.Link>
+            <Nav.Link href="/admin/list-students"> Manage student </Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Navbar.Collapse className="justify-content-end">

@@ -16,8 +16,8 @@ const Mycourse = ({ item, loadMycourse }) => {
     } else {
       Swal.fire({
         icon: 'error',
-        title: 'Oops...',
-        text: 'บทเรียนนี้ถูกปิดอยู่ในขณะนี้ กรุณมาเข้ามาใหม่ภายหลัง',
+        title: 'Error',
+        text: 'This course is now not available, plase try again later',
       })
     }
 
@@ -33,10 +33,10 @@ const Mycourse = ({ item, loadMycourse }) => {
         }
         <div className="card-body ">
           <h5 className="card-title">{item.name}</h5>
-          <p style={{ fontSize: '14px' }} className="card-text text-muted mb-0">รหัสวิชา : {item.course_number}</p>
+          <p style={{ fontSize: '14px' }} className="card-text text-muted mb-0">Course ID : {item.course_number}</p>
           {item.description.length < 45
-            ? <p style={{ fontSize: '14px' }} className="card-text text-muted">รายละเอียด : {(item.description)}</p>
-            : <p style={{ fontSize: '14px' }} className="card-text text-muted">รายละเอียด : {(item.description.substring(0, 45))}...</p>
+            ? <p style={{ fontSize: '14px' }} className="card-text text-muted">Detail : {(item.description)}</p>
+            : <p style={{ fontSize: '14px' }} className="card-text text-muted">Detail : {(item.description.substring(0, 45))}...</p>
           }
         </div>
       </div>
