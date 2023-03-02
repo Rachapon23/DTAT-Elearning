@@ -63,7 +63,7 @@ const TeacherFromAdmin = () => {
 
     const columns = [
         {
-          title: 'ลำดับ',
+          title: 'No',
           align: 'center',
           dataIndex: '_id',
           render: (_, dataObj) => {
@@ -71,27 +71,27 @@ const TeacherFromAdmin = () => {
           }
         },
         {
-          title: `รหัสพนักงาน`,
+          title: `Employee ID`,
           align: 'center',
           dataIndex: 'employee_ID',
         },
         {
-          title: `รหัสแผนก`,
+          title: `Department ID`,
           align: 'center',
           dataIndex: 'department_ID',
         },
         {
-          title: `ชื่อ`,
+          title: `First Name`,
           align: 'center',
           dataIndex: 'firstname',
         },
         {
-          title: `นามสกุล`,
+          title: `Last Name`,
           align: 'center',
           dataIndex: 'lastname',
         },
         {
-          title: `สิทธิ์`,
+          title: `Authority`,
           align: 'center',
           dataIndex: 'role',
           render: (_, item) => {
@@ -105,7 +105,7 @@ const TeacherFromAdmin = () => {
           }
         },
         {
-            title: `สถานะ`,
+            title: `Status`,
             align: 'center',
             dataIndex: 'enabled',
             render: (_, item) => {

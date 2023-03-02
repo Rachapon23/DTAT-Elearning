@@ -35,8 +35,8 @@ const Register = () => {
     if(value.password !== value.repassword ){
 
       Swal.fire(
-        'รหัสผ่านไม่ตรงกัน',
-        'รหัสผ่านไม่ตรงกัน',
+        'Error',
+        'Password not match',
         'error'
       )
     } else {
@@ -44,8 +44,8 @@ const Register = () => {
       .then((res) => {
         console.log(res);
         Swal.fire(
-          'สำเร้จ',
-          'สมัครสมาชิกสำเร็จ',
+          'Success',
+          'Register success',
           'success'
         )
         navigate("/");
@@ -92,11 +92,11 @@ const Register = () => {
             <div className="container">
               <div className="card shadow-sm">
                 <div className="card-body p-5">
-                  <h3 className="text-center my-4">สมัครสมาชิก</h3>
+                  <h3 className="text-center my-4"> Register </h3>
                   <form onSubmit={handleSubmit}>
                     <div className="row">
                       <div className="form-group col-md-6 mt-3">
-                        <label className="form-label">รหัสพนักงาน</label>
+                        <label className="form-label"> Employee ID</label>
                         <input
                           className={
                             error.employee_ID && error.employee_ID.length !== 0 ? "form-control is-invalid" : "form-control"
@@ -110,7 +110,7 @@ const Register = () => {
                         </div>
                       </div>
                       <div className="form-group col-md-6  mt-3">
-                        <label className="form-label">รหัสแผนก</label>
+                        <label className="form-label"> Department ID </label>
                         <input
                           className={
                             error.department_ID && error.department_ID.length !== 0 ? "form-control is-invalid" : "form-control"
@@ -126,7 +126,7 @@ const Register = () => {
                     </div>
                     <div className="row">
                       <div className="form-group col-md-6  mt-3">
-                        <label className="form-label">รหัสผ่าน</label>
+                        <label className="form-label"> Password </label>
                         <input
                           className={
                             error.password && error.password.length !== 0 ? "form-control is-invalid" : "form-control"
@@ -140,7 +140,7 @@ const Register = () => {
                         </div>
                       </div>
                       <div className="form-group col-md-6  mt-3">
-                        <label className="form-label">ยืนยันรหัสผ่าน</label>
+                        <label className="form-label"> Confirm Password</label>
                         <input
                           className={
                             error.repassword && error.repassword.length !== 0 ? "form-control is-invalid" : "form-control"
@@ -172,7 +172,7 @@ const Register = () => {
                     </div>
                     <div className="row">
                       <div className="form-group col-md-6  mt-3">
-                        <label className="form-label">ชื่อ</label>
+                        <label className="form-label"> First Name </label>
                         <input
                           className={
                             error.firstname && error.firstname.length !== 0 ? "form-control is-invalid" : "form-control"
@@ -186,7 +186,7 @@ const Register = () => {
                         </div>
                       </div>
                       <div className="form-group col-md-6  mt-3">
-                        <label className="form-label">นามสกุล</label>
+                        <label className="form-label"> Last Name </label>
                         <input
                           className={
                             error.lastname && error.lastname.length !== 0 ? "form-control is-invalid" : "form-control"
@@ -204,7 +204,7 @@ const Register = () => {
                     <br />
                     <div className="d-flex justify-content-center">
                       <button type="submit" className="btn btn-outline-success">
-                        สมัครสมาชิก
+                        register
                       </button>
                     </div>
                     </form>

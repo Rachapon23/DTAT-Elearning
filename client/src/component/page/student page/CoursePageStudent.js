@@ -109,11 +109,11 @@ const CoursePageStudent = () => {
                                 <div className="card-body">
                                     <div className="mt-3 px-2">
                                         <h3 className="card-title mb-3 fw-bold">{course.name}</h3>
-                                        <p className="card-text fs-6">รายละเอียด : {course.description}</p>
+                                        <p className="card-text fs-6">Detail : {course.description}</p>
                                         {course.status !== "public" ?
                                             <div className="d-flex">
-                                                <p className="text-muted ">รหัสวิชา : {course.course_number}&nbsp;&nbsp;</p>
-                                                <p className="text-muted ">ผู้สอน :&nbsp;</p>
+                                                <p className="text-muted "> Course ID : {course.course_number}&nbsp;&nbsp;</p>
+                                                <p className="text-muted "> Teacher :&nbsp;</p>
                                                 <a onClick={showModal} className="text-info teacher-link">{course.teacher.firstname}</a>
                                             </div>
                                             : <div></div>
@@ -126,11 +126,11 @@ const CoursePageStudent = () => {
                                 <div className="card-body alert-primary">
                                     <div className="mt-3 px-2 text-dark">
                                         <h3 className="card-title mb-3 fw-bold">{course.name}</h3>
-                                        <p className="card-text fs-6">รายละเอียด : {course.description}</p>
+                                        <p className="card-text fs-6">Detail : {course.description}</p>
                                         {course.status !== "public" ?
                                             <div className="d-flex">
-                                                <p className="text-muted ">รหัสวิชา : {course.course_number}&nbsp;&nbsp;</p>
-                                                <p className="text-muted ">ผู้สอน : {course.teacher.firstname}</p>
+                                                <p className="text-muted "> Course ID : {course.course_number}&nbsp;&nbsp;</p>
+                                                <p className="text-muted ">Teacher : {course.teacher.firstname}</p>
                                             </div>
 
                                             : <div></div>
@@ -247,7 +247,7 @@ const CoursePageStudent = () => {
                                                                                                     </div>
                                                                                                     :
                                                                                                     <>
-                                                                                                        <p>ไม่สามารถอ่านไฟลได้</p>
+                                                                                                        <p> Cannot read file </p>
                                                                                                     </>
                                                                                                 }
                                                                                             </>
@@ -293,21 +293,21 @@ const CoursePageStudent = () => {
                             : <div className="mb-5">
                                 <button className="btn btn-danger" type="button"
                                     onClick={() => handleRemove(id)}
-                                >อกกจากบทเรียน</button>
+                                > Leave course </button>
                             </div>
                         }
-                        <Modal title={`ผู้สอน : ${teacher.firstname} ${teacher.lastname}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
+                        <Modal title={`Teacher : ${teacher.firstname} ${teacher.lastname}`} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={[]}>
                             <div className="row p-2">
                                 <div className="col-md-6 mt-2">
                                     <img src={`${process.env.REACT_APP_IMG}/${teacher.profile}`} className="w-100" />
                                 </div>
                                 <div className="col-md-6 mt-2">
-                                    <label className="form-label">email</label>
+                                    <h6><label className="form-label">Email</label></h6>
                                     {!teacher.email
                                         ? <p>-</p>
                                         : <p>{teacher.email}</p>
                                     }
-                                    <label className="form-label">tel</label>
+                                    <h6><label className="form-label">Tel</label></h6>
                                     {!teacher.tel
                                         ? <p>-</p>
                                         : <p>{teacher.tel}</p>
@@ -318,7 +318,7 @@ const CoursePageStudent = () => {
                     </div>
                     :
                     <div className="border bg-white my-3 p-4">
-                        <p className="text-center text-danger">บทเรียนนี้ถูกปิดอยู่ในขณะนี้ กรุณมาเข้ามาใหม่ภายหลัง</p>
+                        <p className="text-center text-danger">This course is now not available, plase try again later</p>
                     </div>
                 }
 

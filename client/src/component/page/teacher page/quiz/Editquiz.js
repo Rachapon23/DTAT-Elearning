@@ -212,7 +212,7 @@ const Editquiz = () => {
                                 
                                 <div className="row">
                                     <div className="col-8">
-                                        <label className="form-label">ชื่อการทดสอบ</label>
+                                        <label className="form-label"> Quiz Name</label>
                                         <input 
                                             type="text" 
                                             className={
@@ -228,7 +228,7 @@ const Editquiz = () => {
                                         </div>
                                     </div>
                                     <div className="col-4">
-                                        <label className="form-label">จำนวนในการเข้าทำแบบทดสอบ</label>
+                                        <label className="form-label"> Attemp </label>
                                         <input 
                                             type="number" 
                                             min="1" 
@@ -249,7 +249,7 @@ const Editquiz = () => {
 
                                 <div className="row">
                                     <div>
-                                        <label className="form-label  mt-3">คำชี้แจง</label>
+                                        <label className="form-label  mt-3"> Description </label>
                                         <textarea 
                                             type="text" 
                                             className={
@@ -279,11 +279,11 @@ const Editquiz = () => {
                                     </button>
                                 </div>
                                 <div className="card-body p-5">
-                                    <p>ข้อที่ {index + 1}</p>
+                                    <p>Question {index + 1}</p>
                                     <textarea 
                                         type="text" 
                                         id={`title${index}`} 
-                                        placeholder='คำถาม' 
+                                        placeholder='Question' 
                                         className="form-control"
                                         onChange={(e) => {
                                             item.title = e.target.value
@@ -482,7 +482,7 @@ const Editquiz = () => {
                         </div>
 
                         <div className="d-grid my-3">
-                            <button type='submit' className="btn btn-warning">บันทึก</button>
+                            <button type='submit' className="btn btn-warning"> Save </button>
                         </div>
                     </form>
                 </div>

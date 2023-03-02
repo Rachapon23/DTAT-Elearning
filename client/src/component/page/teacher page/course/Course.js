@@ -339,7 +339,7 @@ const Course = () => {
                         <div className="card">
                             <div className="bg-primary head-form"></div>
                             <div className="card-body p-5">
-                                <label className="form-label">ชื่อบทเรียน</label>
+                                <label className="form-label">Course Name</label>
                                 <input 
                                     type="text" 
                                     className={
@@ -355,7 +355,7 @@ const Course = () => {
 
                                 <div className="row mt-3">
                                     <div className="col-md-6">
-                                        <label className="form-label">รหัสบทเรียน</label>
+                                        <label className="form-label">Course ID</label>
                                         <input 
                                             type="text" 
                                             className={
@@ -370,13 +370,13 @@ const Course = () => {
                                         </div>
                                     </div>
                                     <div className="col-md-6">
-                                        <label className="form-label">รหัสผ่าน</label>
+                                        <label className="form-label">Password</label>
                                         <input type="text" className="form-control" name='password'
                                             onChange={handAddName} />
                                     </div>
                                 </div>
 
-                                <label className="form-label  mt-3">รายละเอียด</label>
+                                <label className="form-label  mt-3">Confirm Password</label>
                                 <textarea type="text" 
                                     className={
                                         error.description && error.description.length !== 0 ? "form-control is-invalid" : "form-control"
@@ -389,7 +389,7 @@ const Course = () => {
                                     {error.description}
                                 </div>
 
-                                <label className="form-label  mt-3">ห้องเรียน</label>
+                                <label className="form-label  mt-3">Room</label>
                                 <div className="">
                                     <select 
                                         name="room" 
@@ -398,7 +398,7 @@ const Course = () => {
                                             error.room && error.room.length !== 0 ? "form-control is-invalid" : "form-control"
                                         }  
                                         onChange={handAddName}>
-                                        <option value="">เลือกห้อง</option>
+                                        <option value="">select room...</option>
                                         {room.map((item, index) =>
                                             <option key={index} value={item._id}>{item.room}</option>
                                         )}
@@ -408,10 +408,10 @@ const Course = () => {
                                     </div>
                                 </div>
 
-                                <label className="form-label  mt-3">รูปหน้าปก</label>
+                                <label className="form-label  mt-3">Cover Picture</label>
                                 <div className="">
                                     <input type="file" className="form-control" onChange={handleImg} />
-                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 820px * 312px</p>
+                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}> recommend size 820px * 312px </p>
                                 </div>
                             </div>
                         </div>
@@ -426,7 +426,7 @@ const Course = () => {
                                     </button>
                                 </div>
                                 <div className="card-body p-5">
-                                    <p>หัวเรื่อง</p>
+                                    <p>Topic</p>
                                     <div>
                                         <input 
                                             type="text" 
@@ -446,7 +446,7 @@ const Course = () => {
                                     </div>
 
                                     <div>
-                                        <label className="form-label  mt-3">รายละเอียด</label>
+                                        <label className="form-label  mt-3"> Detail </label>
                                         <textarea 
                                             type="text" 
                                             className="form-control"
@@ -465,7 +465,7 @@ const Course = () => {
                                     </div>
 
                                     <div className="d-flex justify-content-between mb-0 mt-4" >
-                                        <p className="">เนื้อหาย่อย</p>
+                                        <p className="">Sub Content</p>
                                         <button className="btn h4 text-primary mb-0"
                                             type='Button' onClick={(e) => handdleAddtext(e, index)}
                                         >+</button>
@@ -640,7 +640,7 @@ const Course = () => {
                                     </div> */}
 
                                     <div className="d-flex justify-content-between mb-0 mt-3" >
-                                        <p className="">แบบทดสอบ</p>
+                                        <p className=""> Quiz </p>
                                         <button className="btn h4 text-primary mb-0"
                                             type='Button' onClick={(e) => handdleAddquiz(e, index)}
                                         >+</button>
@@ -673,7 +673,7 @@ const Course = () => {
                                                                     className= "form-control"
                                                                     defaultValue={'DEFAULT'}>
 
-                                                                    <option value="DEFAULT" disabled>เลือกแบบทดสอบ</option>
+                                                                    <option value="DEFAULT" disabled>select quiz...</option>
                                                                     {dataquiz.map((dtem, ddex) => (
                                                                         <option key={ddex} value={JSON.stringify(dtem)} >{dtem.name}</option>
                                                                     ))}
@@ -716,7 +716,7 @@ const Course = () => {
                         </div>
 
                         <div className="d-grid my-3">
-                            <button type='submit' className="btn btn-primary">บันทึก</button>
+                            <button type='submit' className="btn btn-primary">  Save </button>
                         </div>
 
                     </form>
