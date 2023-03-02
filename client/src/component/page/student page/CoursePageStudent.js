@@ -247,8 +247,18 @@ const CoursePageStudent = () => {
                                                                                                     </div>
                                                                                                     :
                                                                                                     <>
-                                                                                                        <p> Cannot read file </p>
-                                                                                                    </>
+                                                                                                    {ttem.filetype === "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                                                                                                        ? <div>
+                                                                                                            <a href={`${process.env.REACT_APP_IMG}/${ttem.filename}`} className="text-warning">
+                                                                                                                <i className="bi bi-filetype-ppt"></i> {ttem.name}</a>
+                                                                                                        </div>
+                                                                                                        :
+                                                                                                        <>
+    
+                                                                                                            <p>Cannot read file</p>
+                                                                                                        </>
+                                                                                                    }
+                                                                                                </>
                                                                                                 }
                                                                                             </>
                                                                                         }
