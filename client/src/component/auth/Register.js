@@ -81,8 +81,10 @@ const Register = () => {
   return (
     <div>
       <nav className="navbar navbar-light  bg-nav">
-        <div className="container">
-          <a className="navbar-brand text-white brand" href="/"> E-learning</a>
+      <div className="container">
+          <a className="navbar-brand text-white brand" href="/">
+            <img src="navbrand3.png" className="logo-nav" />&nbsp;
+          </a>
         </div>
       </nav>
 

@@ -23,7 +23,7 @@ const NavStudent = () => {
       {/* <Container> */}
 
         <Navbar.Brand href="/student/home" className="text-white">
-          Denso elearning Student
+        <img src="/navbrand3.png" className="logo-nav" />
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

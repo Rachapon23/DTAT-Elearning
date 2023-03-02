@@ -30,20 +30,20 @@ const Login = () => {
   };
 
   const handleEmail = (e) => {
-    setEmail({...email, [e.target.name]: e.target.value})
+    setEmail({ ...email, [e.target.name]: e.target.value })
     setError({ ...error, [e.target.name]: "" });
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(!!!value.employee_ID) {
-      setError({employee_ID: "Please enter employee ID"})
+    if (!!!value.employee_ID) {
+      setError({ employee_ID: "Please enter employee ID" })
       document.getElementById("employee_ID").focus({ focusVisible: true });
       return
     }
-    else if(!!!value.password) {
-      setError({password: "Please enter password"})
+    else if (!!!value.password) {
+      setError({ password: "Please enter password" })
       document.getElementById("password").focus({ focusVisible: true });
       return
     }
@@ -60,18 +60,18 @@ const Login = () => {
       })
       .catch((err) => {
         const err_obj = err.response.data
-        
+
         try {
           console.log(err_obj.field)
-          if(err_obj.field === "employee_ID") setError({employee_ID: err_obj.data});
-          else if(err_obj.field === "password") setError({password: err_obj.data});
+          if (err_obj.field === "employee_ID") setError({ employee_ID: err_obj.data });
+          else if (err_obj.field === "password") setError({ password: err_obj.data });
           else Swal.fire(
             'error',
             err_obj,
             'error'
           )
         }
-        catch(err) {
+        catch (err) {
           Swal.fire(
             'error',
             "Unexpected error please contact admin",
@@ -96,23 +96,23 @@ const Login = () => {
 
 
     console.log(!!sessionStorage.getItem('token'))
-    if(!!sessionStorage.getItem('token')){
+    if (!!sessionStorage.getItem('token')) {
       checkRole(sessionStorage.getItem("token"))
-      .then(res => {
-        console.log(res)
-      if (res.data === "admin") {
-        navigate("/admin/home");
-      } else if (res.data === "teacher") {
-        navigate("/teacher/home");
-      } else {
-        navigate("/student/home");
-      }
+        .then(res => {
+          console.log(res)
+          if (res.data === "admin") {
+            navigate("/admin/home");
+          } else if (res.data === "teacher") {
+            navigate("/teacher/home");
+          } else {
+            navigate("/student/home");
+          }
 
 
-      }).catch(err => {
-        console.log(err)
+        }).catch(err => {
+          console.log(err)
 
-      })
+        })
     }
     // if (sessionStorage.length != 0) {
     //   if (sessionStorage.getItem("role") === "admin") {
@@ -127,7 +127,7 @@ const Login = () => {
 
   const handleSendEmail = (e) => {
     e.preventDefault();
-    console.log(email); 
+    console.log(email);
     sendEmail(email)
       .then((res) => {
         console.log(res);
@@ -136,21 +136,21 @@ const Login = () => {
           'Send email success, Please check your email inbox',
           'success'
         )
-      // navigate("/");
+        // navigate("/");
       })
       .catch((err) => {
         const err_obj = err.response.data
         console.log(err)
         try {
           console.log(err_obj.field)
-          if(err_obj.field === "email") setError({email: err_obj.data});
+          if (err_obj.field === "email") setError({ email: err_obj.data });
           else Swal.fire(
             'error',
             err_obj,
             'error'
           )
         }
-        catch(err) {
+        catch (err) {
           Swal.fire(
             'error',
             "Unexpected error please contact admin",
@@ -172,7 +172,9 @@ const Login = () => {
     <div className="">
       <nav className="navbar navbar-light  bg-nav">
         <div className="container">
-          <a className="navbar-brand text-white brand" href="/">E-learning</a>
+          <a className="navbar-brand text-white brand" href="/">
+            <img src="navbrand3.png" className="logo-nav" />&nbsp;
+          </a>
         </div>
 
       </nav>
@@ -211,7 +213,7 @@ const Login = () => {
                       id="password"
                       onChange={handleChange}
                     />
-                    
+
                     <div className="invalid-feedback">
                       {error.password}
                     </div>
@@ -225,7 +227,7 @@ const Login = () => {
                     </button>
                   </div>
                 </form>
-    
+
                 <div className="d-flex justify-content-between">
 
                   <a className="text-muted" href="/#" onClick={showModal}> forgot password </a>
@@ -242,8 +244,8 @@ const Login = () => {
                         onChange={handleEmail}
                       />
                       <div className="invalid-feedback">
-                      {error.email}
-                    </div>
+                        {error.email}
+                      </div>
                     </div>
 
                   </Modal>

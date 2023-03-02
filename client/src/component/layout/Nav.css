@@ -14,3 +14,7 @@
 .bg-nav{
     background-image: url("../../../public/back-g-nav-2.png");
 }
+.logo-nav{
+    height: 40px;
+    width: auto;
+}
