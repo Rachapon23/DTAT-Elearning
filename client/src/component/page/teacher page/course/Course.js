@@ -586,6 +586,7 @@ const Course = () => {
                                                                     ttem.filetype = e.target.files[0].type
                                                                     ttem.file = e.target.files[0]
                                                                     // ttem.name = e.target.value
+                                                                    // console.log(e.target.files[0].type)
                                                                     SetValueTopic([...valuetopic])
                                                                 }}
                                                             />
