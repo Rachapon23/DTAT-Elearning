@@ -2,7 +2,7 @@ import React from 'react'
 import NavTeacher from '../../../layout/NavTeacher'
 import { useState, useEffect } from 'react'
 import { createQuiz } from '../../../../function/teacher/funcQuiz'
-
+import Swal from "sweetalert2";
 import './quiz.css'
 import { useNavigate } from 'react-router-dom'
 const Quiz = () => {
@@ -43,7 +43,17 @@ const Quiz = () => {
         ans3: "",
         ans4: "",
     }) 
-
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
     const handAddName = (e) => {
         if(e.target.name === "attemp") {
             setNameQuiz({ ...nameQuiz, [e.target.name]: Number(e.target.value) });    
@@ -154,6 +164,10 @@ const Quiz = () => {
                 .then(res => {
                     console.log(res)
                     // window.location.reload(false);
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Your quiz created successfully'
+                    })
                     navigate('/teacher/list-quiz')
                 })
                 .catch(err => {

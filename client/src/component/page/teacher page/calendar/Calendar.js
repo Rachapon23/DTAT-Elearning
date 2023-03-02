@@ -55,6 +55,10 @@ const Calendar = () => {
                     })
                     setJson("")
                     loadData()
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Your time table created successfully'
+                    })
 
                 }).catch(err => {
                     console.log(err)
@@ -96,6 +100,10 @@ const Calendar = () => {
         updateEvent(sessionStorage.getItem("token"), values)
             .then(res => {
                 console.log(res)
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Your time table updated'
+                })
             }).catch(err => {
                 console.log(err)
             })
@@ -111,6 +119,7 @@ const Calendar = () => {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
+    
     const handleClick = (info) => {
         const id = info.event._def.extendedProps._id
         // console.log(info.event._def.extendedProps.coursee.teacher)
@@ -129,7 +138,7 @@ const Calendar = () => {
                         console.log(res)
                         Toast.fire({
                             icon: 'success',
-                            title: 'Your file has been deleted successfully'
+                            title: 'Your time table has been deleted successfully'
                         })
                         loadData()
                     }).catch(err => {
