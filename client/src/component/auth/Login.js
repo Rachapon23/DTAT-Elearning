@@ -176,7 +176,6 @@ const Login = () => {
             <img src="navbrand3.png" className="logo-nav" />&nbsp;
           </a>
         </div>
-
       </nav>
       <div className="black-g">
         <div className="container">
