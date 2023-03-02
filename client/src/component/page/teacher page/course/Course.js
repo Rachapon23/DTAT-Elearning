@@ -313,7 +313,7 @@ const Course = () => {
 
                 Toast.fire({
                     icon: 'success',
-                    title: 'Your file has been deleted successfully'
+                    title: 'Your course created successfully'
                 })
                 // window.location.reload(false);
                 navigate('/teacher/get-course/'+res.data._id)

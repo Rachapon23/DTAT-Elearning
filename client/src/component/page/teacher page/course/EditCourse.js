@@ -173,7 +173,17 @@ const EditCourse = () => {
         valuetopic[index].file.splice(tdex, 1)
         setNextState([...nextState])
     }
-
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
     const hadleAddNewQuiz = () => {
         Swal.fire({
             icon: 'warning',
@@ -324,12 +334,20 @@ const EditCourse = () => {
                         formDatafile.append('file', valuetopic[array[i].topic_number].file[array[i].file_number].file)
                         await uploadfile(sessionStorage.getItem("token"), formDatafile).then(res => {
                             console.log(res)
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Your course updated'
+                            })
                             navigate('/teacher/get-course/' + id)
                         }).catch(err => {
                             console.log(err)
                         })
                     }
                 } else {
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Your course updated'
+                    })
                     navigate('/teacher/get-course/' + id)
                 }
 

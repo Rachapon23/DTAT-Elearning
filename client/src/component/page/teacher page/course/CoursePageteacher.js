@@ -74,7 +74,7 @@ const CoursePageteacher = () => {
                         console.log(res)
                         Toast.fire({
                             icon: 'success',
-                            title: 'Your file has been deleted successfully'
+                            title: 'Your Course has been deleted successfully'
                         })
 
                         navigate('/teacher/list-courses')

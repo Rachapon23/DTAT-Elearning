@@ -208,7 +208,7 @@ const Login = () => {
                       className={
                         error.password && error.password.length !== 0 ? "form-control is-invalid" : "form-control"
                       }
-                      type="text"
+                      type="password"
                       name="password"
                       id="password"
                       onChange={handleChange}

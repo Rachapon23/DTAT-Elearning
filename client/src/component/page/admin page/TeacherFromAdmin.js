@@ -4,6 +4,7 @@ import { listTeacheruser, changeRole } from '../../../function/funcFromAdmin'
 import { useState, useEffect } from "react";
 import { changeEnable } from '../../../function/funcFromAdmin';
 import { Table } from 'antd';
+import Swal from "sweetalert2";
 
 const TeacherFromAdmin = () => {
     const [data, setData] = useState([])
@@ -27,6 +28,17 @@ const TeacherFromAdmin = () => {
 
 
     }
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
     // console.log(data)
     const handlechange = (e, id) => {
         // console.log(e.target.value,id)
@@ -38,6 +50,10 @@ const TeacherFromAdmin = () => {
             .then(res => {
                 console.log(res)
                 loadData()
+                Toast.fire({
+                    icon: 'success',
+                    title: 'change Role successfully'
+                })
             })
             .catch(err => {
                 console.log(err)

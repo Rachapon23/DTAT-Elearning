@@ -31,26 +31,35 @@ const Listquiz = () => {
   useEffect(() => {
     loadQuiz()
   }, [])
-
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
   const handleRemoveQuiz = (id) =>{
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33',
+      //   cancelButtonColor: '#3085d6',
       confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
+  }).then((result) => {
       if (result.isConfirmed) {
         removeQuiz(sessionStorage.getItem("token"), id)
         .then(res => {
             console.log(res)
-            Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            )
+            Toast.fire({
+              icon: 'success',
+              title: 'Your Quiz has been deleted successfully'
+          })
             loadQuiz()
           }).catch(err => {
             console.log(err)
