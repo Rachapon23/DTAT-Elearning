@@ -22,7 +22,7 @@ const NavTeacher = () => {
     <Navbar className="bg-nav" expand="lg">
       <Container>
         <Navbar.Brand href="/teacher/home" className="text-white">
-          Denso elearning Teacher
+        <img src="/navbrand3.png" className="logo-nav" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
