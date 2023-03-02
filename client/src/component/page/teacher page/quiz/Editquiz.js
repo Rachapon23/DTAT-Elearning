@@ -49,7 +49,17 @@ const Editquiz = () => {
         ans3: "",
         ans4: "",
     }) 
-
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
     const handAddName = (e) => {
         setNameQuiz({ ...nameQuiz, [e.target.name]: e.target.value });
         setError({ ...error, [e.target.name]: ""})
@@ -156,11 +166,10 @@ const Editquiz = () => {
                 .then((response) => {
                     console.log(response)
                     loadData()
-                    Swal.fire(
-                        'Good job!',
-                        `${response.data}`,
-                        'success'
-                    )
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Your quiz updated'
+                    })
                     navigate('/teacher/list-quiz')
                 })
                 .catch((err) => {
