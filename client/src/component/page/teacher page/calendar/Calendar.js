@@ -212,7 +212,7 @@ const Calendar = () => {
                     </div>
                 </div>
             </div>
-            <Modal title="สร้างตารางเรียน" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Create time table" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <div className="mb-5 mt-4">
                     <div className="form-group mb-3">
                         <label className='form-label'> Select Course </label>

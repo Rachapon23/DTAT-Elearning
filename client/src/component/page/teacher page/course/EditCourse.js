@@ -505,7 +505,7 @@ const EditCourse = () => {
                                                     <input type="file" className="form-control"
                                                         onChange={handleImg}
                                                     />
-                                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}>ขนาดที่แนะนำ 820px * 312px</p>
+                                                    <p className='text-end mt-2' style={{ fontSize: "12px" }}>recommend size 820px * 312px</p>
                                                 </div>
                                             </div>
                                         }
@@ -719,7 +719,7 @@ const EditCourse = () => {
 
                                             {item.quiz.length > 0 &&
                                                 <div className="d-grid">
-                                                    <button className="btn btn-outline-secondary" type="button" onClick={hadleAddNewQuiz}>สร้างแบบทดสอบใหม่</button>
+                                                    <button className="btn btn-outline-secondary" type="button" onClick={hadleAddNewQuiz}> Create new quiz</button>
                                                 </div>
                                             }
                                             <ul>

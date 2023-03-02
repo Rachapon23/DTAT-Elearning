@@ -650,7 +650,7 @@ const Course = () => {
 
                                         {item.quiz.length > 0 &&
                                             <div className="d-grid">
-                                                <button className="btn btn-outline-secondary" type="button" onClick={hadleAddNewQuiz}>สร้างแบบทดสอบใหม่</button>
+                                                <button className="btn btn-outline-secondary" type="button" onClick={hadleAddNewQuiz}>Create new quiz</button>
                                             </div>
                                         }
                                         <ul>
