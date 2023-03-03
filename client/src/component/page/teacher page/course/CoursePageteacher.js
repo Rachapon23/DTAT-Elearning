@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import NavTeacher from "../../../layout/NavTeacher";
 import './course.css'
@@ -10,6 +10,7 @@ import { Switch } from 'antd';
 import { useNavigate } from 'react-router-dom'
 import { getCourse, removeCourse, enablecourse } from "../../../../function/teacher/funcCourse";
 import ReactPlayer from "react-player";
+import { duration } from 'moment';
 
 
 const CoursePageteacher = () => {
@@ -19,12 +20,22 @@ const CoursePageteacher = () => {
     const [dataQuiz, setDataQuiz] = useState([])
     const navigate = useNavigate()
     const { pathname } = useLocation()
+    const playRef = useRef(null)
+    const playerContainerRef = useRef(null)
+
+    const [videoController, setVideoController] = useState({
+        playing: false,
+        duration: 0.00,
+        muted: false,
+        volume: 0.1,
+        played: 0,
+    })
 
 
     const fetchCourse = () => {
         getCourse(sessionStorage.getItem("token"), id)
             .then((response) => {
-                console.log(response)
+                // console.log(response)
                 setCourse(response.data)
                 setTopic(response.data.topic)
             })
@@ -72,7 +83,7 @@ const CoursePageteacher = () => {
             if (result.isConfirmed) {
                 removeCourse(sessionStorage.getItem("token"), params)
                     .then(res => {
-                        console.log(res)
+                        // console.log(res)
                         Toast.fire({
                             icon: 'success',
                             title: 'Your Course has been deleted successfully'
@@ -100,7 +111,7 @@ const CoursePageteacher = () => {
                 enable: checked
             })
             .then((response) => {
-                console.log(response)
+                // console.log(response)
                 fetchCourse()
             })
             .catch((err) => {
@@ -108,14 +119,32 @@ const CoursePageteacher = () => {
             })
     };
 
-    const handleForwardVideo = (e) => {
-        console.log(e)
-        // var delta = this.state.player.getCurrentTime() - this.state.currentTime;
-        // if (delta > 0.01)
-        // {
-        //     this.state.player.seekTo(this.state.currentTime)
-        // }
+    const handlePlayVideo = () => {
+        if(videoController.playing) {
+            setVideoController({playing: false})
+            setVideoController({duration: playRef.current.getCurrentTime()})
+        }
+        else setVideoController({playing: true})
     }
+
+    const handleForwardVideo = () => {
+        playRef.current.seekTo(playRef.current.getCurrentTime() + 10)
+        console.log(playRef.current.getCurrentTime())
+    }
+
+    const handleRewind = () => {
+        playRef.current.seekTo(playRef.current.getCurrentTime() - 10)
+    }
+
+    const handleVideoVolume = (e) => {
+        console.log(e.target.value)
+        setVideoController({volume: e.target.value / 100})
+    }
+
+    const handleProcess= (e) => {
+        console.log(e)
+    }
+
 
 
     return (
@@ -168,7 +197,6 @@ const CoursePageteacher = () => {
                             <div className="">
                                 <p className="fs-6">{item.description}</p>
 
-                                {console.log("-> ", item)}
                                 {item.text.length > 0 &&
                                     <div className=""><ul>
                                         {item.text.map((ttem, tdex) =>
@@ -259,13 +287,17 @@ const CoursePageteacher = () => {
                                                                                     :
 
                                                                                     <>
-                                                                                        <div id="playerWrapper">
+                                                                                        <div ref={playerContainerRef} id="playerWrapper">
                                                                                             <div className="d-flex justify-content-center">
                                                                                                 <ReactPlayer
+                                                                                                    ref={playRef}
                                                                                                     width={"100%"}
                                                                                                     height={"100%"}
                                                                                                     url={`${process.env.REACT_APP_IMG}/${ttem.filename}`}
-                                                                                                    muted={false}
+                                                                                                    muted={videoController.muted}
+                                                                                                    playing={videoController.playing}
+                                                                                                    onProgress={(e) => handleProcess(e)}
+
                                                                                                 />
                                                                                             </div>
                                                                                             
@@ -277,9 +309,9 @@ const CoursePageteacher = () => {
                                                                                                 </div>
 
                                                                                                 <div id="controlIcons" className="container d-flex justify-content-center">
-                                                                                                    <button>back</button>
-                                                                                                    <button>play</button>
-                                                                                                    <button>Fast</button>
+                                                                                                    <button onClick={handleRewind}>back</button>
+                                                                                                    <button onClick={handlePlayVideo}>play</button>
+                                                                                                    <button onClick={handleForwardVideo}>Fast</button>
 
 
                                                                                                 </div>
@@ -287,21 +319,21 @@ const CoursePageteacher = () => {
                                                                                                 {/* <div className="container d-flex justify-content-between"/> */}
 
                                                                                                 <div className="ps-4 pe-4">
-                                                                                                    <input type="range" class="form-range" min="0" max="100" step="1" defaultValue={0} value={50}/>
+                                                                                                    <input type="range" class="form-range" min="0" max="100" step="1" value={videoController.play_on}/>
                                                                                                 </div>
 
                                                                                                 <div id="buttomIcons" className="container d-flex justify-content-between">
                                                                                                     <div className='row'>
                                                                                                         <div className="col-6">
-                                                                                                            <button>Back</button>
-                                                                                                            <button>Play</button>
-                                                                                                            <button>Fast</button>
+                                                                                                            <button onClick={handleRewind}>Back</button>
+                                                                                                            <button onClick={handlePlayVideo}>Play</button>
+                                                                                                            <button onClick={handleForwardVideo}>Fast</button>
                                                                                                         </div>
                                                                                                         <div className="col">
-                                                                                                            <input type="range" class="form-range" min="0" max="100" step="1" defaultValue={0}/>
+                                                                                                            <input type="range" class="form-range" min="0" max="100" step="1" value={videoController.volume * 100} onChange={(e) => handleVideoVolume(e)}/>
                                                                                                         </div>
                                                                                                         <div className="col">
-                                                                                                            <h5>{"5:50"}</h5>
+                                                                                                            <h5>{videoController.duration}</h5>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div id="buttomIcons" className="row d-flex justify-content-end">
