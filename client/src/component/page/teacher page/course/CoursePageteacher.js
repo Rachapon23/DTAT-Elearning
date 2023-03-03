@@ -9,6 +9,7 @@ import { Switch } from 'antd';
 // import Parser from 'html-react-parser';
 import { useNavigate } from 'react-router-dom'
 import { getCourse, removeCourse, enablecourse } from "../../../../function/teacher/funcCourse";
+import ReactPlayer from "react-player";
 
 
 const CoursePageteacher = () => {
@@ -107,6 +108,15 @@ const CoursePageteacher = () => {
             })
     };
 
+    const handleForwardVideo = (e) => {
+        console.log(e)
+        // var delta = this.state.player.getCurrentTime() - this.state.currentTime;
+        // if (delta > 0.01)
+        // {
+        //     this.state.player.seekTo(this.state.currentTime)
+        // }
+    }
+
 
     return (
         <div>
@@ -173,20 +183,33 @@ const CoursePageteacher = () => {
                                 {item.link.length > 0 &&
                                     <div className=""><ul>
                                         {item.link.map((ttem, tdex) =>
-
-                                            <li key={tdex}>
-                                                <a className='text-info' href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
-                                            </li>
-
+                                            ttem.url.includes("youtube.com") ?
+                                            (
+                                                <div className="d-flex justify-content-center">
+                                                    <iframe 
+                                                        width="560" 
+                                                        height="315" 
+                                                        src={ttem.url.replace("watch?v=","embed/")} 
+                                                        title="YouTube video player" 
+                                                        frameborder="0" 
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                                        allowfullscreen
+                                                    />
+                                                </div>
+                                            )
+                                            :
+                                            (
+                                                <li key={tdex}>
+                                                    <a className='text-info' href={ttem.url}><i className="bi bi-link"></i>&nbsp;{ttem.name}</a>
+                                                </li>
+                                            )
                                         )}
                                     </ul>
                                     </div>
                                 }
-                                {console.log("-> ", item.file)}
+                                
                                 {item.file &&
                                     <div className="">
-
-
                                         {item.file.map((ttem, tdex) =>
 
                                             <div key={tdex} className="mb-2">
@@ -236,7 +259,64 @@ const CoursePageteacher = () => {
                                                                                     :
 
                                                                                     <>
-                                                                                        {ttem.filetype == "video/mp4"
+                                                                                        <div id="playerWrapper">
+                                                                                            <div className="d-flex justify-content-center">
+                                                                                                <ReactPlayer
+                                                                                                    width={"100%"}
+                                                                                                    height={"100%"}
+                                                                                                    url={`${process.env.REACT_APP_IMG}/${ttem.filename}`}
+                                                                                                    muted={false}
+                                                                                                />
+                                                                                            </div>
+                                                                                            
+                                                                                            <div id="controlWarpper">
+                                                                                                <div className="container d-flex justify-content-between">
+                                                                                                    <div >
+                                                                                                        <h1>Title</h1>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div id="controlIcons" className="container d-flex justify-content-center">
+                                                                                                    <button>back</button>
+                                                                                                    <button>play</button>
+                                                                                                    <button>Fast</button>
+
+
+                                                                                                </div>
+
+                                                                                                {/* <div className="container d-flex justify-content-between"/> */}
+
+                                                                                                <div className="ps-4 pe-4">
+                                                                                                    <input type="range" class="form-range" min="0" max="100" step="1" defaultValue={0} value={50}/>
+                                                                                                </div>
+
+                                                                                                <div id="buttomIcons" className="container d-flex justify-content-between">
+                                                                                                    <div className='row'>
+                                                                                                        <div className="col-6">
+                                                                                                            <button>Back</button>
+                                                                                                            <button>Play</button>
+                                                                                                            <button>Fast</button>
+                                                                                                        </div>
+                                                                                                        <div className="col">
+                                                                                                            <input type="range" class="form-range" min="0" max="100" step="1" defaultValue={0}/>
+                                                                                                        </div>
+                                                                                                        <div className="col">
+                                                                                                            <h5>{"5:50"}</h5>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div id="buttomIcons" className="row d-flex justify-content-end">
+                                                                                                        <button>Full</button>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                
+
+
+                                                                                            </div>
+                                                                                        </div>
+
+
+                                                                                        {/* {ttem.filetype == "video/mp4"
                                                                                             ? <div className="container">
                                                                                                 <p>{(ttem.name).split('.')[0]}</p>
                                                                                                 <div className="d-flex justify-content-center">
@@ -264,7 +344,7 @@ const CoursePageteacher = () => {
                                                                                                     </>
                                                                                                 }
                                                                                             </>
-                                                                                        }
+                                                                                        } */}
                                                                                     </>
                                                                                 }
                                                                             </>
