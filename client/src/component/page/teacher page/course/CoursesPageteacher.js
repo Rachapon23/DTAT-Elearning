@@ -73,7 +73,6 @@ const CoursesPageteacher = () => {
                                         ? <img src={`${process.env.REACT_APP_IMG}/${course.image}`} className="card-img-top w-100" />
                                         : <img src="/book-main-img-3.png" className="card-img-top w-100" />
                                     }
-                                    {/* <img src={`${process.env.REACT_APP_IMG}/${course.image}`} className="card-img-top w-100" /> */}
                                     <div className="card-body ">
                                         <div className="d-flex justify-content-between">
                                             <p className="card-title mb-0">{course.name}</p>
@@ -86,8 +85,6 @@ const CoursesPageteacher = () => {
                                             </div>
 
                                         </div>
-                                        {/* <p id='text-p-5' className="card-text my-0">รายละเอียด : {course.description}</p> */}
-                                        {/* <p id='text-p-6' className="card-text mt-1 "><i className="bi bi-hand-index"></i>&nbsp;คลิกเพื่อเข้าเรียน </p> */}
                                     </div>
                                 </div>
                             </div>))

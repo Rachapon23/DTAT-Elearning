@@ -28,6 +28,7 @@ const NavAdmin = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {/* <Nav.Link href="/admin/home">หน้าแรก</Nav.Link> */}
+            <Nav.Link href="/admin/managehome"> Manage Home </Nav.Link>
             <Nav.Link href="/admin/list-users"> All user </Nav.Link>
             {/* <Nav.Link href="/homeadmin">จัดการแอดมิน</Nav.Link> */}
             <Nav.Link href="/admin/list-teachers"> Manage teacher </Nav.Link>

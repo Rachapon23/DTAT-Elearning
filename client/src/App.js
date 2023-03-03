@@ -4,16 +4,17 @@ import { Routes, Route } from "react-router-dom";
 // import PrivateTeacher from "./route/PrivateTeacher";
 // import Privateadmin from "./route/Privateadmin";
 // import Notfound from "./component/page/Notfound";
-//auth
+// //auth
 import Login from "./component/auth/Login";
 // import Register from "./component/auth/Register";
 // import ResetPassword from "./component/auth/ResetPassword";
 // import ResetPasswordRoute from "./route/ResetPasswordRoute";
 //admin
-// import HomePageadmin from "./component/page/admin page/HomePageAdmin";
-// import AlluserFromadmin from "./component/page/admin page/AlluserFromadmin";
-// import StudentFormAdmin from "./component/page/admin page/StudentFormAdmin";
-// import TeacherFromAdmin from "./component/page/admin page/TeacherFromAdmin";
+import HomePageadmin from "./component/page/admin page/HomePageAdmin";
+import AlluserFromadmin from "./component/page/admin page/AlluserFromadmin";
+import StudentFormAdmin from "./component/page/admin page/StudentFormAdmin";
+import TeacherFromAdmin from "./component/page/admin page/TeacherFromAdmin";
+import ManageHome from "./component/page/admin page/ManageHome";
 
 //teacher
 // import HomePageTeacher from "./component/page/teacher page/HomePageTeacher";
@@ -46,19 +47,20 @@ function App() {
         {/* auth */}
         {/* <Route path="*" element={<Notfound/>} /> */}
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/register" element={<Register />} />
-        <Route element={<ResetPasswordRoute />}>
+        {/* <Route path="/register" element={<Register />} /> */}
+        {/* <Route element={<ResetPasswordRoute />}>
           <Route path="/reset-password/:id" element={<ResetPassword />}></Route>
         </Route> */}
 
 
         {/* admin */}
-        {/* <Route element={<Privateadmin />}>
+        {/* <Route element={<Privateadmin />}> */}
           <Route path="/admin/home" element={<HomePageadmin />} />
+          <Route path="/admin/managehome" element={<ManageHome />} />
           <Route path="/admin/list-users" element={<AlluserFromadmin />} />
           <Route path="/admin/list-students" element={<StudentFormAdmin />} />
           <Route path="/admin/list-teachers" element={<TeacherFromAdmin />} />
-        </Route> */}
+        {/* </Route> */}
  
         {/* teacher */}
         {/* <Route element={<PrivateTeacher />}>
