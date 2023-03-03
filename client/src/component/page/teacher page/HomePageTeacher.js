@@ -1,9 +1,9 @@
 import React from 'react'
 import NavTeacher from '../../layout/NavTeacher'
 import { useState, useEffect } from 'react'
-import { getMyaccount, uploadProfile,updateProfile } from '../../../function/teacher/funcMiscellaneous'
+import { getMyaccount, uploadProfile, updateProfile } from '../../../function/teacher/funcMiscellaneous'
 import { getmyCourseTeacher } from '../../../function/teacher/funcCourse';
-import { listQuiz} from "../../../function/teacher/funcQuiz";
+import { listQuiz } from "../../../function/teacher/funcQuiz";
 import './teacher.css'
 const HomePageTeacher = () => {
   // const [nextState, setNextState] = useState([]);
@@ -25,8 +25,8 @@ const HomePageTeacher = () => {
         console.log(res.data)
         setData(res.data)
         setValue({
-          email:res.data.email,
-      tel: res.data.tel
+          email: res.data.email,
+          tel: res.data.tel
         })
       })
       .catch(err => {
@@ -35,26 +35,26 @@ const HomePageTeacher = () => {
   }
   const fetchMyCourse = () => {
     getmyCourseTeacher(sessionStorage.getItem("token"))
-        .then((response) => {
-            console.log("course : ",response.data)
-            setCourses(response.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-}
-const loadQuiz = () => {
-  listQuiz(
-    sessionStorage.getItem("token")
-  )
-    .then(res => {
-      console.log("quiz : ",res.data)
-      setDataQuiz(res.data)
-    })
-    .catch(err => {
-      console.log(err)
-    })
-}
+      .then((response) => {
+        console.log("course : ", response.data)
+        setCourses(response.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  const loadQuiz = () => {
+    listQuiz(
+      sessionStorage.getItem("token")
+    )
+      .then(res => {
+        console.log("quiz : ", res.data)
+        setDataQuiz(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   useEffect(() => {
     loadData()
@@ -226,37 +226,37 @@ const loadQuiz = () => {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6">
-                   <div className="card">
-              <div className="card-body p-5">
-                <div>
-                  <p> Overview </p>
-                  <hr />
-                  <div className="my-3">
-                  <label className="form-label"> Course </label>
-                  <div className="mb-3 row">
-                      <label className="col-sm-5 col-form-label">Amount</label>
-                      <div className="col-sm-7">
-                        <input type="text" readOnly className="form-control-plaintext" value={`${courses.length} courses`} />
+                <div className="card">
+                  <div className="card-body p-5">
+                    <div>
+                      <p> Overview </p>
+                      <hr />
+                      <div className="my-3">
+                        <label className="form-label"> Course </label>
+                        <div className="mb-3 row">
+                          <label className="col-sm-5 col-form-label">Amount</label>
+                          <div className="col-sm-7">
+                            <input type="text" readOnly className="form-control-plaintext" value={`${courses.length} courses`} />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="my-3">
-                  <label className="form-label">Quiz</label>
-                  <div className="mb-3 row">
-                      <label className="col-sm-5 col-form-label"> Amount </label>
-                      <div className="col-sm-7">
-                        <input type="text" readOnly className="form-control-plaintext" value={`${dataquiz.length} quizzes`} />
+                      <hr />
+                      <div className="my-3">
+                        <label className="form-label">Quiz</label>
+                        <div className="mb-3 row">
+                          <label className="col-sm-5 col-form-label"> Amount </label>
+                          <div className="col-sm-7">
+                            <input type="text" readOnly className="form-control-plaintext" value={`${dataquiz.length} quizzes`} />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-              </div>
               <div className="col-md-6"></div>
             </div>
-         
+
           </div>
         </div>
       </div>

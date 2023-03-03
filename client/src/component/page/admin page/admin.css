@@ -71,3 +71,7 @@
         background-position: 50% 0%;
     }
 }
+
+#remove{
+    cursor: pointer;
+}
