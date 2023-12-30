@@ -1,5 +1,6 @@
 # DTAT-Elearning
-E-learning system for DTAT
+**This version is no longer mainteance by developer**   
+E-learning system for DTAT   
 
 # Basic of pushing file git
 ## 1. Add file
